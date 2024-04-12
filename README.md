@@ -4,6 +4,7 @@ This project is an encapsulation of some common components, aiming to decouple t
 
 We classify components into the following categories:
 
+- `impl`: Utils' implementations (request, etc.)
 - `wrapper`: Non-rendering components (event listeners, etc.)
 - `prefab`: Minimum-level components (buttons, input boxes, etc.)
 - `layout`: Larger-level components (navigation bar, etc.)
