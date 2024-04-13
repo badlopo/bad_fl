@@ -94,3 +94,14 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: JetBrainsMono
+      fonts:
+        - asset: fonts/JetBrainsMono-Regular.ttf
+        - asset: fonts/JetBrainsMono-Bold.ttf
+        - asset: fonts/JetBrainsMono-ExtraBold.ttf
+        - asset: fonts/JetBrainsMono-ExtraLight.ttf
+        - asset: fonts/JetBrainsMono-Light.ttf
+        - asset: fonts/JetBrainsMono-Medium.ttf
+        - asset: fonts/JetBrainsMono-SemiBold.ttf
+        - asset: fonts/JetBrainsMono-Thin.ttf
