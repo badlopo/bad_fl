@@ -8,8 +8,8 @@ const formatter = JsonEncoder.withIndent('  ');
 
 void main() {
   final app = Router();
-  // capture all routes start with '/mirrir
-  app.get('/mirror/<path|.*>', (Request request, String path) {
+  // capture all routes start with '/mirror'
+  app.all('/mirror/<path|.*>', (Request request, String path) {
     print('You requested: $path');
 
     final String body = '''
