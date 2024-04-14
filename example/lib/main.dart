@@ -1,3 +1,4 @@
+import 'package:example/pages/unknown.dart';
 import 'package:example/routes/name.dart';
 import 'package:example/routes/route.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +20,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
         fontFamily: 'JetBrainsMono',
-        scaffoldBackgroundColor: const Color(0xFFF5F6F7)
+        scaffoldBackgroundColor: const Color(0xFFF5F6F7),
       ),
       initialRoute: NamedRoute.boot,
+      unknownRoute: GetPage(name: '/unknown', page: () => const UnknownPage()),
       getPages: route,
     );
   }
