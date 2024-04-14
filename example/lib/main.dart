@@ -16,8 +16,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Bad FL',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
+        scaffoldBackgroundColor: const Color(0xFFF5F6F7)
       ),
       initialRoute: NamedRoute.boot,
       getPages: route,
