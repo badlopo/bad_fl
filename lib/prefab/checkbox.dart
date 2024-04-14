@@ -91,7 +91,7 @@ class BadCheckBox extends StatelessWidget {
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
               color: checked ? checkedColor : null,
-              border: Border.all(color: Colors.white, width: 1),
+              border: checked ? checkedBorder : null,
               borderRadius: rounded ? BorderRadius.circular(size / 2) : null,
             ),
             child: checked
