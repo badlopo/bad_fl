@@ -1,7 +1,7 @@
 import 'package:example/pages/boot.dart';
 import 'package:example/pages/prefab/checkbox.dart';
 import 'package:example/pages/prefab/text.dart';
-import 'package:example/pages/request.dart';
+import 'package:example/pages/impl/request.dart';
 import 'package:example/routes/name.dart';
 import 'package:get/get.dart';
 
@@ -13,5 +13,5 @@ final List<GetPage> route = [
   GetPage(name: NamedRoute.text, page: () => const BadTextDocPage()),
 
   // impl
-  GetPage(name: NamedRoute.request, page: () => const RequestPage()),
+  GetPage(name: NamedRoute.request, page: () => const RequestImplDocPage()),
 ];

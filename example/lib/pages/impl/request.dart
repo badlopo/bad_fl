@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class RequestPage extends StatelessWidget {
-  const RequestPage({super.key});
+class RequestImplDocPage extends StatelessWidget {
+  const RequestImplDocPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Request'),
+        title: const Text('RequestImpl'),
       ),
     );
   }
