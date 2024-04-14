@@ -24,7 +24,7 @@ const _error2 =
 
 class BadText extends StatelessWidget {
   final String text;
-  final String fontFamily;
+  final String? fontFamily;
 
   /// 是否可选中, 默认 false
   final bool selectable;
@@ -49,9 +49,10 @@ class BadText extends StatelessWidget {
   final TextOverflow? overflow;
   final int? maxLines;
 
-  const BadText(this.text, {
+  const BadText(
+    this.text, {
     super.key,
-    required this.fontFamily,
+    this.fontFamily,
     this.selectable = false,
     this.color,
     this.fontSize = 16,
@@ -105,7 +106,7 @@ class BadText extends StatelessWidget {
         fontFamily: fontFamily,
         height: height,
         decoration:
-        underline == true ? TextDecoration.underline : TextDecoration.none,
+            underline == true ? TextDecoration.underline : TextDecoration.none,
         shadows: shadows,
       ),
       textAlign: textAlign,
