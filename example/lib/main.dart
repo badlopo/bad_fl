@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
+        fontFamily: 'JetBrainsMono',
         scaffoldBackgroundColor: const Color(0xFFF5F6F7)
       ),
       initialRoute: NamedRoute.boot,
