@@ -11,6 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
   dio:
+  easy_refresh:
+  get:
 
 dev_dependencies:
   flutter_test:
