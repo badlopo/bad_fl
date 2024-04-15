@@ -8,12 +8,16 @@ abstract class NamedRoute {
   // impl
   static const request = '/impl/request';
 
+  // layout
+  static const panel = '/layout/panel';
+  static const refreshable = '/layout/refreshable';
+
+  // mixin
+  static const search = '/mixin/search';
+
   // prefab
   static const checkbox = '/prefab/checkbox';
   static const text = '/prefab/text';
-
-  // layout
-  static const panel = '/layout/panel';
 
   // wrapper
   static const clickable = '/wrapper/clickable';
