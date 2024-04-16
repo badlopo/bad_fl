@@ -29,7 +29,7 @@ const Map<String, List<(String, String)>> panelSections = {
   ]
 };
 
-const forwardIcon = Icon(Icons.arrow_forward_ios_rounded, size: 16);
+const forwardIcon = Icon(Icons.arrow_right, size: 16);
 
 class BootPage extends StatelessWidget {
   const BootPage({super.key});
@@ -46,7 +46,7 @@ class BootPage extends StatelessWidget {
                 options: BadPanelOptions(
                   title: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: BadText(section.key, color: Colors.black54),
+                    child: BadText(section.key),
                   ),
                   dividerColor: Colors.black12,
                 ),
@@ -59,7 +59,7 @@ class BootPage extends StatelessWidget {
                       ),
                     )
                     .toList(),
-              ),
+              ).paddingOnly(bottom: 16),
             )
             .toList(),
       ),
