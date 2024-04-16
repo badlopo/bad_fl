@@ -38,6 +38,28 @@ class BadExpandable extends StatelessWidget {
     this.child,
   }) : assert(child != null || emptyIcon != null);
 
+  BadExpandable.none({
+    super.key,
+    this.headerHeight = 28.0,
+    this.gap = 20.0,
+    required this.title,
+    required this.emptyIcon,
+    this.openedIcon = const Icon(Icons.arrow_drop_up, size: 24),
+    this.closedIcon = const Icon(Icons.arrow_drop_down, size: 24),
+  })  : child = null,
+        assert(emptyIcon != null);
+
+  BadExpandable.some({
+    super.key,
+    this.headerHeight = 28.0,
+    this.gap = 20.0,
+    required this.title,
+    this.openedIcon = const Icon(Icons.arrow_drop_up, size: 24),
+    this.closedIcon = const Icon(Icons.arrow_drop_down, size: 24),
+    required this.child,
+  })  : emptyIcon = null,
+        assert(child != null);
+
   @override
   Widget build(BuildContext context) {
     final header = SizedBox(
