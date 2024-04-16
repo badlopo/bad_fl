@@ -50,6 +50,8 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
 
+  flutter_highlight:
+
   shelf:
   shelf_router:
 
