@@ -1,17 +1,13 @@
 import 'package:example/pages/boot.dart';
-import 'package:example/pages/prefab/checkbox.dart';
-import 'package:example/pages/prefab/text.dart';
-import 'package:example/pages/impl/request.dart';
+import 'package:example/pages/helper/debounce.dart';
 import 'package:example/routes/name.dart';
 import 'package:get/get.dart';
 
 final List<GetPage> route = [
   GetPage(name: NamedRoute.boot, page: () => const BootPage()),
 
-  // prefab
-  GetPage(name: NamedRoute.checkbox, page: () => const BadCheckBoxDocPage()),
-  GetPage(name: NamedRoute.text, page: () => const BadTextDocPage()),
+  // helper
+  GetPage(name: NamedRoute.debounce, page: () => const DebouncePage()),
 
-  // impl
-  GetPage(name: NamedRoute.request, page: () => const RequestImplDocPage()),
+  // tobe implemented
 ];
