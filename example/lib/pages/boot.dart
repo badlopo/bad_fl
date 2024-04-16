@@ -46,7 +46,7 @@ class BootPage extends StatelessWidget {
                 options: BadPanelOptions(
                   title: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: BadText(section.key),
+                    child: BadText(section.key, fontWeight: FontWeight.w500),
                   ),
                   dividerColor: Colors.black12,
                 ),
