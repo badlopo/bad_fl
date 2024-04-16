@@ -70,8 +70,7 @@ class BadExpandable extends StatelessWidget {
           if (child == null)
             emptyIcon!
           else
-            // this will (and only need to) be wrapped in `Obx` when `child` is not `null`.
-            _open.value ? openedIcon : closedIcon,
+            Obx(() => _open.isTrue ? openedIcon : closedIcon),
         ],
       ),
     );
