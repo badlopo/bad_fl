@@ -1,6 +1,5 @@
 import 'package:bad_fl/prefab/text.dart';
 import 'package:bad_fl/layout/panel.dart';
-import 'package:bad_fl/layout/refreshable.dart';
 import 'package:example/routes/name.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +13,7 @@ const Map<String, List<(String, String)>> panelSections = {
     ('Request', NamedRoute.request),
   ],
   'Layout': [
+    ('Expandable', NamedRoute.panel),
     ('Panel', NamedRoute.panel),
     ('Refreshable', NamedRoute.refreshable),
   ],

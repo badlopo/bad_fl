@@ -9,6 +9,7 @@ abstract class NamedRoute {
   static const request = '/impl/request';
 
   // layout
+  static const expandable = '/layout/expandable';
   static const panel = '/layout/panel';
   static const refreshable = '/layout/refreshable';
 
