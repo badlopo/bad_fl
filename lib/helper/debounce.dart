@@ -1,7 +1,7 @@
 import 'dart:async';
 
 /// a task that will be debounced
-typedef DebounceTask = void Function();
+typedef DebounceTask = FutureOr<void> Function();
 
 class DebounceImpl {
   /// inner task
