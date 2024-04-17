@@ -30,8 +30,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   bad_fl:
     path: ../
+  flutter_highlight:
   get:
 
 
@@ -49,8 +51,6 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
-
-  flutter_highlight:
 
   shelf:
   shelf_router:
