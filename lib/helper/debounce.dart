@@ -8,15 +8,20 @@ class DebounceImpl {
   final DebounceTask _task;
 
   /// duration to debounce
-  final Duration _duration;
+  Duration _duration;
 
   /// debounce timer
   Timer? _timer;
 
   DebounceImpl(this._task, this._duration);
 
+  /// set duration to debounce, this will take effect on the next call
+  set duration(Duration duration) {
+    _duration = duration;
+  }
+
   /// refresh the debounce timer
-  call() {
+  void call() {
     _timer?.cancel();
     _timer = Timer(_duration, _task);
   }
