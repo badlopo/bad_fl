@@ -83,25 +83,37 @@ class DebouncePage extends GetView<_DebounceController> {
     return DocPageScaffold(
       title: 'DebounceImpl',
       tags: const ['category:helper', 'type:class'],
-      description: _description,
-      // TODO: signature
       playground: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Obx(() => BadText('count: ${controller.count}')),
-          const SizedBox(height: 8),
-          Obx(() => BadText('applied duration: ${controller.sec}s')),
-          const SizedBox(height: 8),
           SizedBox(
-            width: 160,
+            width: 180,
             child: CupertinoTextField(
-              prefix: const BadText('duration:').paddingOnly(left: 4),
+              prefix: const BadText('set duration:').paddingOnly(left: 4),
               suffix: const BadText('s').paddingOnly(right: 4),
               controller: TextEditingController(text: '1'),
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               onChanged: controller.changeDuration,
             ),
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Obx(
+                () => BadText(
+                  'count: ${controller.count}',
+                  color: Colors.orange,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Obx(
+                () => BadText(
+                  '(applied duration: ${controller.sec}s)',
+                  color: Colors.grey,
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 8),
           OutlinedButton(
@@ -129,6 +141,8 @@ class DebouncePage extends GetView<_DebounceController> {
           ),
         ],
       ),
+      description: _description,
+      // TODO: signature
       examples: const [
         ('Basic Usage', _basic),
         ('Change Duration', _changeDuration),

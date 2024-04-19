@@ -70,14 +70,29 @@ class DocPageScaffold extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          // tags
           Wrap(
             spacing: 8,
             runSpacing: 8,
             children: tags.map((tag) => Chip(label: BadText(tag))).toList(),
           ),
+          // playground
+          if (playground != null)
+            Container(
+              margin: const EdgeInsets.only(top: 16),
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Colors.white,
+              ),
+              child: BadExpandable(
+                title: const BadText('Playground', fontWeight: FontWeight.w500),
+                child: playground!,
+              ),
+            ),
           // description
           Container(
-            margin: const EdgeInsets.symmetric(vertical: 16),
+            margin: const EdgeInsets.only(top: 16),
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
@@ -90,7 +105,7 @@ class DocPageScaffold extends StatelessWidget {
           ),
           // TODO: signature
           Container(
-            margin: const EdgeInsets.only(bottom: 16),
+            margin: const EdgeInsets.only(top: 16),
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
@@ -102,24 +117,10 @@ class DocPageScaffold extends StatelessWidget {
                   'This is a sample page. This is a sample page. This is a sample page. This is a sample page.'),
             ),
           ),
-          // playground
-          if (playground != null)
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.white,
-              ),
-              child: BadExpandable(
-                title: const BadText('Playground', fontWeight: FontWeight.w500),
-                child: playground!,
-              ),
-            ),
           // examples
           ...?examples?.map(
             (example) => Container(
-              margin: const EdgeInsets.only(bottom: 16),
+              margin: const EdgeInsets.only(top: 16),
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
