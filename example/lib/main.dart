@@ -25,6 +25,15 @@ class MyApp extends StatelessWidget {
       initialRoute: NamedRoute.boot,
       unknownRoute: GetPage(name: '/unknown', page: () => const UnknownPage()),
       getPages: route,
+      // builder: (context, child) {
+      //   return Center(
+      //     child: SizedBox(
+      //       width: 390,
+      //       height: 844,
+      //       child: child!,
+      //     ),
+      //   );
+      // },
     );
   }
 }
