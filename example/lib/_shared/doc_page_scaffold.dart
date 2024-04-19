@@ -1,5 +1,7 @@
 import 'package:bad_fl/prefab/text.dart';
 import 'package:bad_fl/layout/expandable.dart';
+import 'package:bad_fl/wrapper/clickable.dart';
+import 'package:example/pages/impl/external_link.dart';
 import 'package:example/routes/name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_highlight/flutter_highlight.dart';
@@ -30,8 +32,11 @@ class DocPageScaffold extends StatelessWidget {
   /// title of the page
   final String title;
 
-  /// tags of the item
-  final List<String> tags;
+  /// url of the source
+  final String sourceUrl;
+
+  /// category of the item
+  final String category;
 
   /// description of the item
   final String description;
@@ -45,7 +50,8 @@ class DocPageScaffold extends StatelessWidget {
   const DocPageScaffold({
     super.key,
     required this.title,
-    required this.tags,
+    required this.sourceUrl,
+    required this.category,
     required this.description,
     required this.playground,
     this.examples,
@@ -70,12 +76,22 @@ class DocPageScaffold extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          // tags
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: tags.map((tag) => Chip(label: BadText(tag))).toList(),
+          SizedBox(
+            width: Get.width,
+            child: BadText('Category: $category'),
           ),
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: Clickable(
+              onClick: () => ExternalLinkImpl.openExternal(sourceUrl),
+              child: const BadText(
+                'Click here to refer to the source code.',
+                color: Colors.blue,
+                underline: true,
+              ),
+            ),
+          ),
+
           // playground
           if (playground != null)
             Container(
@@ -86,7 +102,11 @@ class DocPageScaffold extends StatelessWidget {
                 color: Colors.white,
               ),
               child: BadExpandable(
-                title: const BadText('Playground', fontWeight: FontWeight.w500),
+                title: const BadText(
+                  'Playground',
+                  color: Colors.indigo,
+                  fontWeight: FontWeight.w500,
+                ),
                 child: playground!,
               ),
             ),
@@ -99,22 +119,12 @@ class DocPageScaffold extends StatelessWidget {
               color: Colors.white,
             ),
             child: BadExpandable(
-              title: const BadText('Description', fontWeight: FontWeight.w500),
+              title: const BadText(
+                'Description',
+                color: Colors.brown,
+                fontWeight: FontWeight.w500,
+              ),
               child: BadText(description, fontSize: 14),
-            ),
-          ),
-          // TODO: signature
-          Container(
-            margin: const EdgeInsets.only(top: 16),
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: Colors.white,
-            ),
-            child: BadExpandable(
-              title: const BadText('Signature', fontWeight: FontWeight.w500),
-              child: BadText(
-                  'This is a sample page. This is a sample page. This is a sample page. This is a sample page.'),
             ),
           ),
           // examples
@@ -129,6 +139,7 @@ class DocPageScaffold extends StatelessWidget {
               child: BadExpandable(
                 title: BadText(
                   'Example: ${example.$1}',
+                  color: Colors.green,
                   fontWeight: FontWeight.w500,
                 ),
                 // child: BadText(example.$2, fontSize: 14),
