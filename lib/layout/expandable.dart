@@ -77,15 +77,19 @@ class BadExpandable extends StatelessWidget {
 
     if (child == null) return header;
 
-    return Obx(
-      () => Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Clickable(onClick: _open.toggle, child: header),
-          if (_open.isTrue) SizedBox(height: gap),
-          if (_open.isTrue) child!,
-        ],
+    return AnimatedSize(
+      duration: const Duration(milliseconds: 300),
+      alignment: Alignment.topCenter,
+      child: Obx(
+        () => Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Clickable(onClick: _open.toggle, child: header),
+            if (_open.isTrue) SizedBox(height: gap),
+            if (_open.isTrue) child!,
+          ],
+        ),
       ),
     );
   }
