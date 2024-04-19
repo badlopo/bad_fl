@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
+const _sourceUrl =
+    'https://github.com/badlopo/bad_fl/blob/master/lib/helper/debounce.dart';
+
 const _description =
     '''Wrap a function in [DebounceImpl] to make it a debounced function.
 
@@ -81,8 +84,9 @@ class DebouncePage extends GetView<_DebounceController> {
     Get.put(_DebounceController());
 
     return DocPageScaffold(
-      title: 'DebounceImpl',
-      tags: const ['category:helper', 'type:class'],
+      title: 'class: DebounceImpl',
+      sourceUrl: _sourceUrl,
+      category: 'helper',
       playground: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
