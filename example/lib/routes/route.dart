@@ -1,6 +1,6 @@
-import 'package:example/pages/boot.dart';
-import 'package:example/pages/helper/debounce.dart';
-import 'package:example/routes/name.dart';
+import 'package:bad_fl_doc/pages/boot.dart';
+import 'package:bad_fl_doc/pages/helper/debounce.dart';
+import 'package:bad_fl_doc/routes/name.dart';
 import 'package:get/get.dart';
 
 final List<GetPage> route = [

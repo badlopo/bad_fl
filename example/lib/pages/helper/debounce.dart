@@ -1,6 +1,6 @@
 import 'package:bad_fl/helper/debounce.dart';
 import 'package:bad_fl/prefab/text.dart';
-import 'package:example/_shared/doc_page_scaffold.dart';
+import 'package:bad_fl_doc/_shared/doc_page_scaffold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
