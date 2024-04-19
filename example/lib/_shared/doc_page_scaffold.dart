@@ -91,7 +91,6 @@ class DocPageScaffold extends StatelessWidget {
               ),
             ),
           ),
-
           // playground
           if (playground != null)
             Container(
@@ -147,6 +146,7 @@ class DocPageScaffold extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(height: 48)
         ],
       ),
     );
