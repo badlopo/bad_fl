@@ -89,6 +89,7 @@ class BadText extends StatelessWidget {
           decoration: underline == true
               ? TextDecoration.underline
               : TextDecoration.none,
+          decorationColor: color,
           shadows: shadows,
         ),
         textAlign: textAlign,
@@ -107,6 +108,7 @@ class BadText extends StatelessWidget {
         height: height,
         decoration:
             underline == true ? TextDecoration.underline : TextDecoration.none,
+        decorationColor: color,
         shadows: shadows,
       ),
       textAlign: textAlign,
