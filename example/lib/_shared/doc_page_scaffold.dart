@@ -53,7 +53,7 @@ class DocPageScaffold extends StatelessWidget {
     required this.sourceUrl,
     required this.category,
     required this.description,
-    required this.playground,
+    this.playground,
     this.examples,
   });
 
