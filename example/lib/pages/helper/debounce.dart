@@ -146,7 +146,6 @@ class DebouncePage extends GetView<_DebounceController> {
         ],
       ),
       description: _description,
-      // TODO: signature
       examples: const [
         ('Basic Usage', _basic),
         ('Change Duration', _changeDuration),
