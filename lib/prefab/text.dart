@@ -1,23 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// 支持的字体列表
-abstract class FontList {
-  /// PingFang SC -- 默认
-  static const String pingFang = 'PingFang SC';
-
-  /// JinBu -- 广告卡片
-  static const String jinBu = 'JinBu';
-
-  /// Merriweather -- 文献标题
-  static const String merriweather = 'Merriweather';
-
-  /// Roboto -- 数据行文本 (日期, 热度, 数量, 等)
-  static const String roboto = 'Roboto';
-
-  /// DIN -- 支付相关
-  static const String din = 'DIN';
-}
-
 const _error1 = '[TextImpl] overflow does not work with selectable!';
 const _error2 =
     '[TextImpl] use maxLines with selectable text may cause unexpected scroll!';
