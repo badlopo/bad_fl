@@ -19,6 +19,7 @@ abstract class NamedRoute {
   // prefab
   static const checkbox = '/prefab/checkbox';
   static const text = '/prefab/text';
+  static const text_input = '/prefab/text_input';
 
   // wrapper
   static const clickable = '/wrapper/clickable';

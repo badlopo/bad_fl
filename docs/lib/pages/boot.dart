@@ -23,6 +23,7 @@ const Map<String, List<(String, String)>> panelSections = {
   'Prefab': [
     ('Checkbox', NamedRoute.checkbox),
     ('Text', NamedRoute.text),
+    ('TextInput', NamedRoute.text_input),
   ],
   'Wrapper': [
     ('Clickable', NamedRoute.clickable),
