@@ -105,6 +105,9 @@ class _BadTextInputState extends State<BadTextInput> {
           child: Clickable(onClick: handleClear, child: widget.clearWidget),
         ),
         suffixMode: OverlayVisibilityMode.editing,
+        onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
+        onChanged: widget.onChanged,
+        onSubmitted: widget.onSubmitted,
       ),
     );
   }
