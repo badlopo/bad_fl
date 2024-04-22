@@ -1,6 +1,7 @@
 import 'package:bad_fl/wrapper/clickable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class BadTextInput extends StatefulWidget {
   final double? width;
@@ -12,6 +13,7 @@ class BadTextInput extends StatefulWidget {
 
   final TextInputType inputType;
   final TextInputAction textInputAction;
+  final List<TextInputFormatter>? formatters;
   final TextStyle? style;
   final TextStyle? placeholderStyle;
 
@@ -33,6 +35,7 @@ class BadTextInput extends StatefulWidget {
     this.onSubmitted,
     this.inputType = TextInputType.text,
     this.textInputAction = TextInputAction.done,
+    this.formatters,
     this.style,
     this.placeholderStyle,
     this.space = 8.0,
@@ -85,6 +88,7 @@ class _BadTextInputState extends State<BadTextInput> {
         magnifierConfiguration: TextMagnifierConfiguration.disabled,
         keyboardType: widget.inputType,
         textInputAction: widget.textInputAction,
+        inputFormatters: widget.formatters,
         style: widget.style,
         placeholder: widget.placeholder,
         placeholderStyle: widget.placeholderStyle,
