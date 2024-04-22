@@ -85,7 +85,7 @@ class DocPageScaffold extends StatelessWidget {
             child: Clickable(
               onClick: () => ExternalLinkImpl.openExternal(sourceUrl),
               child: const BadText(
-                'Click here to refer to the source code.',
+                'Refer to the annotated source code.',
                 color: Colors.blue,
                 underline: true,
               ),
