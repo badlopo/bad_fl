@@ -27,8 +27,7 @@ const _underline = '''BadTextInput(
   onSubmitted: (s) {
     print('submit with value \$s');
   },
-),
-''';
+)''';
 
 const _numberOnly = '''BadTextInput(
   height: 32,
@@ -46,8 +45,7 @@ const _numberOnly = '''BadTextInput(
   onSubmitted: (s) {
     print('submit with value \$s');
   },
-),
-''';
+)''';
 
 const _style = TextStyle(fontSize: 14, color: Colors.grey);
 

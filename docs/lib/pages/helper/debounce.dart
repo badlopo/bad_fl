@@ -25,8 +25,7 @@ void main() {
 
   // only one 'triggered' will be printed after 1 second
   // output: triggered
-}
-''';
+}''';
 
 const _changeDuration = '''void main() async {
   var watcher = Stopwatch();
