@@ -24,6 +24,7 @@ const Map<String, List<(String, String)>> panelSections = {
     ('Checkbox', NamedRoute.checkbox),
     ('Text', NamedRoute.text),
     ('TextInput', NamedRoute.text_input),
+    ('PasswordInput', NamedRoute.password_input),
   ],
   'Wrapper': [
     ('Clickable', NamedRoute.clickable),
