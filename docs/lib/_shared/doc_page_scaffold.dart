@@ -60,10 +60,7 @@ class DocPageScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: BadText(title, fontWeight: FontWeight.w500),
-        automaticallyImplyLeading: false,
-      ),
+      appBar: AppBar(title: BadText(title, fontWeight: FontWeight.w500)),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
         mini: true,
