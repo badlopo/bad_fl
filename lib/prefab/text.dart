@@ -22,7 +22,8 @@ class BadText extends StatelessWidget {
   final double lineHeight;
 
   double get height => lineHeight / fontSize;
-  final bool? underline;
+  final bool underline;
+  final bool italic;
   final List<Shadow>? shadows;
   final TextAlign? textAlign;
   final TextDirection? textDirection;
@@ -40,7 +41,8 @@ class BadText extends StatelessWidget {
     this.fontSize = 16,
     this.fontWeight = FontWeight.w400,
     double? lineHeight,
-    this.underline,
+    this.underline = false,
+    this.italic = false,
     this.shadows,
     this.textAlign,
     this.textDirection,
@@ -68,9 +70,9 @@ class BadText extends StatelessWidget {
           fontWeight: fontWeight,
           fontFamily: fontFamily,
           height: height,
-          decoration: underline == true
-              ? TextDecoration.underline
-              : TextDecoration.none,
+          decoration:
+              underline ? TextDecoration.underline : TextDecoration.none,
+          fontStyle: italic ? FontStyle.italic : FontStyle.normal,
           decorationColor: color,
           shadows: shadows,
         ),
@@ -90,6 +92,7 @@ class BadText extends StatelessWidget {
         height: height,
         decoration:
             underline == true ? TextDecoration.underline : TextDecoration.none,
+        fontStyle: italic ? FontStyle.italic : FontStyle.normal,
         decorationColor: color,
         shadows: shadows,
       ),
