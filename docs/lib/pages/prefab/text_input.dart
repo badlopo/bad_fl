@@ -13,7 +13,7 @@ const _sourceUrl =
 
 const _description = '''Widget for plain text input.''';
 
-const _underline = '''BadTextInput(
+const _eg1 = '''BadTextInput(
   width: 320,
   height: 28,
   initialValue: '',
@@ -29,7 +29,7 @@ const _underline = '''BadTextInput(
   },
 )''';
 
-const _numberOnly = '''BadTextInput(
+const _eg2 = '''BadTextInput(
   height: 32,
   initialValue: '',
   placeholder: 'numbers only',
@@ -187,8 +187,8 @@ class TextInputPage extends GetView<_TextInputController> {
       ),
       description: _description,
       examples: const [
-        ('Underlined Input', _underline),
-        ('Number Only Input', _numberOnly),
+        ('Underlined', _eg1),
+        ('Number Only', _eg2),
       ],
     );
   }
