@@ -22,6 +22,7 @@ const Map<String, List<(String, String)>> panelSections = {
   ],
   'Prefab': [
     ('Checkbox', NamedRoute.checkbox),
+    ('OTPInput', NamedRoute.otp_input),
     ('Text', NamedRoute.text),
     ('TextInput', NamedRoute.text_input),
     ('PasswordInput', NamedRoute.password_input),
