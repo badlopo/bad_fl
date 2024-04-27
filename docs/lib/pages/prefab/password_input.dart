@@ -60,13 +60,14 @@ class PasswordInputPage extends GetView<_PasswordInputController> {
           Obx(() => BadText('Last action: ${controller.action}')),
           const SizedBox(height: 12),
           BadPasswordInput(
-            width: 200,
+            width: 280,
             height: 32,
             space: 10,
             placeholder: 'Enter your password',
             style: const TextStyle(color: Colors.grey, fontSize: 14),
             border: Border.all(),
             borderRadius: 8,
+            prefixWidget: const BadText('Password:', color: Colors.red),
             onVisibilityChanged: (visible) =>
                 controller.action('visibility changed to "$visible"'),
             onChanged: (value) =>
