@@ -21,12 +21,8 @@ const _eg1 = '''BadTextInput(
   prefixWidget: const BadText('Enter your name:'),
   style: const TextStyle(fontSize: 14, color: Colors.grey),
   border: const Border(bottom: BorderSide(color: Colors.grey)),
-  onChanged: (s) {
-    print('value changed to \$s');
-  },
-  onSubmitted: (s) {
-    print('submit with value \$s');
-  },
+  onChanged: (s) => print('value changed to \$s'),
+  onSubmitted: (s) => print('submit with value \$s'),
 )''';
 
 const _eg2 = '''BadTextInput(
@@ -39,12 +35,8 @@ const _eg2 = '''BadTextInput(
   border: Border.all(color: Colors.grey),
   borderRadius: 4,
   formatters: [FilteringTextInputFormatter.digitsOnly],
-  onChanged: (s) {
-    print('value changed to \$s');
-  },
-  onSubmitted: (s) {
-    print('submit with value \$s');
-  },
+  onChanged: (s) => print('value changed to \$s'),
+  onSubmitted: (s) => print('submit with value \$s'),
 )''';
 
 const _style = TextStyle(fontSize: 14, color: Colors.grey);

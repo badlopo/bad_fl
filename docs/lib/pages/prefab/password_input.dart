@@ -21,9 +21,9 @@ const _eg1 = '''BadPasswordInput(
   style: const TextStyle(color: Colors.grey, fontSize: 14),
   border: Border.all(),
   borderRadius: 8,
-  onVisibilityChanged: (visible) => controller.action('visibility changed to "\$visible"'),
-  onChanged: (value) => controller.action('value changed to "\$value"'),
-  onSubmitted: (value) => controller.action('submitted with "\$value"'),
+  onVisibilityChanged: (visible) => print('visibility changed to "\$visible"'),
+  onChanged: (value) => print('value changed to "\$value"'),
+  onSubmitted: (value) => print('submitted with "\$value"'),
 )''';
 
 const _eg2 = '''BadPasswordInput(
@@ -34,9 +34,9 @@ const _eg2 = '''BadPasswordInput(
   initialVisibility: true,
   style: const TextStyle(color: Colors.grey, fontSize: 14),
   border: const Border(bottom: BorderSide()),
-  onVisibilityChanged: (visible) => controller.action('visibility changed to "\$visible"'),
-  onChanged: (value) => controller.action('value changed to "\$value"'),
-  onSubmitted: (value) => controller.action('submitted with "\$value"'),
+  onVisibilityChanged: (visible) => print('visibility changed to "\$visible"'),
+  onChanged: (value) => print('value changed to "\$value"'),
+  onSubmitted: (value) => print('submitted with "\$value"'),
 )''';
 
 class _PasswordInputController extends GetxController {
