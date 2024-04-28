@@ -14,6 +14,8 @@ dependencies:
   dio:
   easy_refresh:
   get:
+  hive:
+  hive_flutter:
   image_picker:
   package_info_plus:
   path:
