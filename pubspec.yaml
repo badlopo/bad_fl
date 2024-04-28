@@ -10,9 +10,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  device_info_plus:
   dio:
   easy_refresh:
   get:
+  image_picker:
+  package_info_plus:
   path:
   path_provider:
   url_launcher:
