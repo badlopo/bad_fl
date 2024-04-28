@@ -5,13 +5,17 @@ portability.
 
 ## Note
 
-Some classes need to be initialized before use, they have a static method named `prepare` to do this.
+Some classes need to be initialized before use.
+
+- `prepare`: can be called as soon as possible
+- `extend`: may only be called after the privacy policy has been accepted
 
 Below is a list of classes that need to be initialized:
 
-| Class     | Description        |
-|-----------|--------------------|
-| CacheImpl | file cache manager |
+| Class       | `prepare`                       | `extend`                       |
+|-------------|---------------------------------|--------------------------------|
+| `CacheImpl` | `static Future<bool> prepare()` | -                              |
+| `MetaImpl`  | `static Future<bool> prepare()` | `static Future<bool> extend()` |
 
 ## Known issues
 
