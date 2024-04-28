@@ -3,6 +3,16 @@
 This project is an encapsulation of some common components and utils, aiming to decouple the project and improve
 portability.
 
+## Note
+
+Some classes need to be initialized before use, they have a static method named `prepare` to do this.
+
+Below is a list of classes that need to be initialized:
+
+| Class     | Description        |
+|-----------|--------------------|
+| CacheImpl | file cache manager |
+
 ## Known issues
 
 | Affected                     | Description                                                                                                                                 |

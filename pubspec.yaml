@@ -13,6 +13,8 @@ dependencies:
   dio:
   easy_refresh:
   get:
+  path:
+  path_provider:
   url_launcher:
 
 dev_dependencies:
