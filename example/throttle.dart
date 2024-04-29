@@ -12,7 +12,7 @@ void main() async {
   });
 
   // trigger the function -- first call
-  throttledLog();  // count is 1
+  throttledLog(); // count is 1
   count += 1;
 
   // trigger the function several times -- the following calls will be ignored
@@ -27,5 +27,5 @@ void main() async {
 
   // wait until the first call is completed
   await Future.delayed(const Duration(seconds: 1));
-  throttledLog();  // count is 5
+  throttledLog(); // count is 5
 }
