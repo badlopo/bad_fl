@@ -1,9 +1,52 @@
-# Bad FL
+# About BadFL
 
-This project is an encapsulation of some common components and utils, aiming to decouple the project and improve
-portability.
+BadFL includes encapsulation of commonly used utils and components, as well as secondary encapsulation of commonly used
+libraries (such as `dio`, `hive`, `device_info_plus`, etc.)
 
-## Note
+It expresses component properties in a form closer to CSS representation, making it easier for web developers to get
+started.
+
+**NOTICE!!!** This library **completely** abandons semantics! (For example, `Container`+`GestureDetector` is used to
+express a `Button` rather than build-in ones) People who have related needs or care about this should use it with
+caution.
+
+# Architecture
+
+## Extension
+
+extension methods for built-in or commonly used classes
+
+###  
+
+## Helper
+
+// TODO
+
+## Impl
+
+// TODO
+
+## Layout
+
+// TODO
+
+## Mixin
+
+// TODO
+
+## Prefab
+
+// TODO
+
+## Scaffold
+
+// TODO
+
+## Wrapper
+
+// TODO
+
+# Useful Tips
 
 Some classes need to be initialized before use.
 
