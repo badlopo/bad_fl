@@ -1,20 +1,6 @@
+import 'package:bad_fl/extension/list.dart';
 import 'package:bad_fl/wrapper/clickable.dart';
 import 'package:flutter/material.dart';
-
-List<Product> _inject<Item, Product>(
-  List<Item> items,
-  Product Function(Item item) builder,
-  Product plug,
-) {
-  final result = <Product>[];
-  for (var i = 0; i < items.length; i++) {
-    result.add(builder(items[i]));
-    if (i < items.length - 1) {
-      result.add(plug);
-    }
-  }
-  return result;
-}
 
 class BadPanelItem extends StatelessWidget {
   final Widget label;
@@ -121,10 +107,9 @@ class BadPanel extends StatelessWidget {
         borderRadius: BorderRadius.circular(options.radius),
       ),
       child: Column(
-        children: _inject(
-          items,
-          (item) => item,
-          Divider(
+        children: items.slotted(
+          builder: (item) => item,
+          slot: Divider(
             height: options.dividerThickness,
             thickness: options.dividerThickness,
             color: options.dividerColor,
