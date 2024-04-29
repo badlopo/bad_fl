@@ -34,7 +34,7 @@ class BadTextInput extends StatefulWidget {
   /// text style of the input field
   final TextStyle? style;
 
-  /// text style of the placeholder text
+  /// text style of the placeholder text, ignored if [placeholder] is null
   final TextStyle? placeholderStyle;
 
   /// space between prefix/suffix and outside of the input field
@@ -94,11 +94,7 @@ class BadTextInput extends StatefulWidget {
       size: 16,
       color: Colors.grey,
     ),
-  })  : assert(inputType != TextInputType.multiline, 'Use TextField instead.'),
-        assert(
-          placeholderStyle == null || placeholder != null,
-          'Placeholder style requires placeholder.',
-        );
+  }) : assert(inputType != TextInputType.multiline, 'Use TextField instead.');
 
   @override
   State<BadTextInput> createState() => _BadTextInputState();

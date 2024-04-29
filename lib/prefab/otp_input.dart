@@ -31,7 +31,7 @@ class BadOTPInput extends StatefulWidget {
   /// text style of the input field
   final TextStyle? style;
 
-  /// text style of the placeholder text
+  /// text style of the placeholder text, ignored if [placeholder] is null
   final TextStyle? placeholderStyle;
 
   /// space between prefix/suffix and outside of the input field
@@ -82,11 +82,7 @@ class BadOTPInput extends StatefulWidget {
     this.prefixWidget,
     this.sendWidget = const Icon(Icons.send, size: 16, color: Colors.blue),
     required this.onSendTapped,
-  })  : assert(inputType != TextInputType.multiline, 'Use TextField instead.'),
-        assert(
-          placeholderStyle == null || placeholder != null,
-          'Placeholder style requires placeholder.',
-        );
+  }) : assert(inputType != TextInputType.multiline, 'Use TextField instead.');
 
   @override
   State<BadOTPInput> createState() => _BadOTPInputState();

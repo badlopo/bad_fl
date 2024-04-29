@@ -39,7 +39,7 @@ class BadPasswordInput extends StatefulWidget {
   /// text style of the input field
   final TextStyle? style;
 
-  /// text style of the placeholder text
+  /// text style of the placeholder text, ignored if [placeholder] is null
   final TextStyle? placeholderStyle;
 
   /// space between prefix/suffix and outside of the input field
@@ -112,10 +112,7 @@ class BadPasswordInput extends StatefulWidget {
       size: 16,
       color: Colors.grey,
     ),
-  }) : assert(
-          placeholderStyle == null || placeholder != null,
-          'Placeholder style requires placeholder.',
-        );
+  });
 
   @override
   State<BadPasswordInput> createState() => _BadPasswordInputState();
