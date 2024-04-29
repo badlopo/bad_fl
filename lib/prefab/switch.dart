@@ -1,4 +1,4 @@
-import 'package:bad_fl/bad_fl.dart';
+import 'package:bad_fl/wrapper/clickable.dart';
 import 'package:flutter/material.dart';
 
 class BadSwitch extends StatefulWidget {
