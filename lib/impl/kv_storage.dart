@@ -12,10 +12,10 @@ abstract class KVStorageImpl {
   /// Throws an exception if
   /// - `prepare` is not called yet
   /// - `ValueType` is not matched
-  static ValueType get<ValueType>(String k, ValueType fallback) {
+  static ValueType? get<ValueType>(String k, [ValueType? fallback]) {
     _guard();
 
-    return _box!.get(k, defaultValue: fallback) as ValueType;
+    return _box!.get(k, defaultValue: fallback) as ValueType?;
   }
 
   /// set value by key
