@@ -28,6 +28,16 @@ abstract class KVStorageImpl {
     return _box!.put(k, v);
   }
 
+  /// remove value by key
+  ///
+  /// Throws an exception if
+  /// - `prepare` is not called yet
+  static Future<void> remove(String k) {
+    _guard();
+
+    return _box!.delete(k);
+  }
+
   /// list all keys in storage
   static Iterable<String> keys() {
     _guard();
