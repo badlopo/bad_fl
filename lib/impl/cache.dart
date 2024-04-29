@@ -52,7 +52,9 @@ abstract class CacheImpl {
     ResultType Function() task,
     ResultType resultOnError,
   ) {
-    if (_root == null) throw Exception('call prepare() first');
+    if (_root == null) {
+      throw Exception('prepare() must be called first before any operation.');
+    }
     try {
       return task();
     } catch (_) {

@@ -4,7 +4,9 @@ abstract class KVStorageImpl {
   static Box? _box;
 
   static void _guard() {
-    if (_box == null) throw Exception('call prepare() first');
+    if (_box == null) {
+      throw Exception('prepare() must be called first before any operation.');
+    }
   }
 
   /// get value by key, return `fallback` if not found
