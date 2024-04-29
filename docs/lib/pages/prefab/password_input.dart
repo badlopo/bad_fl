@@ -82,7 +82,7 @@ class PasswordInputPage extends GetView<_PasswordInputController> {
             fontSize: 14,
           ),
           Clickable(
-            onClick: () => Get.toNamed(NamedRoute.text_input),
+            onClick: () => Get.toNamed(NamedRoute.textInput),
             child: const BadText(
               '=> Link to "BadTextInput"',
               color: Colors.blue,

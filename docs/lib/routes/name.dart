@@ -18,10 +18,10 @@ abstract class NamedRoute {
 
   // prefab
   static const checkbox = '/prefab/checkbox';
-  static const otp_input = '/prefab/otp_input';
-  static const password_input = '/prefab/password_input';
+  static const otpInput = '/prefab/otp_input';
+  static const passwordInput = '/prefab/password_input';
   static const text = '/prefab/text';
-  static const text_input = '/prefab/text_input';
+  static const textInput = '/prefab/text_input';
 
   // wrapper
   static const clickable = '/wrapper/clickable';

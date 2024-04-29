@@ -15,10 +15,10 @@ final List<GetPage> route = [
   GetPage(name: NamedRoute.throttle, page: () => const ThrottlePage()),
 
   // prefab
-  GetPage(name: NamedRoute.otp_input, page: () => const OTPInputPage()),
-  GetPage(name: NamedRoute.text_input, page: () => const TextInputPage()),
+  GetPage(name: NamedRoute.otpInput, page: () => const OTPInputPage()),
+  GetPage(name: NamedRoute.textInput, page: () => const TextInputPage()),
   GetPage(
-    name: NamedRoute.password_input,
+    name: NamedRoute.passwordInput,
     page: () => const PasswordInputPage(),
   ),
 
