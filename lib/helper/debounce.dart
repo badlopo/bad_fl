@@ -4,7 +4,7 @@ import 'dart:async';
 typedef DebounceTask = FutureOr<void> Function();
 
 class DebounceImpl {
-  /// inner task
+  /// default task (fallback if not overridden)
   final DebounceTask _task;
 
   /// duration to debounce
@@ -20,9 +20,19 @@ class DebounceImpl {
     _duration = duration;
   }
 
-  /// refresh the debounce timer
-  void call() {
+  /// refresh the debounce timer (and override the task if needed)
+  void call([DebounceTask? overrideTask]) {
     _timer?.cancel();
-    _timer = Timer(_duration, _task);
+    _timer = Timer(_duration, overrideTask ?? _task);
   }
+}
+
+void main() async {
+  final debounce =
+      DebounceImpl(() => print('debounced'), const Duration(seconds: 1));
+  debounce();
+  await Future.delayed(const Duration(milliseconds: 500));
+  debounce();
+  debounce(() => print('overridden'));
+  debounce();
 }
