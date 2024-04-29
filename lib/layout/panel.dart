@@ -20,14 +20,14 @@ class BadPanelItem extends StatelessWidget {
   final Widget label;
   final Widget? body;
   final Widget? suffix;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   const BadPanelItem({
     super.key,
     required this.label,
     this.body,
     this.suffix,
-    required this.onTap,
+    this.onTap,
   });
 
   @override
@@ -52,7 +52,9 @@ class BadPanelItem extends StatelessWidget {
       ),
     );
 
-    return Clickable(onClick: onTap, child: panelItem);
+    if (onTap == null) return panelItem;
+
+    return Clickable(onClick: onTap!, child: panelItem);
   }
 }
 
