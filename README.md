@@ -14,9 +14,11 @@ caution.
 
 ## Extension
 
-extension methods for built-in or commonly used classes
+Extension methods of built-in types, named in the form of `<Type>Ext`.
 
-###  
+### `ListExt`
+
+- `slotted`: build a new element from each element of the list and insert slot elements between every two elements.
 
 ## Helper
 
