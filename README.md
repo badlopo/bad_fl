@@ -126,7 +126,23 @@ void main() async {
 
 ## Wrapper
 
-// TODO
+Non-visual components that wrap other components.
+
+### [`Clickable`](./lib/wrapper/clickable.dart)
+
+Add click event listener to the widget.
+
+```dart
+class ClickableExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Clickable(
+      onClick: () => print('clicked'),
+      child: Container(width: 100, height: 100, color: Colors.blue),
+    );
+  }
+}
+```
 
 # Useful Tips
 
