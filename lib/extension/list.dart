@@ -1,5 +1,5 @@
 extension ListExt<Item> on List<Item> {
-  slotted<Product>({
+  List<Product> slotted<Product>({
     required Product Function(Item item) builder,
     required Product slot,
   }) {
