@@ -19,6 +19,9 @@ class BadOTPInput extends StatefulWidget {
   /// callback when the user submits the input (e.g. press enter)
   final ValueSetter<String>? onSubmitted;
 
+  /// type of input (mainly affects keyboard layout on mobile)
+  final TextInputType inputType;
+
   /// action button on mobile keyboard (e.g. done, next, search)
   final TextInputAction textInputAction;
 
@@ -66,6 +69,7 @@ class BadOTPInput extends StatefulWidget {
     this.placeholder,
     this.onChanged,
     this.onSubmitted,
+    this.inputType = TextInputType.text,
     this.textInputAction = TextInputAction.done,
     this.formatters,
     this.style,
@@ -78,7 +82,8 @@ class BadOTPInput extends StatefulWidget {
     this.prefixWidget,
     this.sendWidget = const Icon(Icons.send, size: 16, color: Colors.blue),
     required this.onSendTapped,
-  }) : assert(
+  })  : assert(inputType != TextInputType.multiline, 'Use TextField instead.'),
+        assert(
           placeholderStyle == null || placeholder != null,
           'Placeholder style requires placeholder.',
         );
@@ -104,7 +109,7 @@ class _BadOTPInputState extends State<BadOTPInput> {
       child: CupertinoTextField(
         controller: _controller,
         magnifierConfiguration: TextMagnifierConfiguration.disabled,
-        keyboardType: TextInputType.visiblePassword,
+        keyboardType: widget.inputType,
         textInputAction: widget.textInputAction,
         inputFormatters: widget.formatters,
         style: widget.style,
