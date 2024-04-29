@@ -42,7 +42,10 @@ class BadPasswordInput extends StatefulWidget {
   /// text style of the placeholder text
   final TextStyle? placeholderStyle;
 
-  /// space between prefix, input field, and suffix
+  /// space between prefix/suffix and outside of the input field
+  final double padding;
+
+  /// space between prefix/suffix and text of the input field
   final double space;
 
   /// background color of the input field
@@ -87,6 +90,7 @@ class BadPasswordInput extends StatefulWidget {
     this.formatters,
     this.style,
     this.placeholderStyle,
+    this.padding = 8.0,
     this.space = 8.0,
     this.fill,
     this.border,
@@ -163,12 +167,12 @@ class _BadPasswordInputState extends State<BadPasswordInput> {
         ),
         prefix: widget.prefixWidget != null
             ? Padding(
-                padding: EdgeInsets.only(left: widget.space),
+                padding: EdgeInsets.only(left: widget.padding),
                 child: widget.prefixWidget,
               )
             : null,
         suffix: Padding(
-          padding: EdgeInsets.only(right: widget.space),
+          padding: EdgeInsets.only(right: widget.padding),
           child: Clickable(
             onClick: toggleVisibility,
             child: _obscureText ? widget.hiddenWidget : widget.visibleWidget,
