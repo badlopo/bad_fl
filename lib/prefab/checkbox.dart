@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 typedef IconBuilder = Widget Function(bool checked);
 
-class BadCheckBox extends StatelessWidget {
+class BadCheckBox extends StatefulWidget {
   /// size of the checkbox
   final double size;
 
@@ -16,89 +16,97 @@ class BadCheckBox extends StatelessWidget {
   /// size of the icon inside the checkbox, default to [size]
   final double iconSize;
 
+  /// border of the checkbox
+  final Border border;
+
   /// whether the checkbox is rounded
   final bool rounded;
 
-  /// whether the checkbox is checked, this controls the state of the checkbox
-  final bool checked;
+  /// whether the checkbox is checked initially, default to false
+  final bool initialChecked;
 
   /// color of the checkbox when checked, default to null
   final Color? checkedColor;
 
-  /// border when checked, default to null
-  final Border? checkedBorder;
-
-  /// callback when the checkbox is tapped
-  final VoidCallback onTap;
-
-  /// icon to be displayed inside the checkbox
-  Widget get _innerIcon => icon ?? iconBuilder!(checked);
-
-  // const BadCheckBox({
-  //   super.key,
-  //   required this.size,
-  //   this.icon,
-  //   this.iconBuilder,
-  //   double? iconSize,
-  //   this.rounded = true,
-  //   required this.checked,
-  //   this.checkedColor,
-  //   this.checkedBorder,
-  //   required this.onTap,
-  // })  : iconSize = iconSize ?? size,
-  //       assert(icon != null || iconBuilder != null,
-  //           'icon or iconBuilder must be provided'),
-  //       assert(icon == null || iconBuilder == null,
-  //           'icon and iconBuilder can\'t be used together');
+  /// callback when the state of the checkbox is changed
+  final ValueChanged<bool> onCheckedChanged;
 
   const BadCheckBox.icon({
     super.key,
     required this.size,
-    this.icon,
+    required this.icon,
     double? iconSize,
+    required this.border,
     this.rounded = true,
-    required this.checked,
+    this.initialChecked = false,
     this.checkedColor,
-    this.checkedBorder,
-    required this.onTap,
+    required this.onCheckedChanged,
   })  : iconSize = iconSize ?? size,
-        iconBuilder = null;
+        iconBuilder = null,
+        assert(icon != null, 'icon must be provided');
 
   const BadCheckBox.iconBuilder({
     super.key,
     required this.size,
     required this.iconBuilder,
     double? iconSize,
+    required this.border,
     this.rounded = true,
-    required this.checked,
+    this.initialChecked = false,
     this.checkedColor,
-    this.checkedBorder,
-    required this.onTap,
+    required this.onCheckedChanged,
   })  : iconSize = iconSize ?? size,
-        icon = null;
+        icon = null,
+        assert(iconBuilder != null, 'iconBuilder must be provided');
+
+  @override
+  State<BadCheckBox> createState() => _BadCheckBoxState();
+}
+
+class _BadCheckBoxState extends State<BadCheckBox> {
+  bool checked = false;
+
+  /// icon to be displayed inside the checkbox
+  Widget get _innerIcon => widget.icon ?? widget.iconBuilder!(checked);
+
+  void toggle() {
+    setState(() {
+      checked = !checked;
+    });
+    widget.onCheckedChanged(checked);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    checked = widget.initialChecked;
+  }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: size,
-      height: size,
+      width: widget.size,
+      height: widget.size,
       child: Center(
         child: Clickable(
-          onClick: onTap,
+          onClick: toggle,
           child: Container(
-            width: size,
-            height: size,
+            width: widget.size,
+            height: widget.size,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
-              color: checked ? checkedColor : null,
-              border: checked ? checkedBorder : null,
-              borderRadius: rounded ? BorderRadius.circular(size / 2) : null,
+              color: checked ? widget.checkedColor : null,
+              border: widget.border,
+              borderRadius: widget.rounded
+                  ? BorderRadius.circular(widget.size / 2)
+                  : null,
             ),
             child: checked
                 ? ConstrainedBox(
                     constraints: BoxConstraints(
-                      maxWidth: iconSize,
-                      maxHeight: iconSize,
+                      maxWidth: widget.iconSize,
+                      maxHeight: widget.iconSize,
                     ),
                     child: Center(child: _innerIcon),
                   )
