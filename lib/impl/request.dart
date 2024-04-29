@@ -159,7 +159,7 @@ class RequestWrapper<T> {
 ///
 /// to config [baseUrl], use environment variable `request_base_url`
 abstract class RequestImpl {
-  static const String baseUrl = String.fromEnvironment('request_base_url');
+  static String baseUrl = const String.fromEnvironment('request_base_url');
 
   /// base request implementation, called internally
   ///
