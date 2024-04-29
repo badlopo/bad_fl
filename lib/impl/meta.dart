@@ -7,8 +7,12 @@ abstract class MetaImpl {
   /// version (e.g. 1.0.0)
   static String _version = '??.??.??';
 
+  static String get version => _version;
+
   /// buildNumber (e.g. 1)
   static String _buildNumber = '?';
+
+  static String get buildNumber => _buildNumber;
 
   /// version to displayed (e.g. 1.0.0(1))
   static String get displayVersion => '$_version($_buildNumber)';
