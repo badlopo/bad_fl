@@ -26,13 +26,3 @@ class DebounceImpl {
     _timer = Timer(_duration, overrideTask ?? _task);
   }
 }
-
-void main() async {
-  final debounce =
-      DebounceImpl(() => print('debounced'), const Duration(seconds: 1));
-  debounce();
-  await Future.delayed(const Duration(milliseconds: 500));
-  debounce();
-  debounce(() => print('overridden'));
-  debounce();
-}
