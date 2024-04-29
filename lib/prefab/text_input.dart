@@ -57,6 +57,11 @@ class BadTextInput extends StatefulWidget {
   /// Note: there is no constraint on the size of the widget, be careful to its size
   final Widget? prefixWidget;
 
+  /// widget to display after the input field
+  ///
+  /// Note: there is no constraint on the size of the widget, be careful to its size
+  final Widget? suffixWidget;
+
   /// widget to click to clear the input field
   ///
   /// Default to [Icons.close_rounded] with size `16` and color [Colors.grey]
@@ -83,6 +88,7 @@ class BadTextInput extends StatefulWidget {
     this.border,
     this.borderRadius = 0.0,
     this.prefixWidget,
+    this.suffixWidget,
     this.clearWidget = const Icon(
       Icons.close_rounded,
       size: 16,
@@ -120,6 +126,8 @@ class _BadTextInputState extends State<BadTextInput> {
 
   @override
   Widget build(BuildContext context) {
+    final suffix = Clickable(onClick: handleClear, child: widget.clearWidget);
+
     return SizedBox(
       width: widget.width,
       height: widget.height,
@@ -146,9 +154,17 @@ class _BadTextInputState extends State<BadTextInput> {
             : null,
         suffix: Padding(
           padding: EdgeInsets.only(right: widget.padding),
-          child: Clickable(onClick: handleClear, child: widget.clearWidget),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              suffix,
+              if (widget.suffixWidget != null) widget.suffixWidget!,
+            ],
+          ),
         ),
-        suffixMode: OverlayVisibilityMode.editing,
+        suffixMode: widget.suffixWidget == null
+            ? OverlayVisibilityMode.editing
+            : OverlayVisibilityMode.always,
         onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
         onChanged: widget.onChanged,
         onSubmitted: widget.onSubmitted,

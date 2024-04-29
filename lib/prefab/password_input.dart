@@ -62,6 +62,11 @@ class BadPasswordInput extends StatefulWidget {
   /// Note: there is no constraint on the size of the widget, be careful to its size
   final Widget? prefixWidget;
 
+  /// widget to display after the input field
+  ///
+  /// Note: there is no constraint on the size of the widget, be careful to its size
+  final Widget? suffixWidget;
+
   /// widget to display when the password is visible
   ///
   /// Default to [Icons.visibility_outlined] with size `16` and color [Colors.grey]
@@ -96,6 +101,7 @@ class BadPasswordInput extends StatefulWidget {
     this.border,
     this.borderRadius = 0.0,
     this.prefixWidget,
+    this.suffixWidget,
     this.visibleWidget = const Icon(
       Icons.visibility_outlined,
       size: 16,
@@ -146,6 +152,11 @@ class _BadPasswordInputState extends State<BadPasswordInput> {
 
   @override
   Widget build(BuildContext context) {
+    final suffix = Clickable(
+      onClick: toggleVisibility,
+      child: _obscureText ? widget.hiddenWidget : widget.visibleWidget,
+    );
+
     return SizedBox(
       width: widget.width,
       height: widget.height,
@@ -173,12 +184,17 @@ class _BadPasswordInputState extends State<BadPasswordInput> {
             : null,
         suffix: Padding(
           padding: EdgeInsets.only(right: widget.padding),
-          child: Clickable(
-            onClick: toggleVisibility,
-            child: _obscureText ? widget.hiddenWidget : widget.visibleWidget,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              suffix,
+              if (widget.suffixWidget != null) widget.suffixWidget!,
+            ],
           ),
         ),
-        suffixMode: OverlayVisibilityMode.editing,
+        suffixMode: widget.suffixWidget == null
+            ? OverlayVisibilityMode.editing
+            : OverlayVisibilityMode.always,
         onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
         onChanged: widget.onChanged,
         onSubmitted: widget.onSubmitted,
