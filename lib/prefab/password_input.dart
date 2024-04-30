@@ -43,9 +43,13 @@ class BadPasswordInput extends StatefulWidget {
   final TextStyle? placeholderStyle;
 
   /// space between prefix/suffix and outside of the input field
+  ///
+  /// Default to `8`
   final double padding;
 
   /// space between prefix/suffix and text of the input field
+  ///
+  /// Default to `8`
   final double space;
 
   /// background color of the input field
