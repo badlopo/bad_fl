@@ -153,11 +153,6 @@ class _BadPasswordInputState extends State<BadPasswordInput> {
 
   @override
   Widget build(BuildContext context) {
-    final suffix = Clickable(
-      onClick: toggleVisibility,
-      child: _obscureText ? widget.hiddenWidget : widget.visibleWidget,
-    );
-
     return SizedBox(
       width: widget.width,
       height: widget.height,
@@ -188,7 +183,11 @@ class _BadPasswordInputState extends State<BadPasswordInput> {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              suffix,
+              Clickable(
+                onClick: toggleVisibility,
+                child:
+                    _obscureText ? widget.hiddenWidget : widget.visibleWidget,
+              ),
               if (widget.suffixWidget != null) widget.suffixWidget!,
             ],
           ),

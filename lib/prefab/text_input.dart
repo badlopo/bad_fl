@@ -126,8 +126,6 @@ class _BadTextInputState extends State<BadTextInput> {
 
   @override
   Widget build(BuildContext context) {
-    final suffix = Clickable(onClick: handleClear, child: widget.clearWidget);
-
     return SizedBox(
       width: widget.width,
       height: widget.height,
@@ -157,7 +155,7 @@ class _BadTextInputState extends State<BadTextInput> {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              suffix,
+              Clickable(onClick: handleClear, child: widget.clearWidget),
               if (widget.suffixWidget != null) widget.suffixWidget!,
             ],
           ),
