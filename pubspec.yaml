@@ -21,6 +21,7 @@ dependencies:
   path:
   path_provider:
   url_launcher:
+  webview_flutter:
 
 dev_dependencies:
   flutter_test:

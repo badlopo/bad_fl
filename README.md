@@ -20,6 +20,10 @@ Extension methods of built-in types, named in the form of `<Type>Ext`.
 
 - `slotted`: build a new element from each element of the list and insert slot elements between every two elements.
 
+## Fragment
+
+⏳ WIP
+
 ## Helper
 
 ### [`DebounceImpl`](./lib/helper/debounce.dart)
@@ -135,10 +139,6 @@ Below is a list of classes that need to be initialized:
 ⏳ WIP
 
 ## Prefab
-
-⏳ WIP
-
-## Scaffold
 
 ⏳ WIP
 
