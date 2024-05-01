@@ -8,43 +8,43 @@ const Map<String, List<(String, String)>> panelSections = {
   'Extension': [
     ('List', NamedRoute.list),
   ],
-  'Fragment': [
-    ('WebView', NamedRoute.webview),
-  ],
+  // 'Fragment': [
+  //   ('WebView', NamedRoute.webview),
+  // ],
   'Helper': [
     ('Debounce', NamedRoute.debounce),
     ('Throttle', NamedRoute.throttle),
   ],
-  'Impl': [
-    ('Cache', NamedRoute.cache),
-    ('Clipboard', NamedRoute.clipboard),
-    ('EvCenter', NamedRoute.evCenter),
-    ('ImageSelect', NamedRoute.imageSelect),
-    ('KvStorage', NamedRoute.kvStorage),
-    ('Meta', NamedRoute.meta),
-    ('Request', NamedRoute.request),
-  ],
-  'Layout': [
-    ('Expandable', NamedRoute.panel),
-    ('Panel', NamedRoute.panel),
-    ('Refreshable', NamedRoute.refreshable),
-  ],
-  'Mixin': [
-    ('SearchMixin', NamedRoute.search),
-  ],
+  // 'Impl': [
+  //   ('Cache', NamedRoute.cache),
+  //   ('Clipboard', NamedRoute.clipboard),
+  //   ('EvCenter', NamedRoute.evCenter),
+  //   ('ImageSelect', NamedRoute.imageSelect),
+  //   ('KvStorage', NamedRoute.kvStorage),
+  //   ('Meta', NamedRoute.meta),
+  //   ('Request', NamedRoute.request),
+  // ],
+  // 'Layout': [
+  //   ('Expandable', NamedRoute.panel),
+  //   ('Panel', NamedRoute.panel),
+  //   ('Refreshable', NamedRoute.refreshable),
+  // ],
+  // 'Mixin': [
+  //   ('SearchMixin', NamedRoute.search),
+  // ],
   'Prefab': [
-    ('Button', NamedRoute.button),
-    ('Checkbox', NamedRoute.checkbox),
+    // ('Button', NamedRoute.button),
+    // ('Checkbox', NamedRoute.checkbox),
     ('OTPInput', NamedRoute.otpInput),
     ('PasswordInput', NamedRoute.passwordInput),
-    ('Switch', NamedRoute.switch_),
-    ('Text', NamedRoute.text),
-    ('TextField', NamedRoute.textField),
+    // ('Switch', NamedRoute.switch_),
+    // ('Text', NamedRoute.text),
+    // ('TextField', NamedRoute.textField),
     ('TextInput', NamedRoute.textInput),
   ],
-  'Wrapper': [
-    ('Clickable', NamedRoute.clickable),
-  ]
+  // 'Wrapper': [
+  //   ('Clickable', NamedRoute.clickable),
+  // ]
 };
 
 const forwardIcon = Icon(Icons.arrow_right, size: 16);
