@@ -1,7 +1,7 @@
 import 'package:bad_fl/prefab/text.dart';
 import 'package:bad_fl/layout/expandable.dart';
 import 'package:bad_fl/wrapper/clickable.dart';
-import 'package:bad_fl_doc/pages/impl/external_link.dart';
+import 'package:bad_fl/impl/external_link.dart';
 import 'package:bad_fl_doc/routes/name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_highlight/flutter_highlight.dart';
