@@ -89,7 +89,7 @@ class _BadCheckBoxState extends State<BadCheckBox> {
       width: widget.size,
       height: widget.size,
       child: Center(
-        child: Clickable(
+        child: BadClickable(
           onClick: toggle,
           child: Container(
             width: widget.size,

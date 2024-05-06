@@ -85,7 +85,7 @@ class BadExpandable extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Clickable(onClick: _open.toggle, child: header),
+            BadClickable(onClick: _open.toggle, child: header),
             if (_open.isTrue) SizedBox(height: gap),
             if (_open.isTrue) child!,
           ],

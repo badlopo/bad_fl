@@ -129,7 +129,7 @@ class _BadOTPInputState extends State<BadOTPInput> {
             : null,
         suffix: Padding(
           padding: EdgeInsets.only(right: widget.padding),
-          child: Clickable(
+          child: BadClickable(
             onClick: widget.onSendTapped,
             child: widget.sendWidget,
           ),

@@ -40,7 +40,7 @@ class BadPanelItem extends StatelessWidget {
 
     if (onTap == null) return panelItem;
 
-    return Clickable(onClick: onTap!, child: panelItem);
+    return BadClickable(onClick: onTap!, child: panelItem);
   }
 }
 

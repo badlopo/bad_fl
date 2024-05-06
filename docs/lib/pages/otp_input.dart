@@ -118,7 +118,7 @@ class OTPInputPage extends GetView<_OTPInputController> {
             color: Colors.orange,
             fontSize: 14,
           ),
-          Clickable(
+          BadClickable(
             onClick: () => Get.toNamed(NamedRoute.textInput),
             child: const BadText(
               '=> Link to "BadTextInput"',

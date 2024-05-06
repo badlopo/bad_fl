@@ -42,6 +42,6 @@ class BadButton extends StatelessWidget {
       child: child,
     );
 
-    return Clickable(onClick: onPressed, child: inner);
+    return BadClickable(onClick: onPressed, child: inner);
   }
 }

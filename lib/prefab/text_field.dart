@@ -167,7 +167,7 @@ class _BadTextFieldState extends State<BadTextField> {
           ),
           SizedBox(height: widget.space),
           if (widget.maxLength == null)
-            Clickable(onClick: handleClear, child: widget.clearWidget)
+            BadClickable(onClick: handleClear, child: widget.clearWidget)
           else
             Text(
               '${_controller.text.length}/${widget.maxLength}',

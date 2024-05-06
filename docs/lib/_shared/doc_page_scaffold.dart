@@ -79,7 +79,7 @@ class DocPageScaffold extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 16),
-            child: Clickable(
+            child: BadClickable(
               onClick: () => ExternalLinkImpl.openExternal(sourceUrl),
               child: const BadText(
                 'Refer to the annotated source code.',

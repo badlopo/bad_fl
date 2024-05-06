@@ -183,7 +183,7 @@ class _BadPasswordInputState extends State<BadPasswordInput> {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Clickable(
+              BadClickable(
                 onClick: toggleVisibility,
                 child:
                     _obscureText ? widget.hiddenWidget : widget.visibleWidget,

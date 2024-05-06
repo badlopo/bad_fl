@@ -155,7 +155,7 @@ class _BadTextInputState extends State<BadTextInput> {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Clickable(onClick: handleClear, child: widget.clearWidget),
+              BadClickable(onClick: handleClear, child: widget.clearWidget),
               if (widget.suffixWidget != null) widget.suffixWidget!,
             ],
           ),

@@ -80,6 +80,6 @@ class _BadSwitchState extends State<BadSwitch> {
       ),
     );
 
-    return Clickable(onClick: toggle, child: inner);
+    return BadClickable(onClick: toggle, child: inner);
   }
 }
