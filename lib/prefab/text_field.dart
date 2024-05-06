@@ -1,3 +1,4 @@
+import 'package:bad_fl/wrapper/clickable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,7 +28,12 @@ class BadTextField extends StatefulWidget {
   /// input formatters to restrict input
   final List<TextInputFormatter>? formatters;
 
-  /// maximum count of characters
+  /// maximum count of characters.
+  ///
+  /// - If null, there is no limit on the number of characters. A [clearWidget] will be shown.
+  /// - If positive, the number of characters will be shown. A countWidget (provided by [countWidgetBuilder]) will be shown.
+  ///
+  /// Default to `null`
   final int? maxLength;
 
   /// text style of the input field
@@ -35,6 +41,9 @@ class BadTextField extends StatefulWidget {
 
   /// text style of the placeholder text, ignored if [placeholder] is null
   final TextStyle? placeholderStyle;
+
+  /// text style of the count widget, only used when [maxLength] is not null
+  final TextStyle? countStyle;
 
   /// space between content and outside of the input field
   ///
@@ -75,6 +84,7 @@ class BadTextField extends StatefulWidget {
     this.maxLength,
     this.style,
     this.placeholderStyle,
+    this.countStyle,
     this.padding = const EdgeInsets.all(8),
     this.space = 8,
     this.fill,
@@ -82,7 +92,7 @@ class BadTextField extends StatefulWidget {
     this.borderRadius = 0.0,
     this.clearWidget = const Icon(
       Icons.close_rounded,
-      size: 16,
+      size: 20,
       color: Colors.grey,
     ),
   }) : assert(maxLength == null || maxLength > 0, 'maxLength must be positive');
@@ -94,19 +104,28 @@ class BadTextField extends StatefulWidget {
 class _BadTextFieldState extends State<BadTextField> {
   final TextEditingController _controller = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    if (widget.initialValue != null) _controller.text = widget.initialValue!;
-  }
-
   void handleClear() {
     _controller.clear();
     widget.onChanged?.call('');
   }
 
+  /// callback when the text in the input field changes
+  void changeObserver() {
+    // FIXME: here we rebuild every time the text changes, which is not efficient.
+    // update the count widget
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(changeObserver);
+    if (widget.initialValue != null) _controller.text = widget.initialValue!;
+  }
+
   @override
   void dispose() {
+    _controller.removeListener(changeObserver);
     _controller.dispose();
     super.dispose();
   }
@@ -133,10 +152,12 @@ class _BadTextFieldState extends State<BadTextField> {
               expands: true,
               minLines: null,
               maxLines: null,
+              maxLength: widget.maxLength,
               keyboardType: TextInputType.multiline,
               textInputAction: widget.textInputAction,
               inputFormatters: widget.formatters,
               style: widget.style,
+              padding: EdgeInsets.zero,
               decoration: null,
               onTapOutside: (_) =>
                   FocusManager.instance.primaryFocus?.unfocus(),
@@ -145,11 +166,32 @@ class _BadTextFieldState extends State<BadTextField> {
             ),
           ),
           SizedBox(height: widget.space),
-          // TODO: clear/count
+          if (widget.maxLength == null)
+            Clickable(onClick: handleClear, child: widget.clearWidget)
+          else
+            Text(
+              '${_controller.text.length}/${widget.maxLength}',
+              style: widget.countStyle,
+            ),
         ],
       ),
     );
 
-    return inner;
+    // always use the stack wrapper to avoid rebuilds caused by hierarchy changes
+    return Stack(
+      children: [
+        // the underlying input field
+        inner,
+
+        // show placeholder if the input field is empty and a placeholder is provided
+        if (_controller.text.isEmpty && widget.placeholder != null)
+          IgnorePointer(
+            child: Padding(
+              padding: widget.padding,
+              child: Text(widget.placeholder!, style: widget.placeholderStyle),
+            ),
+          ),
+      ],
+    );
   }
 }
