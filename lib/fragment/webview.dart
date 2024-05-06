@@ -29,7 +29,7 @@ class RemoteSource extends WebviewSource {
   }
 }
 
-class WebviewFragment extends StatefulWidget {
+class BadWebviewFragment extends StatefulWidget {
   /// the source of the webview
   final WebviewSource source;
 
@@ -39,14 +39,14 @@ class WebviewFragment extends StatefulWidget {
   /// callback when web resource error occurred
   final ValueChanged<WebResourceError>? onWebResourceError;
 
-  const WebviewFragment.remote({
+  const BadWebviewFragment.remote({
     super.key,
     required RemoteSource this.source,
     this.onProgress,
     this.onWebResourceError,
   });
 
-  const WebviewFragment.local({
+  const BadWebviewFragment.local({
     super.key,
     required LocalSource this.source,
     this.onProgress,
@@ -54,10 +54,10 @@ class WebviewFragment extends StatefulWidget {
   });
 
   @override
-  State<WebviewFragment> createState() => _WebviewFragmentState();
+  State<BadWebviewFragment> createState() => _BadWebviewFragmentState();
 }
 
-class _WebviewFragmentState extends State<WebviewFragment> {
+class _BadWebviewFragmentState extends State<BadWebviewFragment> {
   final WebViewController controller = WebViewController();
 
   @override
