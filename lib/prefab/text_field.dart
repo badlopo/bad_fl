@@ -111,7 +111,7 @@ class _BadTextFieldState extends State<BadTextField> {
 
   /// callback when the text in the input field changes
   void changeObserver() {
-    // FIXME: here we rebuild every time the text changes, which is not efficient.
+    // OPT: here we rebuild every time the text changes, which is not efficient.
     // update the count widget
     setState(() {});
   }
