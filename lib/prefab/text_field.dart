@@ -52,7 +52,7 @@ class BadTextField extends StatefulWidget {
 
   /// space between text and clear/count widget
   ///
-  /// Default to `8`
+  /// Default to `4`
   final double space;
 
   /// background color of the input field
@@ -86,7 +86,7 @@ class BadTextField extends StatefulWidget {
     this.placeholderStyle,
     this.countStyle,
     this.padding = const EdgeInsets.all(8),
-    this.space = 8,
+    this.space = 4,
     this.fill,
     this.border,
     this.borderRadius = 0.0,
@@ -183,8 +183,8 @@ class _BadTextFieldState extends State<BadTextField> {
         // the underlying input field
         inner,
 
-        // show placeholder if the input field is empty and a placeholder is provided
-        if (_controller.text.isEmpty && widget.placeholder != null)
+        // show placeholder if the input field is empty and a placeholder is provided with a non-empty string
+        if (_controller.text.isEmpty && widget.placeholder?.isNotEmpty == true)
           IgnorePointer(
             child: Padding(
               padding: widget.padding,
