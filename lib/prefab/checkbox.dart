@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 typedef IconBuilder = Widget Function(bool checked);
 
-class BadCheckBox extends StatefulWidget {
+/// Note: this is a controlled checkbox, you need to manage the state of the checkbox yourself.
+class BadCheckBox extends StatelessWidget {
   /// size of the checkbox
   final double size;
 
@@ -22,14 +23,14 @@ class BadCheckBox extends StatefulWidget {
   /// whether the checkbox is rounded
   final bool rounded;
 
-  /// whether the checkbox is checked initially, default to false
-  final bool initialChecked;
-
   /// color of the checkbox when checked, default to null
   final Color? checkedColor;
 
+  /// whether the checkbox is checked initially, default to false
+  final bool checked;
+
   /// callback when the state of the checkbox is changed
-  final ValueChanged<bool> onCheckedChanged;
+  final VoidCallback onTap;
 
   const BadCheckBox.icon({
     super.key,
@@ -38,9 +39,9 @@ class BadCheckBox extends StatefulWidget {
     double? iconSize,
     required this.border,
     this.rounded = true,
-    this.initialChecked = false,
     this.checkedColor,
-    required this.onCheckedChanged,
+    required this.checked,
+    required this.onTap,
   })  : iconSize = iconSize ?? size,
         iconBuilder = null,
         assert(icon != null, 'icon must be provided');
@@ -52,61 +53,38 @@ class BadCheckBox extends StatefulWidget {
     double? iconSize,
     required this.border,
     this.rounded = true,
-    this.initialChecked = false,
     this.checkedColor,
-    required this.onCheckedChanged,
+    required this.checked,
+    required this.onTap,
   })  : iconSize = iconSize ?? size,
         icon = null,
         assert(iconBuilder != null, 'iconBuilder must be provided');
 
-  @override
-  State<BadCheckBox> createState() => _BadCheckBoxState();
-}
-
-class _BadCheckBoxState extends State<BadCheckBox> {
-  bool checked = false;
-
   /// icon to be displayed inside the checkbox
-  Widget get _innerIcon => widget.icon ?? widget.iconBuilder!(checked);
-
-  void toggle() {
-    setState(() {
-      checked = !checked;
-    });
-    widget.onCheckedChanged(checked);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    checked = widget.initialChecked;
-  }
+  Widget get _innerIcon => icon ?? iconBuilder!(checked);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: widget.size,
-      height: widget.size,
+      width: size,
+      height: size,
       child: Center(
         child: BadClickable(
-          onClick: toggle,
+          onClick: onTap,
           child: Container(
-            width: widget.size,
-            height: widget.size,
+            width: size,
+            height: size,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
-              color: checked ? widget.checkedColor : null,
-              border: widget.border,
-              borderRadius: widget.rounded
-                  ? BorderRadius.circular(widget.size / 2)
-                  : null,
+              color: checked ? checkedColor : null,
+              border: border,
+              borderRadius: rounded ? BorderRadius.circular(size / 2) : null,
             ),
             child: checked
                 ? ConstrainedBox(
                     constraints: BoxConstraints(
-                      maxWidth: widget.iconSize,
-                      maxHeight: widget.iconSize,
+                      maxWidth: iconSize,
+                      maxHeight: iconSize,
                     ),
                     child: Center(child: _innerIcon),
                   )
