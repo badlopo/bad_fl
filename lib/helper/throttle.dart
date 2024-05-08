@@ -1,23 +1,18 @@
 import 'dart:async';
 
-/// a task that will be throttled
-typedef ThrottleTask = FutureOr<void> Function();
+class BadThrottler {
+  /// default action to be called when the throttler is called without a action
+  final FutureOr<void> Function()? defaultAction;
 
-class ThrottleImpl {
-  /// inner task
-  final ThrottleTask _task;
-
-  /// running flag
   bool _running = false;
 
-  ThrottleImpl(this._task);
+  BadThrottler({this.defaultAction});
 
-  /// trigger the task
-  Future<void> call() async {
+  Future<void> call(FutureOr<void> Function() action) async {
     if (_running) return;
 
     _running = true;
-    await _task();
+    await action();
     _running = false;
   }
 }

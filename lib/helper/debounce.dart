@@ -1,28 +1,26 @@
 import 'dart:async';
 
-/// a task that will be debounced
-typedef DebounceTask = FutureOr<void> Function();
+/// a debouncer that calls the function after a specified delay
+class BadDebouncer {
+  final Duration delay;
 
-class DebounceImpl {
-  /// default task (fallback if not overridden)
-  final DebounceTask _task;
+  /// default action to be called when the debouncer is called without a action
+  final void Function()? defaultAction;
 
-  /// duration to debounce
-  Duration _duration;
-
-  /// debounce timer
   Timer? _timer;
 
-  DebounceImpl(this._task, this._duration);
+  BadDebouncer({this.delay = const Duration(seconds: 1), this.defaultAction});
 
-  /// set duration to debounce, this will take effect on the next call
-  set duration(Duration duration) {
-    _duration = duration;
-  }
+  void call([void Function()? action]) {
+    assert(
+      action != null || defaultAction != null,
+      'can only call debouncer without action when defaultAction is provided',
+    );
 
-  /// refresh the debounce timer (and override the task if needed)
-  void call([DebounceTask? overrideTask]) {
     _timer?.cancel();
-    _timer = Timer(_duration, overrideTask ?? _task);
+    _timer = Timer(delay, (action ?? defaultAction)!);
   }
+
+  /// cancel the current delayed call
+  void cancel() => _timer?.cancel();
 }
