@@ -35,6 +35,9 @@ mixin BadSearchMixin<ListItemType> on GetxController {
   /// the target string to search (optional)
   String _target = '';
 
+  /// the target string to search (read-only)
+  String get target => _target;
+
   /// the next page number to search
   int _pageNo = 1;
 
