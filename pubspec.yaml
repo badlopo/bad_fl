@@ -1,7 +1,7 @@
 name: bad_fl
-description: "my bad flutter components"
+description: "component, utils, helpers, ..."
 version: 0.0.1
-homepage:
+homepage: https://github.com/badlopo/bad_fl
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
