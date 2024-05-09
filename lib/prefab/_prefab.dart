@@ -1,5 +1,6 @@
 export 'button.dart';
 export 'checkbox.dart';
+export 'katex.dart';
 export 'otp_input.dart';
 export 'password_input.dart';
 export 'switch.dart';
