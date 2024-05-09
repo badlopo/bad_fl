@@ -1,6 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+class Refresher {
+  Future<void> Function()? _refresh;
+
+  /// reload the webview (not refresh the page)
+  refresh() {
+    if (_refresh == null) {
+      throw StateError('No client attached');
+    }
+    _refresh!();
+  }
+}
+
+// TODO: bridge (add when needed)
+
 sealed class WebviewSource {
   const WebviewSource();
 
@@ -30,6 +44,9 @@ class RemoteSource extends WebviewSource {
 }
 
 class BadWebviewFragment extends StatefulWidget {
+  /// the refresher for the webview
+  final Refresher? refresher;
+
   /// the source of the webview
   final WebviewSource source;
 
@@ -41,6 +58,7 @@ class BadWebviewFragment extends StatefulWidget {
 
   const BadWebviewFragment.remote({
     super.key,
+    this.refresher,
     required RemoteSource this.source,
     this.onProgress,
     this.onWebResourceError,
@@ -48,6 +66,7 @@ class BadWebviewFragment extends StatefulWidget {
 
   const BadWebviewFragment.local({
     super.key,
+    this.refresher,
     required LocalSource this.source,
     this.onProgress,
     this.onWebResourceError,
@@ -75,6 +94,10 @@ class _BadWebviewFragmentState extends State<BadWebviewFragment> {
 
     // load the source
     widget.source.load(controller);
+
+    if (widget.refresher != null) {
+      widget.refresher!._refresh = () => widget.source.load(controller);
+    }
   }
 
   @override
