@@ -44,6 +44,9 @@ class RemoteSource extends WebviewSource {
 }
 
 class BadWebviewFragment extends StatefulWidget {
+  /// a extra patch for the user agent
+  final String? userAgentPatch;
+
   /// the refresher for the webview
   final Refresher? refresher;
 
@@ -59,6 +62,7 @@ class BadWebviewFragment extends StatefulWidget {
   const BadWebviewFragment.remote({
     super.key,
     this.refresher,
+    this.userAgentPatch,
     required RemoteSource this.source,
     this.onProgress,
     this.onWebResourceError,
@@ -66,6 +70,7 @@ class BadWebviewFragment extends StatefulWidget {
 
   const BadWebviewFragment.local({
     super.key,
+    this.userAgentPatch,
     this.refresher,
     required LocalSource this.source,
     this.onProgress,
@@ -79,10 +84,8 @@ class BadWebviewFragment extends StatefulWidget {
 class _BadWebviewFragmentState extends State<BadWebviewFragment> {
   final WebViewController controller = WebViewController();
 
-  @override
-  void initState() {
-    super.initState();
-
+  /// all steps here to avoid async in initState
+  void setup() async {
     // config the webview
     controller
       ..enableZoom(false)
@@ -92,12 +95,26 @@ class _BadWebviewFragmentState extends State<BadWebviewFragment> {
         onWebResourceError: widget.onWebResourceError,
       ));
 
+    // patch the user agent if needed
+    if (widget.userAgentPatch != null) {
+      final String? ua = await controller.getUserAgent();
+      await controller.setUserAgent('${ua ?? ''} ${widget.userAgentPatch}');
+    }
+
     // load the source
     widget.source.load(controller);
 
+    // update the refresher
     if (widget.refresher != null) {
       widget.refresher!._refresh = () => widget.source.load(controller);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    setup();
   }
 
   @override
