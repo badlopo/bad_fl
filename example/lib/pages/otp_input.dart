@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:bad_fl/prefab/otp_input.dart';
 import 'package:bad_fl/prefab/text.dart';
 import 'package:bad_fl/wrapper/clickable.dart';
-import 'package:bad_fl_doc/_shared/doc_page_scaffold.dart';
-import 'package:bad_fl_doc/routes/name.dart';
+import 'package:bad_fl_example/_shared/doc_page_scaffold.dart';
+import 'package:bad_fl_example/routes/name.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

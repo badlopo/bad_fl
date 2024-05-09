@@ -1,6 +1,6 @@
-import 'package:bad_fl_doc/pages/unknown.dart';
-import 'package:bad_fl_doc/routes/name.dart';
-import 'package:bad_fl_doc/routes/route.dart';
+import 'package:bad_fl_example/pages/unknown.dart';
+import 'package:bad_fl_example/routes/name.dart';
+import 'package:bad_fl_example/routes/route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,7 +1,7 @@
 import 'package:bad_fl/prefab/button.dart';
 import 'package:bad_fl/prefab/text.dart';
 import 'package:bad_fl/layout/panel.dart';
-import 'package:bad_fl_doc/routes/name.dart';
+import 'package:bad_fl_example/routes/name.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

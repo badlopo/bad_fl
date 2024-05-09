@@ -1,9 +1,9 @@
-import 'package:bad_fl_doc/pages/_misc.dart';
-import 'package:bad_fl_doc/pages/boot.dart';
-import 'package:bad_fl_doc/pages/otp_input.dart';
-import 'package:bad_fl_doc/pages/password_input.dart';
-import 'package:bad_fl_doc/pages/text_input.dart';
-import 'package:bad_fl_doc/routes/name.dart';
+import 'package:bad_fl_example/pages/_misc.dart';
+import 'package:bad_fl_example/pages/boot.dart';
+import 'package:bad_fl_example/pages/otp_input.dart';
+import 'package:bad_fl_example/pages/password_input.dart';
+import 'package:bad_fl_example/pages/text_input.dart';
+import 'package:bad_fl_example/routes/name.dart';
 import 'package:get/get.dart';
 
 final List<GetPage> route = [

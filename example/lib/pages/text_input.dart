@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:bad_fl/prefab/text.dart';
-import 'package:bad_fl_doc/_shared/doc_page_scaffold.dart';
+import 'package:bad_fl_example/_shared/doc_page_scaffold.dart';
 import 'package:bad_fl/prefab/text_input.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
