@@ -29,7 +29,7 @@ class BadCheckBox extends StatelessWidget {
   /// whether the checkbox is checked initially, default to false
   final bool checked;
 
-  /// callback when the state of the checkbox is changed
+  /// callback when the checkbox is tapped
   final VoidCallback onTap;
 
   const BadCheckBox.icon({

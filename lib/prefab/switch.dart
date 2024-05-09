@@ -1,85 +1,64 @@
 import 'package:bad_fl/wrapper/clickable.dart';
 import 'package:flutter/material.dart';
 
-class BadSwitch extends StatefulWidget {
+class BadSwitch extends StatelessWidget {
+  /// whether the switch is active
+  final bool active;
+
+  /// callback when the switch is tapped
+  final VoidCallback onTap;
+
   /// width of the switch
   final double width;
 
   /// height of the switch
   final double height;
 
-  /// whether the switch is active initially
-  final bool initialActive;
+  /// gap between the track and the handle, in [0, height/2)
+  final double gap;
 
-  /// callback when the state of the switch is changed
-  final ValueChanged<bool> onActiveChanged;
-
-  /// color of the handle when inactive
   final Color handleColor;
-
-  /// color of the handle when active
   final Color handleColorActive;
-
-  /// color of the track when inactive
   final Color trackColor;
-
-  /// color of the track when active
   final Color trackColorActive;
-
-  final double _ro;
-  final double _ri;
 
   const BadSwitch({
     super.key,
+    required this.active,
+    required this.onTap,
     required this.width,
     required this.height,
-    this.initialActive = false,
-    required this.onActiveChanged,
+    this.gap = 1,
     this.handleColor = Colors.white,
     this.handleColorActive = Colors.white,
     this.trackColor = Colors.grey,
     this.trackColorActive = Colors.blue,
   })  : assert(width > 10 && height > 10, 'size must be greater than 10x10'),
         assert(width > height, 'width must be greater than height'),
-        _ro = height / 2,
-        _ri = height / 2 - 2;
-
-  @override
-  State<BadSwitch> createState() => _BadSwitchState();
-}
-
-class _BadSwitchState extends State<BadSwitch> {
-  bool active = false;
-
-  void toggle() {
-    setState(() {
-      active = !active;
-    });
-    widget.onActiveChanged(active);
-  }
+        assert(gap >= 0 && gap < height / 2, 'gap should in [0, height/2)');
 
   @override
   Widget build(BuildContext context) {
     final inner = AnimatedContainer(
       duration: const Duration(milliseconds: 200),
-      width: widget.width,
-      height: widget.height,
-      padding: const EdgeInsets.all(2),
+      width: width,
+      height: height,
+      padding: EdgeInsets.all(gap),
       decoration: BoxDecoration(
-        color: active ? widget.trackColorActive : widget.trackColor,
-        borderRadius: BorderRadius.circular(widget._ro),
+        color: active ? trackColorActive : trackColor,
+        borderRadius: BorderRadius.circular(height / 2),
       ),
       alignment: active ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-        width: widget.height - 4,
-        height: widget.height - 4,
+        width: width - gap * 2,
+        height: width - gap * 2,
         decoration: BoxDecoration(
-          color: active ? widget.handleColorActive : widget.handleColor,
-          borderRadius: BorderRadius.circular(widget._ri),
+          color: active ? handleColorActive : handleColor,
+          borderRadius: BorderRadius.circular(height / 2 - gap),
         ),
       ),
     );
 
-    return BadClickable(onClick: toggle, child: inner);
+    return BadClickable(onClick: onTap, child: inner);
   }
 }
