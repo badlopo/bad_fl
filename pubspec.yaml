@@ -9,11 +9,12 @@ environment:
   flutter: ">=3.16.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
   device_info_plus: ^10.1.0
   dio: ^5.4.2+1
   easy_refresh: ^3.3.5+1
+  flutter:
+    sdk: flutter
+  flutter_math_fork: ^0.7.2
   get: ^4.6.6
   hive: ^2.2.3
   hive_flutter: ^1.1.0
