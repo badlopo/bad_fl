@@ -1,6 +1,7 @@
 name: bad_fl
 description: "component, utils, helpers, ..."
 version: 0.0.1
+publish_to: https://pub.dev
 homepage: https://github.com/badlopo/bad_fl
 
 environment:
