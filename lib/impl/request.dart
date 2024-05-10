@@ -66,10 +66,15 @@ class ResponseWrapper<T> {
       );
     }
 
+    var data = response.data;
+    if (dataParser != null) {
+      data = dataParser(data, passThrough);
+    }
+
     return ResponseWrapper<T>._(
       // mark as ok
       code: 200,
-      data: response.data,
+      data: data,
     );
   }
 
@@ -321,6 +326,7 @@ abstract class RequestImpl {
     String path, {
     Map<String, dynamic>? queryParameters,
     DataParser<T>? dataParser,
+    dynamic passThrough,
   }) {
     final Future<ResponseWrapper<T>> resp = Future(() async {
       BaseOptions options = BaseOptions();
@@ -329,7 +335,7 @@ abstract class RequestImpl {
         queryParameters: queryParameters,
       );
 
-      return ResponseWrapper.raw(resp, dataParser, null);
+      return ResponseWrapper.raw(resp, dataParser, passThrough);
     });
 
     return RequestWrapper<T>(resp: resp, cancelToken: null);
