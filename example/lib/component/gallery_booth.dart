@@ -1,3 +1,4 @@
+import 'package:bad_fl/prefab/button.dart';
 import 'package:bad_fl/prefab/text.dart';
 import 'package:flutter/material.dart';
 
@@ -79,12 +80,39 @@ class _GalleryBoothState extends State<GalleryBooth> {
   }
 }
 
-class ButtonBox extends StatelessWidget {
-  const ButtonBox({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
+abstract class GalleryItem {
+  static final button = GalleryBooth(
+    name: 'BadButton',
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        BadButton(
+          width: 100,
+          height: 32,
+          borderRadius: 4,
+          fill: Colors.red,
+          child: const BadText('Button', color: Colors.white),
+          onPressed: () {},
+        ),
+        BadButton(
+          width: 100,
+          height: 32,
+          borderRadius: 4,
+          border: Border.all(color: Colors.green, width: 2),
+          child: const BadText('Button', color: Colors.green),
+          onPressed: () {},
+        ),
+        BadButton(
+          width: 100,
+          height: 32,
+          border: const Border(
+            top: BorderSide(color: Colors.orange, width: 2),
+            bottom: BorderSide(color: Colors.orange, width: 2),
+          ),
+          child: const BadText('Button', color: Colors.orange),
+          onPressed: () {},
+        ),
+      ],
+    ),
+  );
 }
