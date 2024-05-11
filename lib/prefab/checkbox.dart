@@ -18,7 +18,7 @@ class BadCheckBox extends StatelessWidget {
   final double iconSize;
 
   /// border of the checkbox
-  final Border border;
+  final Border? border;
 
   /// whether the checkbox is rounded
   final bool rounded;
@@ -37,7 +37,7 @@ class BadCheckBox extends StatelessWidget {
     required this.size,
     required this.icon,
     double? iconSize,
-    required this.border,
+    this.border,
     this.rounded = true,
     this.checkedColor,
     required this.checked,
@@ -51,7 +51,7 @@ class BadCheckBox extends StatelessWidget {
     required this.size,
     required this.iconBuilder,
     double? iconSize,
-    required this.border,
+    this.border,
     this.rounded = true,
     this.checkedColor,
     required this.checked,
