@@ -50,8 +50,8 @@ class BadSwitch extends StatelessWidget {
       ),
       alignment: active ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-        width: width - gap * 2,
-        height: width - gap * 2,
+        width: height - gap * 2,
+        height: height - gap * 2,
         decoration: BoxDecoration(
           color: active ? handleColorActive : handleColor,
           borderRadius: BorderRadius.circular(height / 2 - gap),

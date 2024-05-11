@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
@@ -51,6 +52,32 @@ class ResponseWrapper<T> {
     return Future.value(ResponseWrapper._(msg: msg));
   }
 
+  /// raw builder
+  static ResponseWrapper<T> raw<T>(
+    Response response,
+    DataParser<T>? dataParser,
+    dynamic passThrough,
+  ) {
+    // network error
+    if (response.statusCode != 200) {
+      return ResponseWrapper<T>._(
+        statusCode: response.statusCode,
+        statusMessage: response.statusMessage,
+      );
+    }
+
+    var data = response.data;
+    if (dataParser != null) {
+      data = dataParser(data, passThrough);
+    }
+
+    return ResponseWrapper<T>._(
+      // mark as ok
+      code: 200,
+      data: data,
+    );
+  }
+
   static ResponseWrapper<T> fromResponse<T>(
     Response response,
     DataParser<T>? dataParser,
@@ -67,7 +94,7 @@ class ResponseWrapper<T> {
     // 响应值非 Map, 则直接返回 (文件上传时, 响应值为 String)
     if (response.data is! Map) {
       return ResponseWrapper<T>._(
-        // 标识为成功
+        // mark as ok
         code: 200,
         data: response.data,
       );
@@ -213,7 +240,6 @@ abstract class RequestImpl {
 
   /// GET implementation
   static RequestWrapper<T> get<T>(
-    String method,
     String path, {
     bool cancelable = false,
     Map<String, dynamic>? queryParameters,
@@ -234,7 +260,6 @@ abstract class RequestImpl {
 
   /// POST implementation
   static RequestWrapper<T> post<T>(
-    String method,
     String path, {
     bool cancelable = false,
     Map<String, dynamic>? queryParameters,
@@ -259,7 +284,6 @@ abstract class RequestImpl {
 
   /// PUT implementation
   static RequestWrapper<T> put<T>(
-    String method,
     String path, {
     bool cancelable = false,
     Map<String, dynamic>? queryParameters,
@@ -280,7 +304,6 @@ abstract class RequestImpl {
 
   /// DELETE implementation
   static RequestWrapper<T> delete<T>(
-    String method,
     String path, {
     bool cancelable = false,
     Map<String, dynamic>? queryParameters,
@@ -297,5 +320,24 @@ abstract class RequestImpl {
       headerBuilder: headerBuilder,
       dataParser: dataParser,
     );
+  }
+
+  static RequestWrapper<T> rawGet<T>(
+    String path, {
+    Map<String, dynamic>? queryParameters,
+    DataParser<T>? dataParser,
+    dynamic passThrough,
+  }) {
+    final Future<ResponseWrapper<T>> resp = Future(() async {
+      BaseOptions options = BaseOptions();
+      final Response<dynamic> resp = await Dio(options).get(
+        path,
+        queryParameters: queryParameters,
+      );
+
+      return ResponseWrapper.raw(resp, dataParser, passThrough);
+    });
+
+    return RequestWrapper<T>(resp: resp, cancelToken: null);
   }
 }
