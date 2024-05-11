@@ -1,6 +1,10 @@
+import 'package:bad_fl/bad_fl.dart';
 import 'package:bad_fl/prefab/button.dart';
 import 'package:bad_fl/prefab/text.dart';
+import 'package:bad_fl/wrapper/clickable.dart';
+import 'package:bad_fl_example/routes/name.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 const _gery = Color(0xFFF0F0F0);
 const _shadow = [
@@ -25,9 +29,15 @@ const _shadow = [
 
 class GalleryBooth extends StatefulWidget {
   final String name;
+  final String route;
   final Widget child;
 
-  const GalleryBooth({super.key, required this.name, required this.child});
+  const GalleryBooth({
+    super.key,
+    required this.name,
+    required this.route,
+    required this.child,
+  });
 
   @override
   State<GalleryBooth> createState() => _GalleryBoothState();
@@ -38,43 +48,40 @@ class _GalleryBoothState extends State<GalleryBooth> {
 
   @override
   Widget build(BuildContext context) {
+    final inner = AnimatedContainer(
+      curve: Curves.ease,
+      duration: const Duration(milliseconds: 500),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(width: 1, color: _gery),
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: _hover ? _shadow : null,
+      ),
+      height: 200,
+      child: Column(
+        children: [
+          SizedBox(
+            height: 38,
+            child: BadText(
+              widget.name,
+              fontSize: 18,
+              lineHeight: 38,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const Divider(height: 1, thickness: 1, color: _gery),
+          Expanded(child: widget.child),
+        ],
+      ),
+    );
+
     return MouseRegion(
       cursor: SystemMouseCursors.click,
-      onEnter: (event) {
-        setState(() {
-          _hover = true;
-        });
-      },
-      onExit: (event) {
-        setState(() {
-          _hover = false;
-        });
-      },
-      child: AnimatedContainer(
-        curve: Curves.ease,
-        duration: const Duration(milliseconds: 500),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(width: 1, color: _gery),
-          borderRadius: BorderRadius.circular(8),
-          boxShadow: _hover ? _shadow : null,
-        ),
-        height: 200,
-        child: Column(
-          children: [
-            SizedBox(
-              height: 38,
-              child: BadText(
-                widget.name,
-                fontSize: 18,
-                lineHeight: 38,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const Divider(height: 1, thickness: 1, color: _gery),
-            Expanded(child: widget.child),
-          ],
-        ),
+      onEnter: (_) => setState(() => _hover = true),
+      onExit: (_) => setState(() => _hover = false),
+      child: BadClickable(
+        onClick: () => Get.toNamed(widget.route),
+        child: inner,
       ),
     );
   }
@@ -83,6 +90,7 @@ class _GalleryBoothState extends State<GalleryBooth> {
 abstract class GalleryItem {
   static final button = GalleryBooth(
     name: 'BadButton',
+    route: NamedRoute.button,
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -90,7 +98,7 @@ abstract class GalleryItem {
           width: 100,
           height: 32,
           borderRadius: 4,
-          fill: Colors.red,
+          fill: Colors.blue,
           child: const BadText('Button', color: Colors.white),
           onPressed: () {},
         ),
@@ -111,6 +119,37 @@ abstract class GalleryItem {
           ),
           child: const BadText('Button', color: Colors.orange),
           onPressed: () {},
+        ),
+      ],
+    ),
+  );
+  static final checkbox = GalleryBooth(
+    name: 'BadCheckbox',
+    route: NamedRoute.checkbox,
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        BadCheckBox.icon(
+          size: 32,
+          checkedColor: Colors.blue,
+          icon: const Icon(Icons.check, size: 24, color: Colors.white),
+          checked: true,
+          onTap: () {},
+        ),
+        BadCheckBox.icon(
+          size: 32,
+          icon: const Icon(Icons.close, size: 24, color: Colors.green),
+          border: Border.all(color: Colors.green, width: 2),
+          checked: true,
+          onTap: () {},
+        ),
+        BadCheckBox.icon(
+          size: 32,
+          icon: const Icon(Icons.accessibility, size: 24, color: Colors.white),
+          rounded: false,
+          checkedColor: Colors.orange,
+          checked: true,
+          onTap: () {},
         ),
       ],
     ),
