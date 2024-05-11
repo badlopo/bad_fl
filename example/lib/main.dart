@@ -1,4 +1,4 @@
-import 'package:bad_fl_example/pages/unknown.dart';
+import 'package:bad_fl_example/page/unknown.dart';
 import 'package:bad_fl_example/routes/name.dart';
 import 'package:bad_fl_example/routes/route.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +24,9 @@ class _MyAppState extends State<MyApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
         fontFamily: 'JetBrainsMono',
-        scaffoldBackgroundColor: const Color(0xFFF5F6F7),
+        scaffoldBackgroundColor: Colors.white,
       ),
-      initialRoute: NamedRoute.boot,
+      initialRoute: NamedRoute.gallery,
       unknownRoute: GetPage(name: '/unknown', page: () => const UnknownPage()),
       getPages: route,
       builder: (context, child) {

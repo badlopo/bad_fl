@@ -21,7 +21,7 @@ class UnknownPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () => Get.offAllNamed(NamedRoute.boot),
+              onPressed: () => Get.offAllNamed(NamedRoute.gallery),
               child: const BadText('Back to Home'),
             ),
           ],

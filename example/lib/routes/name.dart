@@ -1,4 +1,6 @@
 abstract class NamedRoute {
+  static const gallery = '/gallery';
+
   static const boot = '/boot';
   static const misc = '/misc';
 
