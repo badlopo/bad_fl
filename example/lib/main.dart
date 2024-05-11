@@ -29,6 +29,7 @@ class _MyAppState extends State<MyApp> {
       initialRoute: NamedRoute.gallery,
       unknownRoute: GetPage(name: '/unknown', page: () => const UnknownPage()),
       getPages: route,
+      transitionDuration: Duration.zero,
       builder: (context, child) {
         return Scaffold(
           backgroundColor: Colors.lightGreen,
