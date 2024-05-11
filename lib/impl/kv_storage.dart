@@ -51,7 +51,7 @@ abstract class KVStorageImpl {
   static Map<String, dynamic> entries() {
     _guard();
 
-    return _box!.toMap() as Map<String, dynamic>;
+    return Map<String, dynamic>.from(_box!.toMap());
   }
 
   /// remove somethings and put somethings
