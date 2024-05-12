@@ -59,23 +59,32 @@ class BadWebviewFragment extends StatefulWidget {
   /// callback when web resource error occurred
   final ValueChanged<WebResourceError>? onWebResourceError;
 
-  const BadWebviewFragment.remote({
+  const BadWebviewFragment({
     super.key,
-    this.refresher,
     this.userAgentPatch,
-    required RemoteSource this.source,
+    this.refresher,
+    required this.source,
     this.onProgress,
     this.onWebResourceError,
   });
 
-  const BadWebviewFragment.local({
+  BadWebviewFragment.remote({
     super.key,
-    this.userAgentPatch,
     this.refresher,
-    required LocalSource this.source,
+    this.userAgentPatch,
+    required Uri uri,
     this.onProgress,
     this.onWebResourceError,
-  });
+  }) : source = RemoteSource(uri: uri);
+
+  BadWebviewFragment.local({
+    super.key,
+    this.refresher,
+    this.userAgentPatch,
+    required String path,
+    this.onProgress,
+    this.onWebResourceError,
+  }) : source = LocalSource(path: path);
 
   @override
   State<BadWebviewFragment> createState() => _BadWebviewFragmentState();
