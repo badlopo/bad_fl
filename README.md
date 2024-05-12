@@ -154,7 +154,7 @@ void main() async {
 // hello again
 ```
 
-## Impl
+### Impl
 
 Some classes need to be initialized before use. Due to privacy issues, some initialization have to be done after the
 user has accepted the privacy policy.
@@ -162,19 +162,18 @@ user has accepted the privacy policy.
 - `prepare`: can be called as soon as possible
 - `extend`: may only be called after the privacy policy has been accepted
 
-Below is a list of classes that need to be initialized:
+| Class              | `prepare` | `extend` |
+|--------------------|-----------|----------|
+| `CacheImpl`        | ✅         | ❌        |
+| `ClipboardImpl`    | ❌         | ❌        |
+| `EvCenterImpl`     | ❌         | ❌        |
+| `ExternalLinkImpl` | ❌         | ❌        |
+| `ImageOPImpl`      | ❌         | ❌        |
+| `KVStorageImpl`    | ✅         | ❌        |
+| `MetaImpl`         | ✅         | ✅        |
+| `RequestImpl`      | ❌         | ❌        |
 
-| Class             | `prepare` | `extend` |
-|-------------------|-----------|----------|
-| `CacheImpl`       | ✅         | ❌        |
-| `ClipboardImpl`   | ❌         | ❌        |
-| `EvCenterImpl`    | ❌         | ❌        |
-| `ImageSelectImpl` | ❌         | ❌        |
-| `KVStorageImpl`   | ✅         | ❌        |
-| `MetaImpl`        | ✅         | ✅        |
-| `RequestImpl`     | ❌         | ❌        |
-
-⏳ WIP
+These classes are fully annotated, please refer to [source code](./lib/impl) for more details.
 
 ## Layout
 
