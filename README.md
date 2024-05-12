@@ -47,9 +47,49 @@ class Example extends StatelessWidget {
 }
 ```
 
-## Fragment
+### Fragment
 
-⏳ WIP
+Fragment is a large section of content on the interface.
+
+#### [`BadWebviewFragment`](./lib/fragment/webview.dart)
+
+```dart
+class Example extends StatefulWidget {
+  const Example({super.key});
+
+  @override
+  State<StatefulWidget> createState() => ExampleState();
+}
+
+class ExampleState extends State<Example> {
+  final refresher = Refresher();
+  double progress = 0.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const BadText('Example'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: refresher.refresh,
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          LinearProgressIndicator(value: progress),
+          BadWebviewFragment.remote(
+            onProgress: (v) => setState(() => progress = v),
+            uri: Uri.parse('https://example.com/'),
+          )
+        ],
+      ),
+    );
+  }
+}
+```
 
 ## Helper
 
