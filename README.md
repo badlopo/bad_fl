@@ -91,15 +91,68 @@ class ExampleState extends State<Example> {
 }
 ```
 
-## Helper
+### Helper
 
 ### [`BadDebouncer`](./lib/helper/debounce.dart)
 
-⏳ WIP
+```dart
+void main() async {
+  final debouncer = BadDebouncer(
+    delay: const Duration(seconds: 1),
+    defaultAction: () {
+      print('default action');
+    },
+  );
+
+  // 1. call the default action
+  debouncer();
+
+  // 2. call with a custom action
+  await Future.delayed(const Duration(seconds: 2));
+  debouncer.call(() {
+    print('wrong action');
+  });
+
+  // 3. cancel the current delayed call
+  debouncer.cancel();
+  debouncer(() {
+    print('correct action');
+  });
+}
+
+// Output:
+// default action
+// correct action
+```
 
 ### [`BadThrottler`](./lib/helper/throttle.dart)
 
-⏳ WIP
+```dart
+void main() async {
+  final throttler = BadThrottler(defaultAction: () async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    print('default action');
+  });
+
+  // call the default action
+  throttler();
+
+  // this call will be ignored
+  throttler(() async {
+    print('hello');
+  });
+
+  // call with a custom action
+  await Future.delayed(const Duration(seconds: 1));
+  throttler(() async {
+    print('hello again');
+  });
+}
+
+// Output:
+// default action
+// hello again
+```
 
 ## Impl
 
