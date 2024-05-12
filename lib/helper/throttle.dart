@@ -8,11 +8,16 @@ class BadThrottler {
 
   BadThrottler({this.defaultAction});
 
-  Future<void> call(FutureOr<void> Function() action) async {
+  Future<void> call([FutureOr<void> Function()? action]) async {
     if (_running) return;
 
+    assert(
+      action != null || defaultAction != null,
+      'can only call throttler without action when defaultAction is provided',
+    );
+
     _running = true;
-    await action();
+    await (action ?? defaultAction)!();
     _running = false;
   }
 }
