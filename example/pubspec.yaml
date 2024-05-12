@@ -34,6 +34,7 @@ dependencies:
   bad_fl:
     path: ../
   flutter_highlight:
+  flutter_markdown:
   get:
 
   # The following adds the Cupertino Icons font to your application.
