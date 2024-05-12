@@ -1,4 +1,6 @@
 abstract class NamedRoute {
+  static const example = '/example';
+
   static const gallery = '/gallery';
 
   static const button = '/prefab/button';
