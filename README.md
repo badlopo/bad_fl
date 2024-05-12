@@ -1,16 +1,20 @@
-# About BadFL
+# BadFL
 
-BadFL includes encapsulation of commonly used utils and components, as well as secondary encapsulation of commonly used
-libraries (such as `dio`, `hive`, `device_info_plus`, etc.)
+[![Pub Version](https://img.shields.io/pub/v/bad_fl)](https://github.com/badlopo/bad_fl)
 
-It expresses component properties in a form closer to CSS representation, making it easier for web developers to get
-started.
+A flutter package, including components, implementations, helper functions and extensions. Designed to provide a simple
+way to develop with flutter.
 
-**NOTICE!!!** This library **completely** abandons semantics! (For example, `Container`+`GestureDetector` is used to
+## Overview
+
+The [`bad_fl`](https://pub.dev/packages/bad_fl) expresses component properties in a form closer to CSS representation,
+making it easier for web developers to get started.
+
+**NOTE:** This library **completely** abandons semantics! (For example, `Container`+`GestureDetector` is used to
 express a `Button` rather than build-in ones) People who have related needs or care about this should use it with
 caution.
 
-# Architecture
+## Usage
 
 ## Extension
 
