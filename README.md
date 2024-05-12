@@ -16,13 +16,36 @@ caution.
 
 ## Usage
 
-## Extension
+### Extension
 
 Extension methods of built-in types, named in the form of `<Type>Ext`.
 
-### [`ListExt`](./lib/extension/list.dart)
+#### [`ListExt`](./lib/extension/list.dart)
 
-- `slotted`: build a new element from each element of the list and insert slot elements between every two elements.
+👉 `slotted`: build a new element from each element of the list and insert slot elements between every two elements.
+
+```dart
+class Example extends StatelessWidget {
+  const Example({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: const [
+          Text('item1'),
+          Text('item2'),
+          Text('item3'),
+          Text('item4'),
+        ].slotted(
+          builder: (v) => v,
+          slot: const Divider(),
+        ),
+      ),
+    );
+  }
+}
+```
 
 ## Fragment
 
