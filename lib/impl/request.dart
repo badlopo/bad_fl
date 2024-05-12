@@ -15,7 +15,7 @@ typedef DataBuilder<T> = Function(dynamic data, PassThrough passThrough);
 /// data parser that will be used to parse data from response.
 typedef DataParser<T> = T Function(dynamic data, PassThrough passThrough);
 
-/// 响应包装器
+/// wrapper for response
 class ResponseWrapper<T> {
   final int? statusCode;
   final String? statusMessage;
@@ -27,9 +27,7 @@ class ResponseWrapper<T> {
   final int? pageSize;
   final int? pageTotal;
 
-  /// 详细的响应数据
-  /// - 解密前为 String
-  /// - 解密后为 String 或 Map 等类型
+  /// the data from response or the result of `dataParser` if provided
   final T? data;
 
   bool get ok => code == 200;
@@ -91,7 +89,7 @@ class ResponseWrapper<T> {
       );
     }
 
-    // 响应值非 Map, 则直接返回 (文件上传时, 响应值为 String)
+    // direct return if not map
     if (response.data is! Map) {
       return ResponseWrapper<T>._(
         // mark as ok
@@ -101,7 +99,7 @@ class ResponseWrapper<T> {
     }
 
     Map<String, dynamic> data = response.data;
-    // 请求发生错误
+    // code not 200
     if (data['code'] != 200) {
       return ResponseWrapper<T>._(
         globalId: data['globalId'],
@@ -110,9 +108,9 @@ class ResponseWrapper<T> {
       );
     }
 
-    // 原始值
+    // raw data
     final raw = data['data'];
-    // 空值处理
+    // no data
     if (raw == null) {
       return ResponseWrapper<T>._(
         globalId: data['globalId'],
@@ -125,7 +123,7 @@ class ResponseWrapper<T> {
       );
     }
 
-    // 返回包装器
+    // parse data and wrap
     return ResponseWrapper<T>._(
       globalId: data['globalId'],
       code: data['code'],
@@ -162,18 +160,18 @@ class ResponseWrapper<T> {
   }
 }
 
-/// 请求包装器
+/// wrapper for request
 class RequestWrapper<T> {
-  /// 响应
+  /// response future
   final Future<ResponseWrapper<T>> resp;
 
-  /// 取消令牌, 内部维护
+  /// cancel token (internal)
   final CancelToken? _cancelToken;
 
-  /// 是否可取消
+  /// whether the request is cancelable
   bool get cancelable => _cancelToken != null;
 
-  /// 取消请求, 仅当 [cancelable] 为 true 时有效, 否则忽略
+  /// cancel the request (only if cancelable)
   void cancel() {
     _cancelToken?.cancel();
   }
