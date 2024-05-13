@@ -1,7 +1,7 @@
 import 'package:bad_fl/wrapper/clickable.dart';
 import 'package:flutter/material.dart';
 
-class BadRadio extends StatefulWidget {
+class BadRadio<Item> extends StatefulWidget {
   /// initial index of the radio group
   final int initialIndex;
 
@@ -41,8 +41,14 @@ class BadRadio extends StatefulWidget {
   /// Note: If this is specified, [activeFill] has no effect.
   final Gradient? activeGradient;
 
-  /// radio group children
-  final List<Widget> children;
+  /// values for each item
+  final List<Item> values;
+
+  /// builder for each item
+  final Widget Function(Item value) childBuilder;
+
+  /// builder for the active item, if not specified, [childBuilder] will be used
+  final Widget Function(Item value)? activeChildBuilder;
 
   const BadRadio({
     super.key,
@@ -57,18 +63,20 @@ class BadRadio extends StatefulWidget {
     this.gradient,
     this.activeFill,
     this.activeGradient,
-    required this.children,
-  })  : assert(children.length >= 2, 'requires at least 2 items'),
+    required this.values,
+    required this.childBuilder,
+    this.activeChildBuilder,
+  })  : assert(values.length >= 2, 'requires at least 2 items'),
         assert(
-          initialIndex >= 0 && initialIndex < children.length,
+          initialIndex >= 0 && initialIndex < values.length,
           'initial index out of range',
         );
 
   @override
-  State<BadRadio> createState() => _BadRadioState();
+  State<BadRadio<Item>> createState() => _BadRadioState<Item>();
 }
 
-class _BadRadioState extends State<BadRadio> {
+class _BadRadioState<Item> extends State<BadRadio<Item>> {
   late final int count;
 
   late final BorderRadius? innerRadius;
@@ -88,7 +96,7 @@ class _BadRadioState extends State<BadRadio> {
   void initState() {
     super.initState();
 
-    count = widget.children.length;
+    count = widget.values.length;
 
     var innerR = widget.borderRadius - widget.padding.horizontal / 2;
     innerRadius = innerR > 0 ? BorderRadius.circular(innerR) : null;
@@ -122,7 +130,9 @@ class _BadRadioState extends State<BadRadio> {
                     flex: 1,
                     child: BadClickable(
                       onClick: () => handleTap(i),
-                      child: Center(child: widget.children[i]),
+                      child: Center(
+                        child: widget.childBuilder(widget.values[i]),
+                      ),
                     ),
                   ),
               ],
@@ -141,7 +151,9 @@ class _BadRadioState extends State<BadRadio> {
                     gradient: widget.activeGradient,
                   ),
                   alignment: Alignment.center,
-                  child: widget.children[activeIndex],
+                  child: (widget.activeChildBuilder ?? widget.childBuilder)(
+                    widget.values[activeIndex],
+                  ),
                 ),
               ),
             ),
