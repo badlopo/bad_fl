@@ -1,12 +1,12 @@
 import 'package:bad_fl/wrapper/clickable.dart';
 import 'package:flutter/material.dart';
 
-class BadRadio<Item> extends StatefulWidget {
-  /// initial index of the radio group
-  final int initialIndex;
+class BadRadio<Item> extends StatelessWidget {
+  /// index of the active item
+  final int activeIndex;
 
-  /// callback when the index changes
-  final ValueChanged<int> onChanged;
+  /// callback when the item is tapped (won't be called if the active item is tapped)
+  final ValueChanged<int> onTap;
 
   /// width of the radio group
   final double? width;
@@ -50,10 +50,18 @@ class BadRadio<Item> extends StatefulWidget {
   /// builder for the active item, if not specified, [childBuilder] will be used
   final Widget Function(Item value)? activeChildBuilder;
 
+  void handleTap(int to) {
+    if (to == activeIndex) return;
+
+    onTap(to);
+  }
+
+  final int _count;
+
   const BadRadio({
     super.key,
-    this.initialIndex = 0,
-    required this.onChanged,
+    required this.activeIndex,
+    required this.onTap,
     this.width,
     required this.height,
     this.padding = const EdgeInsets.all(4),
@@ -67,71 +75,41 @@ class BadRadio<Item> extends StatefulWidget {
     required this.childBuilder,
     this.activeChildBuilder,
   })  : assert(values.length >= 2, 'requires at least 2 items'),
-        assert(
-          initialIndex >= 0 && initialIndex < values.length,
-          'initial index out of range',
-        );
-
-  @override
-  State<BadRadio<Item>> createState() => _BadRadioState<Item>();
-}
-
-class _BadRadioState<Item> extends State<BadRadio<Item>> {
-  late final int count;
-
-  late final BorderRadius? innerRadius;
-
-  int activeIndex = 0;
-
-  void handleTap(int to) {
-    if (to == activeIndex) return;
-
-    setState(() {
-      activeIndex = to;
-    });
-    widget.onChanged(to);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    count = widget.values.length;
-
-    var innerR = widget.borderRadius - widget.padding.horizontal / 2;
-    innerRadius = innerR > 0 ? BorderRadius.circular(innerR) : null;
-
-    activeIndex = widget.initialIndex;
-  }
+        assert(activeIndex >= 0 && activeIndex < values.length, 'out of range'),
+        _count = values.length;
 
   @override
   Widget build(BuildContext context) {
+    final innerR = borderRadius - padding.horizontal / 2;
+    final innerRadius = innerR > 0 ? BorderRadius.circular(innerR) : null;
+
     return Container(
-      width: widget.width,
-      height: widget.height,
-      padding: widget.padding,
+      width: width,
+      height: height,
+      padding: padding,
       decoration: BoxDecoration(
-        color: widget.fill,
-        gradient: widget.gradient,
-        border: widget.border,
-        borderRadius: BorderRadius.circular(widget.borderRadius),
+        color: fill,
+        gradient: gradient,
+        border: border,
+        borderRadius: BorderRadius.circular(borderRadius),
       ),
       child: LayoutBuilder(builder: (_, BoxConstraints constraints) {
-        final double w = constraints.maxWidth / count;
+        final double w = constraints.maxWidth / _count;
         final double h = constraints.maxHeight;
         final double offset = w * activeIndex;
+        final builder = activeChildBuilder ?? childBuilder;
 
         return Stack(
           children: [
             Row(
               children: [
-                for (int i = 0; i < count; i++)
+                for (int i = 0; i < _count; i++)
                   Expanded(
                     flex: 1,
                     child: BadClickable(
                       onClick: () => handleTap(i),
                       child: Center(
-                        child: widget.childBuilder(widget.values[i]),
+                        child: childBuilder(values[i]),
                       ),
                     ),
                   ),
@@ -147,13 +125,11 @@ class _BadRadioState<Item> extends State<BadRadio<Item>> {
                   height: h,
                   decoration: BoxDecoration(
                     borderRadius: innerRadius,
-                    color: widget.activeFill,
-                    gradient: widget.activeGradient,
+                    color: activeFill,
+                    gradient: activeGradient,
                   ),
                   alignment: Alignment.center,
-                  child: (widget.activeChildBuilder ?? widget.childBuilder)(
-                    widget.values[activeIndex],
-                  ),
+                  child: builder(values[activeIndex]),
                 ),
               ),
             ),
