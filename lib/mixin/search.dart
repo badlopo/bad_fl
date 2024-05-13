@@ -41,6 +41,9 @@ mixin BadSearchMixin<ListItemType> on GetxController {
   /// the next page number to search
   int _pageNo = 1;
 
+  /// the next page number to search (read-only)
+  int get pageNo => _pageNo;
+
   /// a [RxList] to store the search result, its generic type is [ListItemType].
   final RxList<ListItemType> resultList = <ListItemType>[].obs;
 
