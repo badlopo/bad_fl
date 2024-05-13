@@ -320,6 +320,7 @@ abstract class RequestImpl {
     );
   }
 
+  /// GET the document as-is
   static RequestWrapper<T> rawGet<T>(
     String path, {
     Map<String, dynamic>? queryParameters,
