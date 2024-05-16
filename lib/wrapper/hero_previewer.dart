@@ -2,6 +2,9 @@ import 'package:bad_fl/wrapper/clickable.dart';
 import 'package:flutter/material.dart';
 
 class BadHeroPreviewer extends StatefulWidget {
+  /// the color to use as mask when previewing the widget
+  final Color maskColor;
+
   /// the widget to display on the screen
   final Widget displayWidget;
 
@@ -10,6 +13,7 @@ class BadHeroPreviewer extends StatefulWidget {
 
   const BadHeroPreviewer({
     super.key,
+    this.maskColor = Colors.black,
     required this.displayWidget,
     this.previewWidget,
   });
@@ -28,6 +32,7 @@ class _BadHeroPreviewerState extends State<BadHeroPreviewer> {
         opaque: false,
         pageBuilder: (ctx, _, __) => _Preview(
           tag: tag,
+          maskColor: widget.maskColor,
           child: widget.previewWidget ?? widget.displayWidget,
         ),
       ),
@@ -45,9 +50,14 @@ class _BadHeroPreviewerState extends State<BadHeroPreviewer> {
 
 class _Preview extends StatefulWidget {
   final UniqueKey tag;
+  final Color maskColor;
   final Widget child;
 
-  const _Preview({required this.tag, required this.child});
+  const _Preview({
+    required this.tag,
+    required this.maskColor,
+    required this.child,
+  });
 
   @override
   State<_Preview> createState() => _PreviewState();
@@ -168,7 +178,7 @@ class _PreviewState extends State<_Preview> {
     return Hero(
       tag: widget.tag,
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: widget.maskColor,
         body: GestureDetector(
           onTap: cancelPreview,
           onDoubleTap: toggleScale,
