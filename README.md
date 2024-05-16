@@ -93,7 +93,7 @@ class ExampleState extends State<Example> {
 
 ### Helper
 
-### [`BadDebouncer`](./lib/helper/debounce.dart)
+#### [`BadDebouncer`](./lib/helper/debounce.dart)
 
 ```dart
 void main() async {
@@ -125,7 +125,7 @@ void main() async {
 // correct action
 ```
 
-### [`BadThrottler`](./lib/helper/throttle.dart)
+#### [`BadThrottler`](./lib/helper/throttle.dart)
 
 ```dart
 void main() async {
@@ -175,23 +175,23 @@ user has accepted the privacy policy.
 
 These classes are fully annotated, please refer to [source code](./lib/impl) for more details.
 
-## Layout
+### Layout
 
 ⏳ WIP
 
-## Mixin
+### Mixin
 
 ⏳ WIP
 
-## Prefab
+### Prefab
 
 ⏳ WIP
 
-## Wrapper
+### Wrapper
 
 Non-visual components that wrap other components.
 
-### [`Clickable`](./lib/wrapper/clickable.dart)
+#### [`Clickable`](./lib/wrapper/clickable.dart)
 
 Add click event listener to the widget.
 
@@ -207,7 +207,7 @@ class ClickableExample extends StatelessWidget {
 }
 ```
 
-# Useful Tips
+## Useful Tips
 
 - When using input components, do not use `borderRadius` and non-fully enclosed `border` at the same time. (will result
   in unexpected lines at the rounded corners)
