@@ -209,6 +209,120 @@ user has accepted the privacy policy.
 | `child`        | `Widget`       | -       | The child widget of the button     |
 | `onClick`      | `VoidCallback` | -       | The click callback of the button   |
 
+#### BadCheckbox
+
+[source code](./lib/prefab/checkbox.dart)
+
+| Property      | Type                    | Default | Description                                                                               |
+|---------------|-------------------------|---------|-------------------------------------------------------------------------------------------|
+| `size`        | `double`                | -       | The size of the checkbox                                                                  |
+| `icon`        | `Widget?`               | -       | The icon of the checkbox (Available when constructed using `BadCheckBox.icon`)            |
+| `iconBuilder` | `Widget Function(bool)` | -       | The icon builder of the checkbox (Available when constructed using `BadCheckBox.builder`) |
+| `iconSize`    | `double`                | `size`  | The size of the icon                                                                      |
+| `border`      | `Border?`               | -       | The border of the checkbox                                                                |
+| `rounded`     | `bool`                  | `true`  | Whether the checkbox is rounded                                                           |
+| `fill`        | `Color?`                | -       | The background color of the checkbox when unchecked                                       |
+| `fillChecked` | `Color?`                | `fill`  | The background color of the checkbox when checked                                         |
+| `checked`     | `bool`                  | -       | Whether the checkbox is checked                                                           |
+| `onTap`       | `VoidCallback`          | -       | The tap callback of the checkbox                                                          |
+
+There are two ways to construct a `BadCheckbox`:
+
+- `BadCheckbox.icon`: Use a fixed icon, the icon will be displayed when the checkbox is **checked**. This is the regular
+  checkbox usage.
+- `BadCheckbox.builder`: Use a custom icon builder. The builder will be called every time the check state changes and
+  get the icon that should be displayed currently (if the result is null, the icon will not be displayed).
+
+You can easily create a checkbox with multiple states using the `BadCheckbox.builder` (a checkbox with three states is
+demonstrated in Example 3)
+
+![](./media/checkbox.gif)
+
+```dart
+class Example extends StatefulWidget {
+  const Example({super.key});
+
+  @override
+  State<Example> createState() => _ExampleState();
+}
+
+class _ExampleState extends State<Example> {
+  bool _v1 = false;
+  bool _v2 = false;
+  int _count = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          // Example 1: Regular Checkbox
+          BadCheckBox.icon(
+            size: 24,
+            icon: const Icon(Icons.check, size: 18),
+            checked: _v1,
+            border: Border.all(),
+            onTap: () {
+              setState(() {
+                _v1 = !_v1;
+              });
+            },
+          ),
+          // Example 2: Custom Icon Builder
+          BadCheckBox.iconBuilder(
+            size: 24,
+            iconBuilder: (c) {
+              return c
+                  ? const Icon(
+                Icons.check,
+                color: Colors.green,
+              )
+                  : const Icon(
+                Icons.close,
+                color: Colors.red,
+              );
+            },
+            checked: _v2,
+            onTap: () {
+              setState(() {
+                _v2 = !_v2;
+              });
+            },
+          ),
+          // Example 3: Multiple States (3 states)
+          BadCheckBox.iconBuilder(
+            size: 24,
+            iconBuilder: (c) {
+              return c
+                  ? const Icon(
+                Icons.check,
+                color: Colors.green,
+              )
+                  : _count % 3 == 1
+                  ? const Icon(
+                Icons.close,
+                color: Colors.red,
+              )
+                  : const Icon(
+                Icons.remove,
+                color: Colors.blue,
+              );
+            },
+            checked: _count % 3 == 0,
+            onTap: () {
+              setState(() {
+                _count += 1;
+              });
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
 ### Wrapper
 
 Non-visual components that wrap other components.
