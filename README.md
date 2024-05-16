@@ -193,7 +193,21 @@ user has accepted the privacy policy.
 
 ### Prefab
 
-⏳ WIP
+#### BadButton
+
+[source code](./lib/prefab/button.dart)
+
+| Property       | Type           | Default | Description                        |
+|----------------|----------------|---------|------------------------------------|
+| `width`        | `double?`      | -       | The width of the button            |
+| `height`       | `double`       | -       | The height of the button           |
+| `margin`       | `EdgeInsets?`  | -       | The margin of the button           |
+| `padding`      | `EdgeInsets?`  | -       | The padding of the button          |
+| `border`       | `Border?`      | -       | The border of the button           |
+| `borderRadius` | `double`       | `0`     | The border radius of the button    |
+| `fill`         | `Color?`       | -       | The background color of the button |
+| `child`        | `Widget`       | -       | The child widget of the button     |
+| `onClick`      | `VoidCallback` | -       | The click callback of the button   |
 
 ### Wrapper
 
