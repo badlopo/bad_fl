@@ -296,6 +296,60 @@ class Example extends StatelessWidget {
 }
 ```
 
+#### BadRefreshable
+
+[source code](./lib/wrapper/refreshable.dart)
+
+A simple encapsulation of [easy_refresh](https://pub.dev/packages/easy_refresh), providing pull-down refresh and pull-up
+loading.
+
+![](./media/refreshable.gif)
+
+```dart
+class Example extends StatefulWidget {
+  const Example({super.key});
+
+  @override
+  State<Example> createState() => _ExampleState();
+}
+
+class _ExampleState extends State<Example> {
+  int _count = 10;
+
+  Future<void> refresh() async {
+    await Future<void>.delayed(const Duration(seconds: 1));
+    setState(() {
+      _count = 10;
+    });
+  }
+
+  Future<void> fetch() async {
+    await Future<void>.delayed(const Duration(seconds: 1));
+    setState(() {
+      _count += 10;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      floatingActionButton: Text('Total: $_count'),
+      body: BadRefreshable(
+        onRefresh: refresh,
+        onLoadMore: fetch,
+        child: ListView.separated(
+          itemCount: _count,
+          itemBuilder: (_, int index) {
+            return ListTile(title: Text('Item $index'));
+          },
+          separatorBuilder: (_, __) => const Divider(),
+        ),
+      ),
+    );
+  }
+}
+```
+
 ## Useful Tips
 
 - When using input components, do not use `borderRadius` and non-fully enclosed `border` at the same time. (will result
