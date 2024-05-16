@@ -20,7 +20,9 @@ caution.
 
 Extension methods of built-in types, named in the form of `<Type>Ext`.
 
-#### [`ListExt`](./lib/extension/list.dart)
+#### ListExt
+
+[source code](./lib/extension/list.dart)
 
 👉 `slotted`: build a new element from each element of the list and insert slot elements between every two elements.
 
@@ -51,7 +53,9 @@ class Example extends StatelessWidget {
 
 Fragment is a large section of content on the interface.
 
-#### [`BadWebviewFragment`](./lib/fragment/webview.dart)
+#### BadWebviewFragment
+
+[source code](./lib/fragment/webview.dart)
 
 ```dart
 class Example extends StatefulWidget {
@@ -93,7 +97,9 @@ class ExampleState extends State<Example> {
 
 ### Helper
 
-#### [`BadDebouncer`](./lib/helper/debounce.dart)
+#### BadDebouncer
+
+[source code](./lib/helper/debounce.dart)
 
 ```dart
 void main() async {
@@ -125,7 +131,9 @@ void main() async {
 // correct action
 ```
 
-#### [`BadThrottler`](./lib/helper/throttle.dart)
+#### BadThrottler
+
+[source code](./lib/helper/throttle.dart)
 
 ```dart
 void main() async {
@@ -156,6 +164,8 @@ void main() async {
 
 ### Impl
 
+These classes are fully annotated, please refer to [source code](./lib/impl) for more details.
+
 Some classes need to be initialized before use. Due to privacy issues, some initialization have to be done after the
 user has accepted the privacy policy.
 
@@ -173,8 +183,6 @@ user has accepted the privacy policy.
 | `MetaImpl`         | ✅         | ✅        |
 | `RequestImpl`      | ❌         | ❌        |
 
-These classes are fully annotated, please refer to [source code](./lib/impl) for more details.
-
 ### Layout
 
 ⏳ WIP
@@ -191,7 +199,9 @@ These classes are fully annotated, please refer to [source code](./lib/impl) for
 
 Non-visual components that wrap other components.
 
-#### [`BadClickable`](./lib/wrapper/clickable.dart)
+#### BadClickable
+
+[source code](./lib/wrapper/clickable.dart)
 
 Add click event listener for the widget.
 
@@ -211,7 +221,9 @@ class Example extends StatelessWidget {
 }
 ```
 
-#### [`BadHeroPreviewer`](./lib/wrapper/hero_previewer.dart)
+#### BadHeroPreviewer
+
+[source code](./lib/wrapper/hero_previewer.dart)
 
 Provide a preview view for the component, with hero animation when opening the preview view.
 
