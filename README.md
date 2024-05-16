@@ -211,6 +211,79 @@ class Example extends StatelessWidget {
 }
 ```
 
+#### [`BadHeroPreviewer`](./lib/wrapper/hero_previewer.dart)
+
+Provide a preview view for the component, with hero animation when opening the preview view.
+
+- image preview:
+
+![](./media/hero_previewer_image.gif)
+
+```dart
+class Example extends StatelessWidget {
+  const Example({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GridView.builder(
+        padding: const EdgeInsets.all(8),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          mainAxisSpacing: 8,
+          crossAxisSpacing: 8,
+          crossAxisCount: 3,
+        ),
+        itemCount: 15,
+        itemBuilder: (_, int index) {
+          return BadHeroPreviewer(
+            displayWidget: Image.network(
+              'https://picsum.photos/seed/num-$index/200',
+              width: 50,
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+```
+
+- custom widget:
+
+![](./media/hero_previewer_custom.gif)
+
+```dart
+class Example extends StatelessWidget {
+  const Example({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: BadHeroPreviewer(
+          displayWidget: Container(
+            color: Colors.green,
+            child: const Text('Click Me!'),
+          ),
+          previewWidget: Container(
+            color: Colors.orange,
+            alignment: Alignment.center,
+            child: const Text(
+              'Wow!\nYou clicked me!',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 32,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+
 ## Useful Tips
 
 - When using input components, do not use `borderRadius` and non-fully enclosed `border` at the same time. (will result
