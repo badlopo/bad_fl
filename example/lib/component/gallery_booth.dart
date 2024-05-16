@@ -131,7 +131,7 @@ abstract class GalleryItem {
       children: [
         BadCheckBox.icon(
           size: 32,
-          checkedColor: Colors.blue,
+          fillChecked: Colors.blue,
           icon: const Icon(Icons.check, size: 24, color: Colors.white),
           checked: true,
           onTap: () {},
@@ -147,7 +147,7 @@ abstract class GalleryItem {
           size: 32,
           icon: const Icon(Icons.accessibility, size: 24, color: Colors.white),
           rounded: false,
-          checkedColor: Colors.orange,
+          fillChecked: Colors.orange,
           checked: true,
           onTap: () {},
         ),
