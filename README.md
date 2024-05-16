@@ -191,17 +191,21 @@ These classes are fully annotated, please refer to [source code](./lib/impl) for
 
 Non-visual components that wrap other components.
 
-#### [`Clickable`](./lib/wrapper/clickable.dart)
+#### [`BadClickable`](./lib/wrapper/clickable.dart)
 
-Add click event listener to the widget.
+Add click event listener for the widget.
 
 ```dart
-class ClickableExample extends StatelessWidget {
+class Example extends StatelessWidget {
+  const Example({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Clickable(
-      onClick: () => print('clicked'),
-      child: Container(width: 100, height: 100, color: Colors.blue),
+    return Scaffold(
+      body: BadClickable(
+        onClick: () => print('clicked'),
+        child: Container(width: 100, height: 100, color: Colors.blue),
+      ),
     );
   }
 }
