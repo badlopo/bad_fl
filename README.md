@@ -323,6 +323,58 @@ class _ExampleState extends State<Example> {
 }
 ```
 
+#### BadKatex
+
+[source code](./lib/prefab/katex.dart)
+
+| Property       | Type                | Default                                                                           | Description                                                    |
+|----------------|---------------------|-----------------------------------------------------------------------------------|----------------------------------------------------------------|
+| `raw`          | `String`            | -                                                                                 | The raw string containing the formula (wrapped by `$` or `$$`) |
+| `prefixes`     | `List<InlineSpan>?` | -                                                                                 | The prefix of the paragraph (e.g. icon)                        |
+| `style`        | `TextStyle?`        | -                                                                                 | The style of the paragraph                                     |
+| `formulaStyle` | `TextStyle?`        | -                                                                                 | The style of the formula (will be merged with `style`)         |
+| `maxLines`     | `int?`              | -                                                                                 | The maximum number of lines                                    |
+| `overflow`     | `TextOverflow?`     | - `null` if `maxLines` is null<br/>- `TextOverflow.ellipsis` if `maxLines` is set | The overflow style of the paragraph                            |
+
+It is a wrapper of [flutter_math_fork](https://pub.dev/packages/flutter_math_fork). You can directly pass in the
+paragraph containing the formula as a raw string, and the formula will be automatically found and rendered.
+
+- Use `$` to wrap inline formulas in the paragraph
+- Use `$$` to wrap block formulas in the paragraph
+- The `\unicode{<code>}` directive has been converted (not supported by `flutter_math_fork`)
+
+![](./media/katex.png)
+
+```dart
+class Example extends StatelessWidget {
+  final String raw = r'''
+When $a \ne 0$, there are two solutions to $ax^2 + bx + c = 0$ and they are
+$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
+''';
+
+  const Example({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          BadKatex(
+            raw: raw,
+            prefixes: const [
+              WidgetSpan(
+                child: Icon(Icons.question_answer, color: Colors.green),
+              ),
+            ],
+            formulaStyle: const TextStyle(color: Colors.orange),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
 ### Wrapper
 
 Non-visual components that wrap other components.
