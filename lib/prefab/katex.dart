@@ -57,8 +57,15 @@ class BadKatex extends StatelessWidget {
   /// prefix elements
   final List<InlineSpan>? prefixes;
 
-  /// text style
+  /// text style for the text
   final TextStyle? style;
+
+  /// text style for the formula
+  ///
+  /// this will override the [style] for the formula (using `style.merge(formulaStyle)`)
+  ///
+  /// Default to [style]
+  final TextStyle? formulaStyle;
 
   /// max number of lines
   ///
@@ -72,8 +79,9 @@ class BadKatex extends StatelessWidget {
     required String raw,
     this.prefixes,
     this.style,
+    TextStyle? formulaStyle,
     this.maxLines,
-    this.overflow,
+    TextOverflow? overflow,
   })  : assert(
           maxLines == null || maxLines > 0,
           'maxLines must be greater than 0 if it is not null',
@@ -82,7 +90,10 @@ class BadKatex extends StatelessWidget {
           prefixes == null || prefixes.isNotEmpty,
           'prefixes cannot be empty if it is not null',
         ),
-        text = _convert(raw);
+        text = _convert(raw),
+        formulaStyle = style == null ? formulaStyle : style.merge(formulaStyle),
+        overflow =
+            overflow ?? (maxLines == null ? null : TextOverflow.ellipsis);
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +128,7 @@ class BadKatex extends StatelessWidget {
           alignment: PlaceholderAlignment.middle,
           child: Math.tex(
             expr,
-            textStyle: style,
+            textStyle: formulaStyle,
             onErrorFallback: (e) => _recover(e, style),
           ),
         ));
@@ -131,7 +142,7 @@ class BadKatex extends StatelessWidget {
             child: Center(
               child: Math.tex(
                 expr,
-                textStyle: style,
+                textStyle: formulaStyle,
                 onErrorFallback: (e) => _recover(e, style),
               ),
             ),
