@@ -49,15 +49,15 @@ class BadText extends StatelessWidget {
 
     /// If not specified, its default value depends on [maxLines]
     ///
-    /// - if [maxLines] is null, [overflowBehavior] is null
-    /// - if [maxLines] is not null, [overflowBehavior] is [TextOverflow.ellipsis]
+    /// - if [maxLines] is null, [overflow] is null
+    /// - if [maxLines] is not null, [overflow] is [TextOverflow.ellipsis]
     ///
     /// Note: does not work with selectable
-    TextOverflow? overflowBehavior,
+    TextOverflow? overflow,
     this.maxLines,
   })  : lineHeight = lineHeight ?? fontSize * 1.2,
-        overflow = overflowBehavior ??
-            (maxLines == null ? null : TextOverflow.ellipsis);
+        overflow =
+            overflow ?? (maxLines == null ? null : TextOverflow.ellipsis);
 
   @override
   Widget build(BuildContext context) {
