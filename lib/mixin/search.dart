@@ -8,7 +8,7 @@ enum SearchEvent {
   noListAttached,
 
   /// search is triggered while still in pending state
-  pending,
+  rejected,
 
   /// search is triggered while there is no more data
   noMoreData,
@@ -83,7 +83,7 @@ mixin BadSearchMixin<ListItemType> on GetxController {
   /// see also: [reloadPage], [searchPage]
   Future<void> nextPage() async {
     if (pending.isTrue) {
-      onSearchEvent(SearchEvent.pending);
+      onSearchEvent(SearchEvent.rejected);
       return;
     } else if (_isEnd) {
       onSearchEvent(SearchEvent.noMoreData);
