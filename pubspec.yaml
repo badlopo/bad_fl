@@ -7,12 +7,12 @@ repository: https://github.com/badlopo/bad_fl
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
-  flutter: ">=3.16.0"
+  flutter: ">=3.22.0"
 
 dependencies:
   device_info_plus: ^10.1.0
   dio: ^5.4.2+1
-  easy_refresh: ^3.3.5+1
+  easy_refresh: ^3.4.0
   flutter:
     sdk: flutter
   flutter_math_fork: ^0.7.2
