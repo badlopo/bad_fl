@@ -129,6 +129,7 @@ class BadKatex extends StatelessWidget {
           child: Math.tex(
             expr,
             textStyle: formulaStyle,
+            mathStyle: MathStyle.text,
             onErrorFallback: (e) => _recover(e, style),
           ),
         ));
