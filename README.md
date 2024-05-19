@@ -197,17 +197,17 @@ user has accepted the privacy policy.
 
 [source code](./lib/prefab/button.dart)
 
-| Property       | Type           | Default | Description                        |
-|----------------|----------------|---------|------------------------------------|
-| `width`        | `double?`      | -       | The width of the button            |
-| `height`       | `double`       | -       | The height of the button           |
-| `margin`       | `EdgeInsets?`  | -       | The margin of the button           |
-| `padding`      | `EdgeInsets?`  | -       | The padding of the button          |
-| `border`       | `Border?`      | -       | The border of the button           |
-| `borderRadius` | `double`       | `0`     | The border radius of the button    |
-| `fill`         | `Color?`       | -       | The background color of the button |
-| `child`        | `Widget`       | -       | The child widget of the button     |
-| `onClick`      | `VoidCallback` | -       | The click callback of the button   |
+| Property       | Type           | Default | Description                    |
+|----------------|----------------|---------|--------------------------------|
+| `width`        | `double?`      | -       | width of the button            |
+| `height`       | `double`       | -       | height of the button           |
+| `margin`       | `EdgeInsets?`  | -       | margin of the button           |
+| `padding`      | `EdgeInsets?`  | -       | padding of the button          |
+| `border`       | `Border?`      | -       | border of the button           |
+| `borderRadius` | `double`       | `0`     | border radius of the button    |
+| `fill`         | `Color?`       | -       | background color of the button |
+| `child`        | `Widget`       | -       | child widget of the button     |
+| `onClick`      | `VoidCallback` | -       | click callback of the button   |
 
 #### BadCheckbox
 
@@ -367,6 +367,61 @@ $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
               ),
             ],
             formulaStyle: const TextStyle(color: Colors.orange),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+#### BadOTPInput
+
+[source code](./lib/prefab/otp_input.dart)
+
+| Property           | Type                        | Default                                                | Description                                                              |
+|--------------------|-----------------------------|--------------------------------------------------------|--------------------------------------------------------------------------|
+| `width`            | `double?`                   | -                                                      | width of the input                                                       |
+| `height`           | `double`                    | -                                                      | height of the input                                                      |
+| `placeholder`      | `String?`                   | -                                                      | placeholder of the input                                                 |
+| `onChanged`        | `ValueChanged<String>?`     | -                                                      | change callback of the input                                             |
+| `onSubmitted`      | `ValueSetter<String>?`      | -                                                      | submit callback of the input                                             |
+| `inputType`        | `TextInputType`             | `TextInputType.text`                                   | input type of the input                                                  |
+| `textInputAction`  | `TextInputAction`           | `TextInputAction.done`                                 | action of the input                                                      |
+| `formatters`       | `List<TextInputFormatter>?` | -                                                      | formatters to restrict input                                             |
+| `style`            | `TextStyle?`                | -                                                      | style of the input                                                       |
+| `placeholderStyle` | `TextStyle?`                | -                                                      | style of the placeholder                                                 |
+| `padding`          | `double`                    | `8`                                                    | space between `prefixWidget`/`sendWidget` and outside of the input field |
+| `space`            | `double`                    | `8`                                                    | space between `prefixWidget`/`sendWidget` and text of the input field    |
+| `fill`             | `Color?`                    | -                                                      | background color of the input                                            |
+| `border`           | `Border?`                   | -                                                      | border of the input                                                      |
+| `borderRadius`     | `double`                    | `0`                                                    | border radius of the input                                               |
+| `prefixWidget`     | `Widget?`                   | -                                                      | widget to display before the input field                                 |
+| `sendWidget`       | `Widget`                    | `const Icon(Icons.send, size: 16, color: Colors.blue)` | widget to display after the input field                                  |
+| `onSendTapped`     | `VoidCallback`              | -                                                      | callback when the `sendWidget` is tapped                                 |
+
+![](./media/otp_input.png)
+
+```dart
+class Example extends StatelessWidget {
+  const Example({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          BadOTPInput(
+            width: 120,
+            height: 32,
+            border: Border.all(color: Colors.grey),
+            borderRadius: 8,
+            onSendTapped: () {
+              print('send tapped');
+            },
+            onSubmitted: (code) {
+              print('submitted: $code');
+            },
           ),
         ],
       ),
