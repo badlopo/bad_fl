@@ -20,9 +20,13 @@ class BadOTPInput extends StatefulWidget {
   final ValueSetter<String>? onSubmitted;
 
   /// type of input (mainly affects keyboard layout on mobile)
+  ///
+  /// Default to `TextInputType.text`
   final TextInputType inputType;
 
   /// action button on mobile keyboard (e.g. done, next, search)
+  ///
+  /// Default to `TextInputAction.done`
   final TextInputAction textInputAction;
 
   /// input formatters to restrict input
@@ -34,12 +38,12 @@ class BadOTPInput extends StatefulWidget {
   /// text style of the placeholder text, ignored if [placeholder] is null
   final TextStyle? placeholderStyle;
 
-  /// space between prefix/suffix and outside of the input field
+  /// space between prefixWidget/sendWidget and outside of the input field
   ///
   /// Default to `8`
   final double padding;
 
-  /// space between prefix/suffix and text of the input field
+  /// space between prefixWidget/sendWidget and text of the input field
   ///
   /// Default to `8`
   final double space;
@@ -61,6 +65,8 @@ class BadOTPInput extends StatefulWidget {
   /// widget to display when 'send' button is available
   ///
   /// Note: there is no constraint on the size of the widget, be careful to its size if you provide a custom widget
+  ///
+  /// Default to `const Icon(Icons.send, size: 16, color: Colors.blue)`
   final Widget sendWidget;
 
   /// callback when the user taps on the send widget
