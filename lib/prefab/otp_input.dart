@@ -62,7 +62,7 @@ class BadOTPInput extends StatefulWidget {
   /// Note: there is no constraint on the size of the widget, be careful to its size
   final Widget? prefixWidget;
 
-  /// widget to display when 'send' button is available
+  /// widget to display as role of send button
   ///
   /// Note: there is no constraint on the size of the widget, be careful to its size if you provide a custom widget
   ///
