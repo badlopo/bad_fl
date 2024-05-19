@@ -10,9 +10,6 @@ class BadPasswordInput extends StatefulWidget {
   /// height of the input field
   final double height;
 
-  /// initial value of the input field
-  final String? initialValue;
-
   /// initial visibility of the password
   ///
   /// Default to `false`
@@ -31,6 +28,8 @@ class BadPasswordInput extends StatefulWidget {
   final ValueSetter<String>? onSubmitted;
 
   /// action button on mobile keyboard (e.g. done, next, search)
+  ///
+  /// Default to `TextInputAction.done`
   final TextInputAction textInputAction;
 
   /// input formatters to restrict input
@@ -42,12 +41,12 @@ class BadPasswordInput extends StatefulWidget {
   /// text style of the placeholder text, ignored if [placeholder] is null
   final TextStyle? placeholderStyle;
 
-  /// space between prefix/suffix and outside of the input field
+  /// space between prefixWidget/suffixWidget and outside of the input field
   ///
   /// Default to `8`
   final double padding;
 
-  /// space between prefix/suffix and text of the input field
+  /// space between prefixWidget/suffixWidget and text of the input field
   ///
   /// Default to `8`
   final double space;
@@ -73,23 +72,22 @@ class BadPasswordInput extends StatefulWidget {
 
   /// widget to display when the password is visible
   ///
-  /// Default to [Icons.visibility_outlined] with size `16` and color [Colors.grey]
-  ///
   /// Note: there is no constraint on the size of the widget, be careful to its size if you provide a custom widget
+  ///
+  /// Default to `const Icon(Icons.visibility_outlined, size: 16, color: Colors.grey)`
   final Widget visibleWidget;
 
   /// widget to display when the password is hidden
   ///
-  /// Default to [Icons.visibility_off_outlined] with size `16` and color [Colors.grey]
-  ///
   /// Note: there is no constraint on the size of the widget, be careful to its size if you provide a custom widget
+  ///
+  /// Default to `const Icon(Icons.visibility_off_outlined, size: 16, color: Colors.grey)`
   final Widget hiddenWidget;
 
   const BadPasswordInput({
     super.key,
     this.width,
     required this.height,
-    this.initialValue,
     this.initialVisibility = false,
     this.placeholder,
     this.onVisibilityChanged,
@@ -106,16 +104,10 @@ class BadPasswordInput extends StatefulWidget {
     this.borderRadius = 0.0,
     this.prefixWidget,
     this.suffixWidget,
-    this.visibleWidget = const Icon(
-      Icons.visibility_outlined,
-      size: 16,
-      color: Colors.grey,
-    ),
-    this.hiddenWidget = const Icon(
-      Icons.visibility_off_outlined,
-      size: 16,
-      color: Colors.grey,
-    ),
+    this.visibleWidget =
+        const Icon(Icons.visibility_outlined, size: 16, color: Colors.grey),
+    this.hiddenWidget =
+        const Icon(Icons.visibility_off_outlined, size: 16, color: Colors.grey),
   });
 
   @override
@@ -141,7 +133,6 @@ class _BadPasswordInputState extends State<BadPasswordInput> {
   @override
   void initState() {
     super.initState();
-    if (widget.initialValue != null) _controller.text = widget.initialValue!;
     _obscureText = !widget.initialVisibility;
   }
 
