@@ -4,11 +4,6 @@ import 'package:get/get.dart';
 
 /// this page is used to test example code in the documentation
 class Example extends StatelessWidget {
-  final String raw = r'''
-When $a \ne 0$, there are two solutions to $ax^2 + bx + c = 0$ and they are
-$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
-''';
-
   const Example({super.key});
 
   @override
@@ -16,14 +11,17 @@ $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
     return Scaffold(
       body: Column(
         children: [
-          BadKatex(
-            raw: raw,
-            prefixes: const [
-              WidgetSpan(
-                child: Icon(Icons.question_answer, color: Colors.green),
-              ),
-            ],
-            formulaStyle: const TextStyle(color: Colors.orange),
+          BadPasswordInput(
+            width: 120,
+            height: 32,
+            border: Border.all(color: Colors.grey),
+            borderRadius: 8,
+            onVisibilityChanged: (to) {
+              print('visibility: $to');
+            },
+            onSubmitted: (code) {
+              print('submitted: $code');
+            },
           ).paddingAll(16),
         ],
       ),
