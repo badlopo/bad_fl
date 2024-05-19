@@ -384,10 +384,10 @@ $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
 | `width`            | `double?`                   | -                                                      | width of the input                                                       |
 | `height`           | `double`                    | -                                                      | height of the input                                                      |
 | `placeholder`      | `String?`                   | -                                                      | placeholder of the input                                                 |
-| `onChanged`        | `ValueChanged<String>?`     | -                                                      | change callback of the input                                             |
-| `onSubmitted`      | `ValueSetter<String>?`      | -                                                      | submit callback of the input                                             |
+| `onChanged`        | `ValueChanged<String>?`     | -                                                      | callback when the value changes                                          |
+| `onSubmitted`      | `ValueSetter<String>?`      | -                                                      | callback when the user submits the input                                 |
 | `inputType`        | `TextInputType`             | `TextInputType.text`                                   | input type of the input                                                  |
-| `textInputAction`  | `TextInputAction`           | `TextInputAction.done`                                 | action of the input                                                      |
+| `textInputAction`  | `TextInputAction`           | `TextInputAction.done`                                 | action button on mobile keyboard                                         |
 | `formatters`       | `List<TextInputFormatter>?` | -                                                      | formatters to restrict input                                             |
 | `style`            | `TextStyle?`                | -                                                      | style of the input                                                       |
 | `placeholderStyle` | `TextStyle?`                | -                                                      | style of the placeholder                                                 |
@@ -397,7 +397,7 @@ $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
 | `border`           | `Border?`                   | -                                                      | border of the input                                                      |
 | `borderRadius`     | `double`                    | `0`                                                    | border radius of the input                                               |
 | `prefixWidget`     | `Widget?`                   | -                                                      | widget to display before the input field                                 |
-| `sendWidget`       | `Widget`                    | `const Icon(Icons.send, size: 16, color: Colors.blue)` | widget to display after the input field                                  |
+| `sendWidget`       | `Widget`                    | `const Icon(Icons.send, size: 16, color: Colors.blue)` | widget to display as role of send button                                 |
 | `onSendTapped`     | `VoidCallback`              | -                                                      | callback when the `sendWidget` is tapped                                 |
 
 ![](./media/otp_input.png)
@@ -418,6 +418,63 @@ class Example extends StatelessWidget {
             borderRadius: 8,
             onSendTapped: () {
               print('send tapped');
+            },
+            onSubmitted: (code) {
+              print('submitted: $code');
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+#### BadPasswordInput
+
+[source code](./lib/prefab/password_input.dart)
+
+| Property              | Type                        | Default                                                                   | Description                                                              |
+|-----------------------|-----------------------------|---------------------------------------------------------------------------|--------------------------------------------------------------------------|
+| `width`               | `double?`                   | -                                                                         | width of the input                                                       |
+| `height`              | `double`                    | -                                                                         | height of the input                                                      |
+| `initialVisibility`   | `bool`                      | `false`                                                                   | initial visibility of the password                                       |
+| `placeholder`         | `String?`                   | -                                                                         | placeholder of the input                                                 |
+| `onVisibilityChanged` | `ValueChanged<bool>?`       | -                                                                         | visibility change callback                                               |
+| `onChanged`           | `ValueChanged<String>?`     | -                                                                         | callback when the value changes                                          |
+| `onSubmitted`         | `ValueSetter<String>?`      | -                                                                         | callback when the user submits the input                                 |
+| `textInputAction`     | `TextInputAction`           | `TextInputAction.done`                                                    | action button on mobile keyboard                                         |
+| `formatters`          | `List<TextInputFormatter>?` | -                                                                         | formatters to restrict input                                             |
+| `style`               | `TextStyle?`                | -                                                                         | style of the input                                                       |
+| `placeholderStyle`    | `TextStyle?`                | -                                                                         | style of the placeholder                                                 |
+| `padding`             | `double`                    | `8`                                                                       | space between `prefixWidget`/`sendWidget` and outside of the input field |
+| `space`               | `double`                    | `8`                                                                       | space between `prefixWidget`/`sendWidget` and text of the input field    |
+| `fill`                | `Color?`                    | -                                                                         | background color of the input                                            |
+| `border`              | `Border?`                   | -                                                                         | border of the input                                                      |
+| `borderRadius`        | `double`                    | `0`                                                                       | border radius of the input                                               |
+| `prefixWidget`        | `Widget?`                   | -                                                                         | widget to display before the input field                                 |
+| `suffixWidget`        | `Widget`                    | -                                                                         | widget to display after the input field                                  |
+| `visibleWidget`       | `Widget`                    | `const Icon(Icons.visibility_outlined, size: 16, color: Colors.grey)`     | widget to display when the password is visible                           |
+| `hiddenWidget`        | `Widget`                    | `const Icon(Icons.visibility_off_outlined, size: 16, color: Colors.grey)` | widget to display when the password is hidden                            |
+
+![](./media/password_input.png)
+
+```dart
+class Example extends StatelessWidget {
+  const Example({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          BadPasswordInput(
+            width: 120,
+            height: 32,
+            border: Border.all(color: Colors.grey),
+            borderRadius: 8,
+            onVisibilityChanged: (to) {
+              print('visibility: $to');
             },
             onSubmitted: (code) {
               print('submitted: $code');
