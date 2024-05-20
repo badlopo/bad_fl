@@ -81,22 +81,23 @@ class BadText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = TextStyle(
+      color: color,
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      fontFamily: fontFamily,
+      height: height,
+      decoration: underline ? TextDecoration.underline : TextDecoration.none,
+      fontStyle: italic ? FontStyle.italic : FontStyle.normal,
+      decorationColor: color,
+      shadows: shadows,
+    );
+
     if (selectable) {
       return SelectableText(
         text,
         magnifierConfiguration: TextMagnifierConfiguration.disabled,
-        style: TextStyle(
-          color: color,
-          fontSize: fontSize,
-          fontWeight: fontWeight,
-          fontFamily: fontFamily,
-          height: height,
-          decoration:
-              underline ? TextDecoration.underline : TextDecoration.none,
-          fontStyle: italic ? FontStyle.italic : FontStyle.normal,
-          decorationColor: color,
-          shadows: shadows,
-        ),
+        style: style,
         textAlign: textAlign,
         textDirection: textDirection,
         maxLines: maxLines,
@@ -105,22 +106,11 @@ class BadText extends StatelessWidget {
 
     return Text(
       text,
-      style: TextStyle(
-        color: color,
-        fontSize: fontSize,
-        fontWeight: fontWeight,
-        fontFamily: fontFamily,
-        height: height,
-        decoration:
-            underline == true ? TextDecoration.underline : TextDecoration.none,
-        fontStyle: italic ? FontStyle.italic : FontStyle.normal,
-        decorationColor: color,
-        shadows: shadows,
-      ),
+      style: style,
       textAlign: textAlign,
       textDirection: textDirection,
-      overflow: overflow,
       maxLines: maxLines,
+      overflow: overflow,
     );
   }
 }
