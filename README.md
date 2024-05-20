@@ -551,6 +551,62 @@ class _ExampleState extends State<Example> {
 }
 ```
 
+#### BadSwitch
+
+[source code](./lib/prefab/switch.dart)
+
+| Property            | Type           | Default        | Description                                              |
+|---------------------|----------------|----------------|----------------------------------------------------------|
+| `active`            | `bool`         | -              | whether the switch is active                             |
+| `onTap`             | `VoidCallback` | -              | callback when the switch is tapped                       |
+| `width`             | `double`       | -              | width of the switch                                      |
+| `height`            | `double`       | -              | height of the switch                                     |
+| `gap`               | `double`       | `1`            | gap between the track and the handle, in `[0, height/2)` |
+| `handleColor`       | `Color`        | `Colors.white` | color of the handle                                      |
+| `handleColorActive` | `Color`        | `Colors.white` | color of the handle when active                          |
+| `trackColor`        | `Color`        | `Colors.grey`  | color of the track                                       |
+| `trackColorActive`  | `Color`        | `Colors.blue`  | color of the track when active                           |
+
+![](./media/switch.gif)
+
+```dart
+class Example extends StatefulWidget {
+  const Example({super.key});
+
+  @override
+  State<Example> createState() => _ExampleState();
+}
+
+class _ExampleState extends State<Example> {
+  bool active = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          BadSwitch(
+            width: 64,
+            height: 32,
+            gap: 2,
+            active: active,
+            handleColorActive: Colors.orange,
+            trackColor: Colors.grey[200]!,
+            trackColorActive: Colors.orange[200]!,
+            onTap: () {
+              setState(() {
+                active = !active;
+              });
+              print('active: $active');
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
 ### Wrapper
 
 Non-visual components that wrap other components.

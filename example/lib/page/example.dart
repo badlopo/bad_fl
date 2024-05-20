@@ -46,29 +46,26 @@ class Example extends StatefulWidget {
 }
 
 class _ExampleState extends State<Example> {
-  int activeIndex = 0;
+  bool active = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          BadRadio(
-            activeIndex: activeIndex,
-            onTap: (int to) {
-              setState(() {
-                activeIndex = to;
-              });
-              print('tapped $to');
-            },
+          BadSwitch(
+            width: 64,
             height: 32,
-            borderRadius: 16,
-            fill: Colors.grey[200],
-            activeFill: Colors.blue[200],
-            values: const ['Item1', 'Item2', 'Item3'],
-            childBuilder: (label) => BadText(label),
-            activeChildBuilder: (label) {
-              return BadText('$label!', color: Colors.white);
+            gap: 2,
+            active: active,
+            handleColorActive: Colors.orange,
+            trackColor: Colors.grey[200]!,
+            trackColorActive: Colors.orange[200]!,
+            onTap: () {
+              setState(() {
+                active = !active;
+              });
+              print('active: $active');
             },
           ),
         ],
