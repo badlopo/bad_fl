@@ -607,6 +607,63 @@ class _ExampleState extends State<Example> {
 }
 ```
 
+#### BadText
+
+[source code](./lib/prefab/text.dart)
+
+| Property        | Type            | Default                                                       | Description                                                   |
+|-----------------|-----------------|---------------------------------------------------------------|---------------------------------------------------------------|
+| `text`          | `String`        | -                                                             | text content                                                  |
+| `fontFamily`    | `String?`       | -                                                             | font family                                                   |
+| `selectable`    | `bool`          | - `false` for `BadText`<br/>- `true` for `BadText.selectable` | whether the text is selectable                                |
+| `color`         | `Color?`        | -                                                             | text color                                                    |
+| `fontSize`      | `double`        | `16`                                                          | font size                                                     |
+| `fontWeight`    | `FontWeight`    | `FontWeight.w400`                                             | font weight                                                   |
+| `lineHeight`    | `double`        | `fontSize * 1.2`                                              | line height                                                   |
+| `underline`     | `bool`          | `false`                                                       | whether the text is underlined                                |
+| `italic`        | `bool`          | `false`                                                       | whether the text is italic                                    |
+| `shadows`       | `List<Shadow>?` | -                                                             | shadows of the text                                           |
+| `textAlign`     | `TextAlign`     | `TextAlign.start`                                             | text alignment                                                |
+| `textDirection` | `TextDirection` | `TextDirection.ltr`                                           | text direction                                                |
+| `overflow`      | `TextOverflow?` | -                                                             | text overflow style (does not work with `BadText.selectable`) |
+| `maxLines`      | `int?`          | -                                                             | maximum number of lines                                       |
+
+![](./media/text.gif)
+
+```dart
+
+const lorem =
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+
+class Example extends StatelessWidget {
+  final RxInt activeIndex = 0.obs;
+
+  Example({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: const [
+          BadText('BadText', color: Colors.grey),
+          BadText(lorem),
+          Divider(),
+          BadText('BadText with maxLine 1', color: Colors.grey),
+          BadText(lorem, maxLines: 1),
+          Divider(),
+          BadText('BadText.selectable', color: Colors.grey),
+          BadText.selectable(lorem),
+          Divider(),
+          BadText('BadText.selectable with maxLine 1', color: Colors.grey),
+          BadText.selectable(lorem, maxLines: 1),
+        ],
+      ),
+    );
+  }
+}
+```
+
 ### Wrapper
 
 Non-visual components that wrap other components.
