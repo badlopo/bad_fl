@@ -17,9 +17,24 @@ class BadSwitch extends StatelessWidget {
   /// gap between the track and the handle, in [0, height/2)
   final double gap;
 
+  /// color of the handle
+  ///
+  /// Defaults to `Colors.white`
   final Color handleColor;
+
+  /// color of the handle when active
+  ///
+  /// Defaults to `Colors.white`
   final Color handleColorActive;
+
+  /// color of the track
+  ///
+  /// Defaults to `Colors.grey`
   final Color trackColor;
+
+  /// color of the track when active
+  ///
+  /// Defaults to `Colors.blue`
   final Color trackColorActive;
 
   const BadSwitch({
