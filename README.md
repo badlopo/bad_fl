@@ -664,6 +664,22 @@ class Example extends StatelessWidget {
 }
 ```
 
+#### BadTextField
+
+[source code](./lib/prefab/text_field.dart)
+
+TODO: Properties
+TODO: Screenshot
+TODO: Example
+
+#### BadTextInput
+
+[source code](./lib/prefab/text_input.dart)
+
+TODO: Properties
+TODO: Screenshot
+TODO: Example
+
 ### Wrapper
 
 Non-visual components that wrap other components.
