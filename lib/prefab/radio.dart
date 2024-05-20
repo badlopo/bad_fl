@@ -30,7 +30,7 @@ class BadRadio<Item> extends StatelessWidget {
 
   /// background gradient of the radio group
   ///
-  /// Note: If this is specified, [fill] has no effect.
+  /// Note: [fill] will be ignored if this is specified.
   final Gradient? gradient;
 
   /// background color of the active item
@@ -38,7 +38,7 @@ class BadRadio<Item> extends StatelessWidget {
 
   /// background gradient of the active item
   ///
-  /// Note: If this is specified, [activeFill] has no effect.
+  /// Note: [activeFill] will be ignored if this is specified.
   final Gradient? activeGradient;
 
   /// values for each item

@@ -66,7 +66,7 @@ class BadOTPInput extends StatefulWidget {
   ///
   /// Note: there is no constraint on the size of the widget, be careful to its size if you provide a custom widget
   ///
-  /// Default to `const Icon(Icons.send, size: 16, color: Colors.blue)`
+  /// Default to `Icon(Icons.send, size: 16, color: Colors.blue)`
   final Widget sendWidget;
 
   /// callback when the user taps on the send widget

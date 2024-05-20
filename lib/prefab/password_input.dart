@@ -74,14 +74,14 @@ class BadPasswordInput extends StatefulWidget {
   ///
   /// Note: there is no constraint on the size of the widget, be careful to its size if you provide a custom widget
   ///
-  /// Default to `const Icon(Icons.visibility_outlined, size: 16, color: Colors.grey)`
+  /// Default to `Icon(Icons.visibility_outlined, size: 16, color: Colors.grey)`
   final Widget visibleWidget;
 
   /// widget to display when the password is hidden
   ///
   /// Note: there is no constraint on the size of the widget, be careful to its size if you provide a custom widget
   ///
-  /// Default to `const Icon(Icons.visibility_off_outlined, size: 16, color: Colors.grey)`
+  /// Default to `Icon(Icons.visibility_off_outlined, size: 16, color: Colors.grey)`
   final Widget hiddenWidget;
 
   const BadPasswordInput({
