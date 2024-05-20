@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class BadTextInput extends StatefulWidget {
+  /// provide a [TextEditingController] to control the input field outside of the widget
+  final TextEditingController? controller;
+
   /// width of the input field
   final double? width;
 
@@ -18,6 +21,9 @@ class BadTextInput extends StatefulWidget {
 
   /// callback when the value changes
   final ValueChanged<String>? onChanged;
+
+  /// callback when the `clearWidget` is clicked
+  final VoidCallback? onCleared;
 
   /// callback when the user submits the input (e.g. press enter)
   final ValueSetter<String>? onSubmitted;
@@ -75,11 +81,13 @@ class BadTextInput extends StatefulWidget {
 
   const BadTextInput({
     super.key,
+    this.controller,
     this.width,
     required this.height,
     this.initialValue,
     this.placeholder,
     this.onChanged,
+    this.onCleared,
     this.onSubmitted,
     this.inputType = TextInputType.text,
     this.textInputAction = TextInputAction.done,
@@ -105,11 +113,12 @@ class BadTextInput extends StatefulWidget {
 }
 
 class _BadTextInputState extends State<BadTextInput> {
-  final TextEditingController _controller = TextEditingController();
+  late final TextEditingController _controller;
 
   @override
   void initState() {
     super.initState();
+    _controller = widget.controller ?? TextEditingController();
     if (widget.initialValue != null) _controller.text = widget.initialValue!;
   }
 
@@ -122,6 +131,7 @@ class _BadTextInputState extends State<BadTextInput> {
   void handleClear() {
     _controller.clear();
     widget.onChanged?.call('');
+    widget.onCleared?.call();
   }
 
   @override
