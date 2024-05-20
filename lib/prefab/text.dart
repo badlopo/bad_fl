@@ -1,42 +1,49 @@
 import 'package:flutter/material.dart';
 
-const _error1 = '[TextImpl] overflow does not work with selectable!';
-const _error2 =
-    '[TextImpl] use maxLines with selectable text may cause unexpected scroll!';
-
 class BadText extends StatelessWidget {
   final String text;
   final String? fontFamily;
 
-  /// 是否可选中, 默认 false
+  /// whether the text is selectable
+  ///
+  /// - `false` for `BadText`
+  /// - `true` for `BadText.selectable`
   final bool selectable;
   final Color? color;
 
-  /// 字体大小, 默认 16
+  /// font size
+  ///
+  /// Default to `16`
   final double fontSize;
 
-  /// 字体粗细, 默认 w400
+  /// font weight
+  ///
+  /// Default to `FontWeight.w400`
   final FontWeight fontWeight;
 
-  /// 行高, 使用具体数值, 默认 1.2 * 16 = 19.2
+  /// line height
+  ///
+  /// Default to `fontSize * 1.2`
   final double lineHeight;
 
   double get height => lineHeight / fontSize;
   final bool underline;
   final bool italic;
   final List<Shadow>? shadows;
-  final TextAlign? textAlign;
-  final TextDirection? textDirection;
+  final TextAlign textAlign;
+  final TextDirection textDirection;
 
-  /// Note: does not work with selectable
   final TextOverflow? overflow;
   final int? maxLines;
 
+  /// If `overflow` is not specified, its default value depends on [maxLines]:
+  ///
+  /// - if [maxLines] is null, [overflow] is null
+  /// - if [maxLines] is not null, [overflow] is [TextOverflow.ellipsis]
   const BadText(
     this.text, {
     super.key,
     this.fontFamily,
-    this.selectable = false,
     this.color,
     this.fontSize = 16,
     this.fontWeight = FontWeight.w400,
@@ -44,34 +51,39 @@ class BadText extends StatelessWidget {
     this.underline = false,
     this.italic = false,
     this.shadows,
-    this.textAlign,
-    this.textDirection,
-
-    /// If not specified, its default value depends on [maxLines]
-    ///
-    /// - if [maxLines] is null, [overflow] is null
-    /// - if [maxLines] is not null, [overflow] is [TextOverflow.ellipsis]
-    ///
-    /// Note: does not work with selectable
+    this.textAlign = TextAlign.start,
+    this.textDirection = TextDirection.ltr,
     TextOverflow? overflow,
     this.maxLines,
-  })  : lineHeight = lineHeight ?? fontSize * 1.2,
+  })  : selectable = false,
+        lineHeight = lineHeight ?? fontSize * 1.2,
         overflow =
             overflow ?? (maxLines == null ? null : TextOverflow.ellipsis);
+
+  /// If `maxLines` is specified, the text may scroll horizontally.
+  const BadText.selectable(
+    this.text, {
+    super.key,
+    this.fontFamily,
+    this.color,
+    this.fontSize = 16,
+    this.fontWeight = FontWeight.w400,
+    double? lineHeight,
+    this.underline = false,
+    this.italic = false,
+    this.shadows,
+    this.textAlign = TextAlign.start,
+    this.textDirection = TextDirection.ltr,
+    this.maxLines,
+  })  : selectable = true,
+        lineHeight = lineHeight ?? fontSize * 1.2,
+        overflow = null;
 
   @override
   Widget build(BuildContext context) {
     if (selectable) {
-      if (overflow != null) {
-        throw Exception(_error1);
-      }
-      if (maxLines != null) {
-        throw Exception(_error2);
-      }
-
       return SelectableText(
         text,
-        // disable magnifier
         magnifierConfiguration: TextMagnifierConfiguration.disabled,
         style: TextStyle(
           color: color,
