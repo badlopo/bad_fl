@@ -22,6 +22,9 @@ class BadTextField extends StatefulWidget {
   /// callback when the value changes
   final ValueChanged<String>? onChanged;
 
+  /// callback when the `clearWidget` is clicked
+  final VoidCallback? onCleared;
+
   /// callback when the user submits (e.g. press enter)
   final ValueSetter<String>? onSubmitted;
 
@@ -82,6 +85,7 @@ class BadTextField extends StatefulWidget {
     this.initialValue,
     this.placeholder,
     this.onChanged,
+    this.onCleared,
     this.onSubmitted,
     this.textInputAction = TextInputAction.newline,
     this.formatters,
@@ -107,6 +111,7 @@ class _BadTextFieldState extends State<BadTextField> {
   void handleClear() {
     _controller.clear();
     widget.onChanged?.call('');
+    widget.onCleared?.call();
   }
 
   /// callback when the text in the text field changes
