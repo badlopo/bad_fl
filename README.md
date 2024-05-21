@@ -213,18 +213,18 @@ user has accepted the privacy policy.
 
 [source code](./lib/prefab/checkbox.dart)
 
-| Property      | Type                    | Default | Description                                                                               |
-|---------------|-------------------------|---------|-------------------------------------------------------------------------------------------|
-| `size`        | `double`                | -       | The size of the checkbox                                                                  |
-| `icon`        | `Widget?`               | -       | The icon of the checkbox (Available when constructed using `BadCheckBox.icon`)            |
-| `iconBuilder` | `Widget Function(bool)` | -       | The icon builder of the checkbox (Available when constructed using `BadCheckBox.builder`) |
-| `iconSize`    | `double`                | `size`  | The size of the icon                                                                      |
-| `border`      | `Border?`               | -       | The border of the checkbox                                                                |
-| `rounded`     | `bool`                  | `true`  | Whether the checkbox is rounded                                                           |
-| `fill`        | `Color?`                | -       | The background color of the checkbox when unchecked                                       |
-| `fillChecked` | `Color?`                | `fill`  | The background color of the checkbox when checked                                         |
-| `checked`     | `bool`                  | -       | Whether the checkbox is checked                                                           |
-| `onTap`       | `VoidCallback`          | -       | The tap callback of the checkbox                                                          |
+| Property      | Type                    | Default | Description                                                                           |
+|---------------|-------------------------|---------|---------------------------------------------------------------------------------------|
+| `size`        | `double`                | -       | size of the checkbox                                                                  |
+| `icon`        | `Widget?`               | -       | icon of the checkbox (Available when constructed using `BadCheckBox.icon`)            |
+| `iconBuilder` | `Widget Function(bool)` | -       | icon builder of the checkbox (Available when constructed using `BadCheckBox.builder`) |
+| `iconSize`    | `double`                | `size`  | size of the icon                                                                      |
+| `border`      | `Border?`               | -       | border of the checkbox                                                                |
+| `rounded`     | `bool`                  | `true`  | whether the checkbox is rounded                                                       |
+| `fill`        | `Color?`                | -       | background color of the checkbox when unchecked                                       |
+| `fillChecked` | `Color?`                | `fill`  | background color of the checkbox when checked                                         |
+| `checked`     | `bool`                  | -       | whether the checkbox is checked                                                       |
+| `onTap`       | `VoidCallback`          | -       | tap callback of the checkbox                                                          |
 
 There are two ways to construct a `BadCheckbox`:
 
@@ -327,14 +327,14 @@ class _ExampleState extends State<Example> {
 
 [source code](./lib/prefab/katex.dart)
 
-| Property       | Type                | Default                                                                           | Description                                                    |
-|----------------|---------------------|-----------------------------------------------------------------------------------|----------------------------------------------------------------|
-| `raw`          | `String`            | -                                                                                 | The raw string containing the formula (wrapped by `$` or `$$`) |
-| `prefixes`     | `List<InlineSpan>?` | -                                                                                 | The prefix of the paragraph (e.g. icon)                        |
-| `style`        | `TextStyle?`        | -                                                                                 | The style of the paragraph                                     |
-| `formulaStyle` | `TextStyle?`        | -                                                                                 | The style of the formula (will be merged with `style`)         |
-| `maxLines`     | `int?`              | -                                                                                 | The maximum number of lines                                    |
-| `overflow`     | `TextOverflow?`     | - `null` if `maxLines` is null<br/>- `TextOverflow.ellipsis` if `maxLines` is set | The overflow style of the paragraph                            |
+| Property       | Type                | Default                                                                           | Description                                                |
+|----------------|---------------------|-----------------------------------------------------------------------------------|------------------------------------------------------------|
+| `raw`          | `String`            | -                                                                                 | raw string containing the formula (wrapped by `$` or `$$`) |
+| `prefixes`     | `List<InlineSpan>?` | -                                                                                 | prefix widgets of the paragraph (e.g. icon)                |
+| `style`        | `TextStyle?`        | -                                                                                 | style of the paragraph                                     |
+| `formulaStyle` | `TextStyle?`        | -                                                                                 | style of the formula (will be merged with `style`)         |
+| `maxLines`     | `int?`              | -                                                                                 | maximum number of lines                                    |
+| `overflow`     | `TextOverflow?`     | - `null` if `maxLines` is null<br/>- `TextOverflow.ellipsis` if `maxLines` is set | overflow style of the paragraph                            |
 
 It is a wrapper of [flutter_math_fork](https://pub.dev/packages/flutter_math_fork). You can directly pass in the
 paragraph containing the formula as a raw string, and the formula will be automatically found and rendered.
@@ -386,7 +386,7 @@ $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
 | `placeholder`      | `String?`                   | -                                                | placeholder of the input                                                 |
 | `onChanged`        | `ValueChanged<String>?`     | -                                                | callback when the value changes                                          |
 | `onSubmitted`      | `ValueSetter<String>?`      | -                                                | callback when the user submits the input                                 |
-| `inputType`        | `TextInputType`             | `TextInputType.text`                             | input type of the input                                                  |
+| `inputType`        | `TextInputType`             | `TextInputType.text`                             | type of input (mainly affects keyboard layout on mobile)                 |
 | `textInputAction`  | `TextInputAction`           | `TextInputAction.done`                           | action button on mobile keyboard                                         |
 | `formatters`       | `List<TextInputFormatter>?` | -                                                | formatters to restrict input                                             |
 | `style`            | `TextStyle?`                | -                                                | style of the input                                                       |
@@ -674,6 +674,7 @@ class Example extends StatelessWidget {
 | `initialValue`     | `String?`                   | -                                                 | initial value of the text field                     |
 | `placeholder`      | `String?`                   | -                                                 | placeholder text                                    |
 | `onChanged`        | `ValueChanged<String>?`     | -                                                 | callback when the value changes                     |
+| `onCleared`        | `VoidCallback?`             | -                                                 | callback when the `clearWidget` is tapped           |
 | `onSubmitted`      | `ValueSetter<String>?`      | -                                                 | callback when the user submits (e.g. press enter)   |
 | `textInputAction`  | `TextInputAction`           | `TextInputAction.newline`                         | action button on mobile keyboard                    |
 | `formatters`       | `List<TextInputFormatter>?` | -                                                 | formatters to restrict text field                   |
@@ -726,9 +727,86 @@ class Example extends StatelessWidget {
 
 [source code](./lib/prefab/text_input.dart)
 
-TODO: Properties
-TODO: Screenshot
-TODO: Example
+| Property           | Type                        | Default                                           | Description                                                                |
+|--------------------|-----------------------------|---------------------------------------------------|----------------------------------------------------------------------------|
+| `controller`       | `TextEditingController?`    | -                                                 | controller of the input field                                              |
+| `width`            | `double?`                   | -                                                 | width of the input field                                                   |
+| `height`           | `double`                    | -                                                 | height of the input field                                                  |
+| `initialValue`     | `String?`                   | -                                                 | initial value of the input field                                           |
+| `placeholder`      | `String?`                   | -                                                 | placeholder text                                                           |
+| `onChanged`        | `ValueChanged<String>?`     | -                                                 | callback when the value changes                                            |
+| `onCleared`        | `VoidCallback?`             | -                                                 | callback when the `clearWidget` is tapped                                  |
+| `onSubmitted`      | `ValueSetter<String>?`      | -                                                 | callback when the user submits (e.g. press enter)                          |
+| `inputType`        | `TextInputType`             | `TextInputType.text`                              | type of input (mainly affects keyboard layout on mobile)                   |
+| `textInputAction`  | `TextInputAction`           | `TextInputAction.done`                            | action button on mobile keyboard                                           |
+| `formatters`       | `List<TextInputFormatter>?` | -                                                 | formatters to restrict input field                                         |
+| `style`            | `TextStyle?`                | -                                                 | style of the input field                                                   |
+| `placeholderStyle` | `TextStyle?`                | -                                                 | style of the placeholder                                                   |
+| `padding`          | `double`                    | `8`                                               | space between `prefixWidget`/`suffixWidget` and outside of the input field |
+| `space`            | `double`                    | `8`                                               | space between `prefixWidget`/`suffixWidget` and text of the input field    |
+| `fill`             | `Color?`                    | -                                                 | background color of the input field                                        |
+| `border`           | `Border?`                   | -                                                 | border of the input field                                                  |
+| `borderRadius`     | `double`                    | `0`                                               | border radius of the input field                                           |
+| `prefixWidget`     | `Widget?`                   | -                                                 | widget to display before the input field                                   |
+| `suffixWidget`     | `Widget?`                   | -                                                 | widget to display after the input field                                    |
+| `clearWidget`      | `Widget`                    | `Icon(Icons.clear, size: 16, color: Colors.grey)` | widget to click to clear the input field                                   |
+
+![](./media/text_input.gif)
+
+```dart
+class Example extends StatelessWidget {
+  const Example({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          const Text('BadTextInput with background color'),
+          BadTextInput(
+            height: 36,
+            borderRadius: 4,
+            fill: Colors.grey[200],
+          ),
+          const Divider(),
+          const Text('BadTextInput with border'),
+          BadTextInput(
+            height: 36,
+            border: Border.all(),
+            borderRadius: 4,
+          ),
+          const Divider(),
+          const Text('BadTextInput with underline'),
+          BadTextInput(
+            height: 36,
+            border: const Border(bottom: BorderSide()),
+          ),
+          const Divider(),
+          const Text('BadTextInput with prefix / suffix / ...'),
+          BadTextInput(
+            height: 36,
+            placeholder: 'Search something ...',
+            placeholderStyle: TextStyle(
+              fontSize: 14,
+              color: Colors.grey[400],
+              fontWeight: FontWeight.w400,
+            ),
+            border: const Border(bottom: BorderSide()),
+            prefixWidget: const Icon(Icons.search),
+            suffixWidget: TextButton(
+              onPressed: () {
+                print('confirm');
+              },
+              child: const Text('Confirm'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
 
 ### Wrapper
 

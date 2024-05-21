@@ -10,20 +10,43 @@ class Example extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          const Text('BadTextField with clear'),
-          BadTextField(
-            height: 108,
-            borderRadius: 8,
-            fill: Colors.grey[200]!,
-            clearWidget: const Text('clear all!'),
+          const Text('BadTextInput with background color'),
+          BadTextInput(
+            height: 36,
+            borderRadius: 4,
+            fill: Colors.grey[200],
           ),
           const Divider(),
-          const Text('BadTextField with counter'),
-          BadTextField(
-            height: 108,
-            borderRadius: 8,
-            fill: Colors.grey[200]!,
-            maxLength: 200,
+          const Text('BadTextInput with border'),
+          BadTextInput(
+            height: 36,
+            border: Border.all(),
+            borderRadius: 4,
+          ),
+          const Divider(),
+          const Text('BadTextInput with underline'),
+          BadTextInput(
+            height: 36,
+            border: const Border(bottom: BorderSide()),
+          ),
+          const Divider(),
+          const Text('BadTextInput with prefix / suffix / ...'),
+          BadTextInput(
+            height: 36,
+            placeholder: 'Search something ...',
+            placeholderStyle: TextStyle(
+              fontSize: 14,
+              color: Colors.grey[400],
+              fontWeight: FontWeight.w400,
+            ),
+            border: const Border(bottom: BorderSide()),
+            prefixWidget: const Icon(Icons.search),
+            suffixWidget: TextButton(
+              onPressed: () {
+                print('confirm');
+              },
+              child: const Text('Confirm'),
+            ),
           ),
         ],
       ),
