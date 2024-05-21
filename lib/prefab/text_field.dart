@@ -4,13 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class BadTextField extends StatefulWidget {
-  /// width of the input field
+  /// provide a [TextEditingController] to control the input field outside of the widget
+  final TextEditingController? controller;
+
+  /// width of the text field
   final double? width;
 
-  /// height of the input field
+  /// height of the text field
   final double height;
 
-  /// initial value of the input field
+  /// initial value of the text field
   final String? initialValue;
 
   /// placeholder text
@@ -19,7 +22,7 @@ class BadTextField extends StatefulWidget {
   /// callback when the value changes
   final ValueChanged<String>? onChanged;
 
-  /// callback when the user submits the input (e.g. press enter)
+  /// callback when the user submits (e.g. press enter)
   final ValueSetter<String>? onSubmitted;
 
   /// action button on mobile keyboard (e.g. done, next, search)
@@ -31,12 +34,12 @@ class BadTextField extends StatefulWidget {
   /// maximum count of characters.
   ///
   /// - If null, there is no limit on the number of characters. A [clearWidget] will be shown.
-  /// - If positive, the number of characters will be shown. A countWidget (provided by [countWidgetBuilder]) will be shown.
+  /// - If positive, the number of characters will be shown. A countWidget will be shown.
   ///
   /// Default to `null`
   final int? maxLength;
 
-  /// text style of the input field
+  /// text style of the text field
   final TextStyle? style;
 
   /// text style of the placeholder text, ignored if [placeholder] is null
@@ -45,7 +48,7 @@ class BadTextField extends StatefulWidget {
   /// text style of the count widget, only used when [maxLength] is not null
   final TextStyle? countStyle;
 
-  /// space between content and outside of the input field
+  /// space between content and outside of the text field
   ///
   /// Default to `EdgeInsets.all(8)`
   final EdgeInsets padding;
@@ -55,31 +58,32 @@ class BadTextField extends StatefulWidget {
   /// Default to `4`
   final double space;
 
-  /// background color of the input field
+  /// background color of the text field
   final Color? fill;
 
-  /// border of the input field
+  /// border of the text field
   final BoxBorder? border;
 
-  /// border radius of the input field
+  /// border radius of the text field
   final double borderRadius;
 
-  /// widget to click to clear the input field
+  /// widget to click to clear the text field
   ///
-  /// Default to [Icons.close_rounded] with size `16` and color [Colors.grey]
+  /// Default to `Icon(Icons.clear, size: 20, color: Colors.grey)`
   ///
   /// Note: there is no constraint on the size of the widget, be careful to its size if you provide a custom widget
   final Widget clearWidget;
 
   const BadTextField({
     super.key,
+    this.controller,
     this.width,
     required this.height,
     this.initialValue,
     this.placeholder,
     this.onChanged,
     this.onSubmitted,
-    this.textInputAction = TextInputAction.done,
+    this.textInputAction = TextInputAction.newline,
     this.formatters,
     this.maxLength,
     this.style,
@@ -90,11 +94,7 @@ class BadTextField extends StatefulWidget {
     this.fill,
     this.border,
     this.borderRadius = 0.0,
-    this.clearWidget = const Icon(
-      Icons.close_rounded,
-      size: 20,
-      color: Colors.grey,
-    ),
+    this.clearWidget = const Icon(Icons.clear, size: 20, color: Colors.grey),
   }) : assert(maxLength == null || maxLength > 0, 'maxLength must be positive');
 
   @override
@@ -102,14 +102,14 @@ class BadTextField extends StatefulWidget {
 }
 
 class _BadTextFieldState extends State<BadTextField> {
-  final TextEditingController _controller = TextEditingController();
+  late final TextEditingController _controller;
 
   void handleClear() {
     _controller.clear();
     widget.onChanged?.call('');
   }
 
-  /// callback when the text in the input field changes
+  /// callback when the text in the text field changes
   void changeObserver() {
     // OPT: here we rebuild every time the text changes, which is not efficient.
     // update the count widget
@@ -119,8 +119,9 @@ class _BadTextFieldState extends State<BadTextField> {
   @override
   void initState() {
     super.initState();
-    _controller.addListener(changeObserver);
+    _controller = widget.controller ?? TextEditingController();
     if (widget.initialValue != null) _controller.text = widget.initialValue!;
+    _controller.addListener(changeObserver);
   }
 
   @override
@@ -180,10 +181,10 @@ class _BadTextFieldState extends State<BadTextField> {
     // always use the stack wrapper to avoid rebuilds caused by hierarchy changes
     return Stack(
       children: [
-        // the underlying input field
+        // the underlying text field
         inner,
 
-        // show placeholder if the input field is empty and a placeholder is provided with a non-empty string
+        // show placeholder if the text field is empty and a placeholder is provided with a non-empty string
         if (_controller.text.isEmpty && widget.placeholder?.isNotEmpty == true)
           IgnorePointer(
             child: Padding(
