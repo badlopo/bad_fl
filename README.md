@@ -636,9 +636,7 @@ const lorem =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
 
 class Example extends StatelessWidget {
-  final RxInt activeIndex = 0.obs;
-
-  Example({super.key});
+  const Example({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -668,9 +666,61 @@ class Example extends StatelessWidget {
 
 [source code](./lib/prefab/text_field.dart)
 
-TODO: Properties
-TODO: Screenshot
-TODO: Example
+| Property           | Type                        | Default                                           | Description                                         |
+|--------------------|-----------------------------|---------------------------------------------------|-----------------------------------------------------|
+| `controller`       | `TextEditingController?`    | -                                                 | controller of the text field                        |
+| `width`            | `double?`                   | -                                                 | width of the text field                             |
+| `height`           | `double`                    | -                                                 | height of the text field                            |
+| `initialValue`     | `String?`                   | -                                                 | initial value of the text field                     |
+| `placeholder`      | `String?`                   | -                                                 | placeholder text                                    |
+| `onChanged`        | `ValueChanged<String>?`     | -                                                 | callback when the value changes                     |
+| `onSubmitted`      | `ValueSetter<String>?`      | -                                                 | callback when the user submits (e.g. press enter)   |
+| `textInputAction`  | `TextInputAction`           | `TextInputAction.newline`                         | action button on mobile keyboard                    |
+| `formatters`       | `List<TextInputFormatter>?` | -                                                 | formatters to restrict text field                   |
+| `maxLength`        | `int?`                      | -                                                 | maximum length of the text field                    |
+| `style`            | `TextStyle?`                | -                                                 | style of the text field                             |
+| `placeholderStyle` | `TextStyle?`                | -                                                 | style of the placeholder                            |
+| `countStyle`       | `TextStyle?`                | -                                                 | style of the count text                             |
+| `padding`          | `EdgeInsets`                | `EdgeInsets.all(8)`                               | space between content and outside of the text field |
+| `space`            | `double`                    | `4`                                               | space between text and `clearWidget`/countText      |
+| `fill`             | `Color?`                    | -                                                 | background color of the text field                  |
+| `border`           | `Border?`                   | -                                                 | border of the text field                            |
+| `borderRadius`     | `double`                    | `0`                                               | border radius of the text field                     |
+| `clearWidget`      | `Widget`                    | `Icon(Icons.clear, size: 20, color: Colors.grey)` | widget to click to clear the text field             |
+
+![](./media/text_field.gif)
+
+```dart
+class Example extends StatelessWidget {
+  const Example({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          const Text('BadTextField with clear'),
+          BadTextField(
+            height: 108,
+            borderRadius: 8,
+            fill: Colors.grey[200]!,
+            clearWidget: const Text('clear all!'),
+          ),
+          const Divider(),
+          const Text('BadTextField with counter'),
+          BadTextField(
+            height: 108,
+            borderRadius: 8,
+            fill: Colors.grey[200]!,
+            maxLength: 200,
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
 
 #### BadTextInput
 
