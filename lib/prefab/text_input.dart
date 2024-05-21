@@ -25,7 +25,7 @@ class BadTextInput extends StatefulWidget {
   /// callback when the `clearWidget` is clicked
   final VoidCallback? onCleared;
 
-  /// callback when the user submits the input (e.g. press enter)
+  /// callback when the user submits (e.g. press enter)
   final ValueSetter<String>? onSubmitted;
 
   /// type of input (mainly affects keyboard layout on mobile)
@@ -43,12 +43,12 @@ class BadTextInput extends StatefulWidget {
   /// text style of the placeholder text, ignored if [placeholder] is null
   final TextStyle? placeholderStyle;
 
-  /// space between prefix/suffix and outside of the input field
+  /// space between prefixWidget/suffixWidget and outside of the input field
   ///
   /// Default to `8`
   final double padding;
 
-  /// space between prefix/suffix and text of the input field
+  /// space between prefixWidget/suffixWidget and text of the input field
   ///
   /// Default to `8`
   final double space;
@@ -74,7 +74,7 @@ class BadTextInput extends StatefulWidget {
 
   /// widget to click to clear the input field
   ///
-  /// Default to [Icons.close_rounded] with size `16` and color [Colors.grey]
+  /// Default to `Icon(Icons.clear, size: 16, color: Colors.grey)`
   ///
   /// Note: there is no constraint on the size of the widget, be careful to its size if you provide a custom widget
   final Widget clearWidget;
@@ -101,11 +101,7 @@ class BadTextInput extends StatefulWidget {
     this.borderRadius = 0.0,
     this.prefixWidget,
     this.suffixWidget,
-    this.clearWidget = const Icon(
-      Icons.close_rounded,
-      size: 16,
-      color: Colors.grey,
-    ),
+    this.clearWidget = const Icon(Icons.clear, size: 16, color: Colors.grey),
   }) : assert(inputType != TextInputType.multiline, 'Use TextField instead.');
 
   @override
