@@ -189,7 +189,14 @@ user has accepted the privacy policy.
 
 ### Mixin
 
-⏳ WIP
+#### BadDisposeMixin
+
+[source code](./lib/mixin/dispose.dart)
+
+Mixin on `GetxController`, used to execute the `dispose` method in the `onClose` lifecycle.
+
+👉 `BadDisposeScrollMixin`: provide a `ScrollController` instance named `sc`  
+👉 `BadDisposeTextEditingMixin`: provide a `TextEditingController` instance named `tec`
 
 ### Prefab
 
