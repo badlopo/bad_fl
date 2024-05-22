@@ -198,6 +198,114 @@ Mixin on `GetxController`, used to execute the `dispose` method in the `onClose`
 👉 `BadDisposeScrollMixin`: provide a `ScrollController` instance named `sc`  
 👉 `BadDisposeTextEditingMixin`: provide a `TextEditingController` instance named `tec`
 
+#### BadSearchMixin
+
+[source code](./lib/mixin/search.dart)
+
+Mixin on `GetxController`, provides search-related functions (pagination, refresh, load more, etc.)
+
+| Field                        | Type                                                                  | Override | Description                                                                                                                                                                                                           |
+|------------------------------|-----------------------------------------------------------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `sc`                         | `ScrollController`                                                    | ❌        | this should be attached to the list container the data is displayed in, whether it's a `ListView`, `GridView`, `CustomScrollView`, etc                                                                                |
+| `pending`                    | `RxBool`                                                              | ❌        | indicate if the search is pending                                                                                                                                                                                     |
+| `pageSize`                   | `int`                                                                 | ✅        | the page size to search, default to `20`                                                                                                                                                                              |
+| `target`                     | `String`                                                              | ❌        | the target string to search (read-only)                                                                                                                                                                               |
+| `pageNo`                     | `int`                                                                 | ❌        | the next page number to search (read-only)                                                                                                                                                                            |
+| `resultList`                 | `List<T>`                                                             | ❌        | result container                                                                                                                                                                                                      |
+| `onSearchEvent` <sup>*</sup> | `void Function(SearchEvent event)`                                    | ✅        | override this method to handle search event (do some log, toast, etc)                                                                                                                                                 |
+| `fetcher`                    | `Future<Iterable<ListItemType>?> Function(String target, int pageNo)` | ✅        | specific implementation of data request. It should return an `Iterable<T>` (success) or `null` (failed).<br/>**NOTE:** this should never be called directly, use `nextPage`, `reloadPage` or `searchPage` when needed |
+| `nextPage` <sup>**</sup>     | `Future<void> Function()`                                             | ❌        | search the next page                                                                                                                                                                                                  |
+| `reloadPage` <sup>**</sup>   | `Future<void> Function()`                                             | ❌        | reload the first page                                                                                                                                                                                                 |
+| `searchPage` <sup>**</sup>   | `Future<void> Function(String newTarget)`                             | ❌        | search the first page with a new target                                                                                                                                                                               |
+
+- `*`: This is optional, you can override this method to handle search events. by default, it will do nothing.
+- `**`: You can call these methods to trigger the corresponding actions. refer to the example below for usage, source
+  code for more details.
+
+![](./media/search_mixin.gif)
+
+```dart
+class _ExampleController extends GetxController with BadSearchMixin<String> {
+  @override
+  int get pageSize => 5;
+
+  @override
+  Future<Iterable<String>?> fetcher(String target, int pageNo) async {
+    // wait for 1 second to simulate the network delay
+    await Future.delayed(const Duration(seconds: 1));
+
+    // mock the search result
+    int base = (pageNo - 1) * pageSize;
+    return List.generate(pageSize, (index) => 'Item ${base + index}');
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+
+    nextPage();
+  }
+}
+
+class Example extends GetView<_ExampleController> {
+  const Example({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    Get.put(_ExampleController());
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Obx(() {
+          return controller.pending.isTrue
+              ? const Text('status: pending')
+              : const Text('status: idle');
+        }),
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: controller.reloadPage,
+                    child: const Text('Refresh'),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: controller.nextPage,
+                    child: const Text('More'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Divider(height: 1, thickness: 1),
+          Expanded(
+            child: Obx(
+                  () =>
+                  ListView.builder(
+                    controller: controller.sc,
+                    itemCount: controller.resultList.length,
+                    itemBuilder: (_, index) {
+                      return ListTile(
+                        title: Text(controller.resultList[index]),
+                      );
+                    },
+                  ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
 ### Prefab
 
 #### BadButton
