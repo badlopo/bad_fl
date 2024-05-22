@@ -21,18 +21,20 @@ enum SearchEvent {
 /// The [BadSearchMixin] provides a simple way to implement paging queries.
 mixin BadSearchMixin<ListItemType> on GetxController {
   /// this should be attached to the list container the data is displayed in,
-  /// whether it's a [ListView] or something else.
+  /// whether it's a `ListView`, `GridView`, `CustomScrollView`, etc.
   @nonVirtual
   final ScrollController sc = ScrollController();
 
-  /// a [RxBool] to indicate if the search is pending.
+  /// indicate if the search is pending.
   @nonVirtual
   final RxBool pending = false.obs;
 
-  /// the page size to search, default to `20`, override it if needed.
+  /// the page size to search
+  ///
+  /// Default to `20`
   final int pageSize = 20;
 
-  /// whether there is no more data to search.
+  /// whether the search is at the end
   bool _isEnd = false;
 
   /// the target string to search (optional)
@@ -49,7 +51,7 @@ mixin BadSearchMixin<ListItemType> on GetxController {
   @nonVirtual
   int get pageNo => _pageNo;
 
-  /// a [RxList] to store the search result, its generic type is [ListItemType].
+  /// result container
   @nonVirtual
   final RxList<ListItemType> resultList = <ListItemType>[].obs;
 
@@ -71,12 +73,12 @@ mixin BadSearchMixin<ListItemType> on GetxController {
     resultList.clear();
   }
 
-  /// override this method to handle search event (log, toast, etc).
+  /// override this method to handle search event (do some log, toast, etc).
   void onSearchEvent(SearchEvent event) {}
 
-  /// specific implementation of data request. It should return an [Iterable] of [ListItemType] (success) or `null` (failed).
+  /// specific implementation of data request. It should return an `Iterable<ListItemType>` (success) or `null` (failed).
   ///
-  /// **NOTE:** this should never be called directly, use [nextPage], [reloadPage] or [searchPage] instead.
+  /// **NOTE:** this should never be called directly, use [nextPage], [reloadPage] or [searchPage] when needed.
   Future<Iterable<ListItemType>?> fetcher(String target, int pageNo);
 
   /// try using [fetcher] to get the next page data and process it.
@@ -118,12 +120,12 @@ mixin BadSearchMixin<ListItemType> on GetxController {
   ///
   /// see also: [nextPage], [searchPage]
   @nonVirtual
-  Future<void> reloadPage() async {
+  Future<void> reloadPage() {
     _resetStatus();
-    await nextPage();
+    return nextPage();
   }
 
-  /// search a new target from the first page.
+  /// search the first page with a new target.
   ///
   /// see also: [nextPage], [reloadPage]
   @nonVirtual
