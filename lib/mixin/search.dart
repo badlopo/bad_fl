@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,9 +22,11 @@ enum SearchEvent {
 mixin BadSearchMixin<ListItemType> on GetxController {
   /// this should be attached to the list container the data is displayed in,
   /// whether it's a [ListView] or something else.
+  @nonVirtual
   final ScrollController sc = ScrollController();
 
   /// a [RxBool] to indicate if the search is pending.
+  @nonVirtual
   final RxBool pending = false.obs;
 
   /// the page size to search, default to `20`, override it if needed.
@@ -36,15 +39,18 @@ mixin BadSearchMixin<ListItemType> on GetxController {
   String _target = '';
 
   /// the target string to search (read-only)
+  @nonVirtual
   String get target => _target;
 
   /// the next page number to search
   int _pageNo = 1;
 
   /// the next page number to search (read-only)
+  @nonVirtual
   int get pageNo => _pageNo;
 
   /// a [RxList] to store the search result, its generic type is [ListItemType].
+  @nonVirtual
   final RxList<ListItemType> resultList = <ListItemType>[].obs;
 
   /// reset the search status for a new search
@@ -81,6 +87,7 @@ mixin BadSearchMixin<ListItemType> on GetxController {
   ///   - failed: trigger [SearchEvent.fetcherFailed]
   ///
   /// see also: [reloadPage], [searchPage]
+  @nonVirtual
   Future<void> nextPage() async {
     if (pending.isTrue) {
       onSearchEvent(SearchEvent.rejected);
@@ -110,6 +117,7 @@ mixin BadSearchMixin<ListItemType> on GetxController {
   /// redo search with the same target from the first page.
   ///
   /// see also: [nextPage], [searchPage]
+  @nonVirtual
   Future<void> reloadPage() async {
     _resetStatus();
     await nextPage();
@@ -118,6 +126,7 @@ mixin BadSearchMixin<ListItemType> on GetxController {
   /// search a new target from the first page.
   ///
   /// see also: [nextPage], [reloadPage]
+  @nonVirtual
   Future<void> searchPage(String newTarget) {
     _resetStatus();
     _target = newTarget;
