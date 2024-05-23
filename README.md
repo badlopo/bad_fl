@@ -185,6 +185,72 @@ user has accepted the privacy policy.
 
 ### Layout
 
+#### BadExpandable
+
+[source code](./lib/layout/expandable.dart)
+
+| Property       | Type      | Default                                 | Description                                         |
+|----------------|-----------|-----------------------------------------|-----------------------------------------------------|
+| `initialOpen`  | `bool`    | `true`                                  | whether the panel is open initially                 |
+| `headerHeight` | `double`  | `28`                                    | height of the header                                |
+| `gap`          | `double`  | `0`                                     | gap between the header and the child                |
+| `title`        | `Widget`  | -                                       | title widget                                        |
+| `emptyIcon`    | `Widget?` | -                                       | icon to be displayed when the panel is empty        |
+| `openedIcon`   | `Widget`  | `Icon(Icons.arrow_drop_up, size: 24)`   | icon to be displayed when the panel is opened       |
+| `closedIcon`   | `Widget`  | `Icon(Icons.arrow_drop_down, size: 24)` | icon to be displayed when the panel is closed       |
+| `child`        | `Widget?` | -                                       | child widget to be displayed when the panel is open |
+
+`BadExpandable` has two constructors:
+
+- the default constructor is when there is a child (`child` cannot be `null`)
+- `BadExpandable.empty` means when there is no child (`emptyIcon` cannot be `null`)
+
+![](./media/expandable.gif)
+
+```dart
+class Example extends StatelessWidget {
+  const Example({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          BadExpandable(
+            title: const Text('block1'),
+            child: Container(
+              height: 200,
+              color: Colors.red,
+            ),
+          ),
+          BadExpandable(
+            title: const Text('block2'),
+            child: Container(
+              height: 200,
+              color: Colors.green,
+            ),
+          ),
+          const BadExpandable.empty(
+            title: Text('empty block'),
+            emptyIcon: Icon(Icons.hourglass_empty, size: 16),
+          ),
+          BadExpandable(
+            title: const Text('block3'),
+            child: Container(
+              height: 200,
+              color: Colors.orange,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+#### BadPanel
+
 ⏳ WIP
 
 ### Mixin
