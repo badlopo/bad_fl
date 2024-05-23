@@ -78,7 +78,7 @@ mixin BadSearchMixin<ListItemType> on GetxController {
 
   /// specific implementation of data request. It should return an `Iterable<ListItemType>` (success) or `null` (failed).
   ///
-  /// **NOTE:** this should never be called directly, use [nextPage], [reloadPage] or [searchPage] when needed.
+  /// Note: this should never be called directly, use [nextPage], [reloadPage] or [searchPage] when needed.
   Future<Iterable<ListItemType>?> fetcher(String target, int pageNo);
 
   /// try using [fetcher] to get the next page data and process it.
