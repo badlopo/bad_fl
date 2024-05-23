@@ -2,7 +2,7 @@ import 'package:bad_fl/wrapper/clickable.dart';
 import 'package:flutter/material.dart';
 
 class BadExpandable extends StatefulWidget {
-  /// whether the panel is open initially or not
+  /// whether the panel is open initially
   ///
   /// Default to `true`
   final bool initialOpen;
@@ -17,25 +17,25 @@ class BadExpandable extends StatefulWidget {
   /// Default to `0`
   final double gap;
 
-  /// title of the panel.
+  /// title widget
   final Widget title;
 
-  /// icon to be displayed when the panel is empty.
+  /// icon to be displayed when the panel is empty
   ///
-  /// Note: required when [child] is `null`.
+  /// Note: required when [child] is `null`
   final Widget? emptyIcon;
 
-  /// icon to be displayed when the panel is open.
+  /// icon to be displayed when the panel is open
   ///
   /// Default to `Icon(Icons.arrow_drop_up, size: 24)`
   final Widget openedIcon;
 
-  /// icon to be displayed when the panel is closed.
+  /// icon to be displayed when the panel is closed
   ///
   /// Default to `Icon(Icons.arrow_drop_down, size: 24)`
   final Widget closedIcon;
 
-  /// child widget to be displayed when the panel is open.
+  /// child widget to be displayed when the panel is open
   ///
   /// Note: if [child] is `null`, this widget will be treated as an empty panel.
   final Widget? child;
