@@ -8,9 +8,25 @@ class Example extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () async {
+              final ff = Finalizer((msg) => print(msg));
+              dynamic a = {1, 2, 3};
+              ff.attach(a, 'a has been finalized');
+              a = null;
+
+              await Future.delayed(Duration(seconds: 1));
+              print('xx');
+            },
+            icon: const Icon(Icons.add),
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: BadTree<Map<String, dynamic>>(
-          root: const {
+          tree: const {
             'name': 'root',
             'children': [
               {
@@ -29,21 +45,20 @@ class Example extends StatelessWidget {
               }
             ],
           },
-          childrenProvider: (node) {
-            final c = node['children'];
-            if (c == null) return null;
-            return List<Map<String, dynamic>>.from(c);
-          },
-          nodeBuilder: (node, depth) {
+          childrenProvider: (node) => node['children'],
+          nodeBuilder: (node) {
             return Padding(
-              padding: EdgeInsets.only(left: 16.0 * depth),
-              child: Container(
-                width: double.infinity,
-                child: BadText('$depth:${node['name']}'),
+              padding: EdgeInsets.only(left: 16.0 * node.depth),
+              child: BadClickable(
+                onClick: node.toggleExpanded,
+                child: Container(
+                  width: double.infinity,
+                  child: BadText(
+                      '${node.depth}: ${node.expanded ? '√' : '×'} ${node.data['name']}'),
+                ),
               ),
             );
           },
-          onNodeTap: (controller) => controller.toggleExpanded(),
         ),
       ),
     );
