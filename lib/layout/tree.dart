@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 /// builder for each node
-typedef TreeNodeBuilder<T> = Widget Function(TreeNode<T> node);
+typedef TreeNodeBuilder<T extends Object> = Widget Function(TreeNode<T> node);
 
 /// representation of a node in the tree
-class TreeNode<TreeNodeData> {
+class TreeNode<TreeNodeData extends Object> {
   /// depth of the node (root node is at depth 0)
   final int depth;
 
@@ -22,32 +22,32 @@ class TreeNode<TreeNodeData> {
   /// set expanded state of the node
   set expanded(bool to) {
     if (_expanded == to) return;
-    _renderExpanded(to);
+    _renderExpanded!(to);
   }
 
   /// toggle expanded state of the node
   void toggleExpanded() {
-    _renderExpanded(!_expanded);
+    _renderExpanded!(!_expanded);
   }
 
   /// render ui with specified expanded state (internal)
-  final void Function(bool to) _renderExpanded;
+  void Function(bool to)? _renderExpanded;
 
-  TreeNode._({
-    required this.depth,
-    required this.data,
-    required void Function(bool to) renderExpanded,
-  }) : _renderExpanded = renderExpanded;
+  TreeNode._({required this.depth, required this.data});
 }
 
-class BadTreeNode<TreeNodeData> extends StatefulWidget {
+// TODO: make it private
+/// tree node widget
+class BadTreeNode<TreeNodeData extends Object> extends StatefulWidget {
+  final Expando<TreeNode<TreeNodeData>> nodes;
   final int depth;
   final TreeNodeData data;
-  final List<TreeNodeData>? Function(TreeNodeData node) childrenProvider;
+  final Iterable<TreeNodeData>? Function(TreeNodeData node) childrenProvider;
   final TreeNodeBuilder<TreeNodeData> nodeBuilder;
 
   const BadTreeNode({
     super.key,
+    required this.nodes,
     required this.depth,
     required this.data,
     required this.childrenProvider,
@@ -59,31 +59,35 @@ class BadTreeNode<TreeNodeData> extends StatefulWidget {
       BadTreeNodeState<TreeNodeData>();
 }
 
-class BadTreeNodeState<TreeNodeData> extends State<BadTreeNode<TreeNodeData>> {
-  late final TreeNode<TreeNodeData> controller;
+class BadTreeNodeState<TreeNodeData extends Object>
+    extends State<BadTreeNode<TreeNodeData>> {
+  late final TreeNode<TreeNodeData> node;
 
   @override
   void initState() {
     super.initState();
 
-    controller = TreeNode<TreeNodeData>._(
+    // get the node from the expando, or create a new one and store it
+    node = widget.nodes[widget.data] ??= TreeNode<TreeNodeData>._(
       depth: widget.depth,
       data: widget.data,
-      renderExpanded: (to) => setState(() => controller._expanded = to),
     );
+    // update function that renders expanded state
+    node._renderExpanded = (to) => setState(() => node._expanded = to);
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<TreeNodeData>? children = widget.childrenProvider(widget.data);
+    final children = widget.childrenProvider(widget.data);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        widget.nodeBuilder(controller),
-        if (controller.expanded && children != null)
+        widget.nodeBuilder(node),
+        if (node.expanded && children != null)
           for (final child in children)
             BadTreeNode(
+              nodes: widget.nodes,
               depth: widget.depth + 1,
               data: child,
               childrenProvider: widget.childrenProvider,
@@ -94,11 +98,16 @@ class BadTreeNodeState<TreeNodeData> extends State<BadTreeNode<TreeNodeData>> {
   }
 }
 
-class BadTree<TreeNodeData> extends StatelessWidget {
+/// tree widget
+class BadTree<TreeNodeData extends Object> extends StatefulWidget {
+  // TODO: BadTreeController for tree state management
+
   /// root node of the tree
   final TreeNodeData tree;
 
   /// function to provide children of a node, return `null` if the node is a leaf
+  ///
+  /// Note: Since we use `Expando` to store the state of the node, this function should be idempotent
   final List<TreeNodeData>? Function(TreeNodeData node) childrenProvider;
 
   /// builder for each node
@@ -112,43 +121,20 @@ class BadTree<TreeNodeData> extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return BadTreeNode<TreeNodeData>(
-      depth: 0,
-      data: tree,
-      childrenProvider: childrenProvider,
-      nodeBuilder: nodeBuilder,
-    );
-  }
+  State<BadTree<TreeNodeData>> createState() => _BadTreeState<TreeNodeData>();
 }
 
-class BadTree2<TreeNodeData> extends StatefulWidget {
-  /// root node of the tree
-  final TreeNodeData root;
+class _BadTreeState<TreeNodeData extends Object>
+    extends State<BadTree<TreeNodeData>> {
+  /// nodes state
+  final nodes = Expando<TreeNode<TreeNodeData>>();
 
-  /// function to provide children of a node, return `null` if the node is a leaf
-  final List<TreeNodeData>? Function(TreeNodeData node) childrenProvider;
-
-  /// builder for each node
-  final TreeNodeBuilder<TreeNodeData> nodeBuilder;
-
-  const BadTree2({
-    super.key,
-    required this.root,
-    required this.childrenProvider,
-    required this.nodeBuilder,
-  });
-
-  @override
-  State<BadTree2<TreeNodeData>> createState() => _BadTree2State<TreeNodeData>();
-}
-
-class _BadTree2State<TreeNodeData> extends State<BadTree2<TreeNodeData>> {
   @override
   Widget build(BuildContext context) {
     return BadTreeNode<TreeNodeData>(
+      nodes: nodes,
       depth: 0,
-      data: widget.root,
+      data: widget.tree,
       childrenProvider: widget.childrenProvider,
       nodeBuilder: widget.nodeBuilder,
     );
