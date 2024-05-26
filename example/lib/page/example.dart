@@ -1,4 +1,5 @@
 import 'package:bad_fl/bad_fl.dart';
+import 'package:bad_fl/layout/tree.dart';
 import 'package:flutter/material.dart';
 
 class Example extends StatelessWidget {
@@ -7,35 +8,43 @@ class Example extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          BadExpandable(
-            title: const Text('block1'),
-            child: Container(
-              height: 200,
-              color: Colors.red,
-            ),
-          ),
-          BadExpandable(
-            title: const Text('block2'),
-            child: Container(
-              height: 200,
-              color: Colors.green,
-            ),
-          ),
-          const BadExpandable.empty(
-            title: Text('empty block'),
-            emptyIcon: Icon(Icons.hourglass_empty, size: 16),
-          ),
-          BadExpandable(
-            title: const Text('block3'),
-            child: Container(
-              height: 200,
-              color: Colors.orange,
-            ),
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: BadTree<Map<String, dynamic>>(
+          root: const {
+            'name': 'root',
+            'children': [
+              {
+                'name': 'child1',
+                'children': [
+                  {'name': 'child1.1'},
+                  {'name': 'child1.2'},
+                ],
+              },
+              {
+                'name': 'child2',
+                'children': [
+                  {'name': 'child2.1'},
+                  {'name': 'child2.2'},
+                ],
+              }
+            ],
+          },
+          childrenProvider: (node) {
+            final c = node['children'];
+            if (c == null) return null;
+            return List<Map<String, dynamic>>.from(c);
+          },
+          nodeBuilder: (node, depth) {
+            return Padding(
+              padding: EdgeInsets.only(left: 16.0 * depth),
+              child: Container(
+                width: double.infinity,
+                child: BadText('$depth:${node['name']}'),
+              ),
+            );
+          },
+          onNodeTap: (controller) => controller.toggleExpanded(),
+        ),
       ),
     );
   }
