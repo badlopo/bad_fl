@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 class _BadFlCore {
   bool enableLog = kDebugMode;
 
-  void log(String message) {
-    if (enableLog) developer.log(message, name: 'BadFL');
+  void log(String module, String message) {
+    if (enableLog) developer.log('Module <$module>: $message', name: 'BadFL');
   }
 }
 
