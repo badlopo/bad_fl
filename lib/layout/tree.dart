@@ -14,7 +14,7 @@ class TreeNode<TreeNodeData extends Object> {
   /// inner data of the node
   final TreeNodeData data;
 
-  /// expanded state of the node (internal)
+  /// expanded state of the node
   ///
   /// Default to `true`
   bool _expanded = true;
@@ -46,7 +46,7 @@ class TreeNode<TreeNodeData extends Object> {
     _setStateDelegate();
   }
 
-  /// render ui with specified expanded state (internal)
+  /// reference to the setState function of the widget that holds the node
   void Function(VoidCallback fn)? _setState;
 
   void _setStateDelegate([VoidCallback fn = _noop]) {
@@ -61,7 +61,8 @@ class TreeNode<TreeNodeData extends Object> {
 }
 
 class _BadTreeNode<TreeNodeData extends Object> extends StatefulWidget {
-  final Expando<TreeNode<TreeNodeData>> nodes;
+  final Expando<TreeNode<TreeNodeData>> _data2node;
+  final Set<TreeNode<TreeNodeData>> _nodes;
 
   final int depth;
   final TreeNodeData data;
@@ -70,12 +71,14 @@ class _BadTreeNode<TreeNodeData extends Object> extends StatefulWidget {
 
   const _BadTreeNode({
     super.key,
-    required this.nodes,
+    required Expando<TreeNode<TreeNodeData>> data2node,
+    required Set<TreeNode<TreeNodeData>> nodes,
     required this.depth,
     required this.data,
     required this.childrenProvider,
     required this.nodeBuilder,
-  });
+  })  : _data2node = data2node,
+        _nodes = nodes;
 
   @override
   State<_BadTreeNode<TreeNodeData>> createState() =>
@@ -91,12 +94,15 @@ class _BadTreeNodeState<TreeNodeData extends Object>
     super.initState();
 
     // get the node from the expando, or create a new one and store it
-    node = widget.nodes[widget.data] ??= TreeNode<TreeNodeData>._(
+    node = widget._data2node[widget.data] ??= TreeNode<TreeNodeData>._(
       depth: widget.depth,
       data: widget.data,
     );
     // hold the reference to the setState function
     node._setState = setState;
+
+    // add the node to the set
+    widget._nodes.add(node);
   }
 
   @override
@@ -110,7 +116,8 @@ class _BadTreeNodeState<TreeNodeData extends Object>
         if (node.expanded && children != null)
           for (final child in children)
             _BadTreeNode(
-              nodes: widget.nodes,
+              data2node: widget._data2node,
+              nodes: widget._nodes,
               depth: widget.depth + 1,
               data: child,
               childrenProvider: widget.childrenProvider,
@@ -123,11 +130,72 @@ class _BadTreeNodeState<TreeNodeData extends Object>
 
 /// controller for tree state management
 class BadTreeController<TreeNodeData extends Object> {
+  bool _attached = false;
+  void Function(VoidCallback fn)? _setState;
+  WeakReference<Expando<TreeNode<TreeNodeData>>>? _data2node;
+  WeakReference<Set<TreeNode<TreeNodeData>>>? _nodes;
+
+  void _attach({
+    required Expando<TreeNode<TreeNodeData>> data2node,
+    required Set<TreeNode<TreeNodeData>> nodes,
+    required void Function(VoidCallback fn) setState,
+  }) {
+    _data2node = WeakReference(data2node);
+    _nodes = WeakReference(nodes);
+    _setState = setState;
+    _attached = true;
+  }
+
+  void _detach() {
+    _attached = false;
+    _data2node = null;
+    _nodes = null;
+    _setState = null;
+  }
+
+  bool _check() {
+    if (!_attached) {
+      BadFl.log('BadTree', 'controller is not attached to any tree');
+      return false;
+    }
+    return true;
+  }
+
   /// get the node of the tree by its data, return `null` if not found
   ///
   /// Note: the `data` should be the same object as the one passed to the tree widget
   TreeNode<TreeNodeData>? getTreeNodeByData(TreeNodeData data) {
+    if (_check()) {
+      return _data2node!.target![data];
+    }
     return null;
+  }
+
+  /// rerender the tree (keeping the expanded state)
+  void rerender() {
+    if (_check()) {
+      _setState!(() {});
+    }
+  }
+
+  /// expand all nodes in the tree
+  void expandAll() {
+    if (_check()) {
+      for (final node in _nodes!.target!) {
+        node._expanded = true;
+      }
+      _setState!(() {});
+    }
+  }
+
+  /// collapse all nodes in the tree
+  void collapseAll() {
+    if (_check()) {
+      for (final node in _nodes!.target!) {
+        node._expanded = false;
+      }
+      _setState!(() {});
+    }
   }
 }
 
@@ -161,13 +229,34 @@ class BadTree<TreeNodeData extends Object> extends StatefulWidget {
 
 class _BadTreeState<TreeNodeData extends Object>
     extends State<BadTree<TreeNodeData>> {
-  /// nodes state
-  final nodes = Expando<TreeNode<TreeNodeData>>('BadTreeNodes');
+  /// `data` to `node` mapping, used to store the state of the node (especially the expanded state)
+  final _data2node = Expando<TreeNode<TreeNodeData>>('BadTreeNodes');
+
+  /// all nodes in the tree, used to implement the controller
+  final Set<TreeNode<TreeNodeData>> _nodes = {};
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller?._attach(
+      data2node: _data2node,
+      nodes: _nodes,
+      setState: setState,
+    );
+  }
+
+  @override
+  void dispose() {
+    widget.controller?._detach();
+    _nodes.clear();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return _BadTreeNode<TreeNodeData>(
-      nodes: nodes,
+      data2node: _data2node,
+      nodes: _nodes,
       depth: 0,
       data: widget.tree,
       childrenProvider: widget.childrenProvider,
