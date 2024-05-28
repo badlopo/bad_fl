@@ -1,7 +1,7 @@
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:js' as js;
+
 import 'package:bad_fl/bad_fl.dart';
-import 'package:bad_fl/prefab/button.dart';
-import 'package:bad_fl/prefab/text.dart';
-import 'package:bad_fl/wrapper/clickable.dart';
 import 'package:bad_fl_example/routes/name.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -50,13 +50,14 @@ class _GalleryBoothState extends State<GalleryBooth> {
   Widget build(BuildContext context) {
     final inner = AnimatedContainer(
       curve: Curves.ease,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 300),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(width: 1, color: _gery),
         borderRadius: BorderRadius.circular(8),
         boxShadow: _hover ? _shadow : null,
       ),
+      width: 390,
       height: 200,
       child: Column(
         children: [
@@ -87,6 +88,10 @@ class _GalleryBoothState extends State<GalleryBooth> {
   }
 }
 
+void showAlert(String message) {
+  js.context.callMethod('alert', [message]);
+}
+
 abstract class GalleryItem {
   static final button = GalleryBooth(
     name: 'BadButton',
@@ -100,7 +105,7 @@ abstract class GalleryItem {
           borderRadius: 4,
           fill: Colors.blue,
           child: const BadText('Button', color: Colors.white),
-          onPressed: () {},
+          onPressed: () => showAlert('Button pressed'),
         ),
         BadButton(
           width: 100,
@@ -108,7 +113,7 @@ abstract class GalleryItem {
           borderRadius: 4,
           border: Border.all(color: Colors.green, width: 2),
           child: const BadText('Button', color: Colors.green),
-          onPressed: () {},
+          onPressed: () => showAlert('Button pressed'),
         ),
         BadButton(
           width: 100,
@@ -118,7 +123,7 @@ abstract class GalleryItem {
             bottom: BorderSide(color: Colors.orange, width: 2),
           ),
           child: const BadText('Button', color: Colors.orange),
-          onPressed: () {},
+          onPressed: () => showAlert('Button pressed'),
         ),
       ],
     ),
@@ -129,28 +134,36 @@ abstract class GalleryItem {
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        BadCheckBox.icon(
-          size: 32,
-          fillChecked: Colors.blue,
-          icon: const Icon(Icons.check, size: 24, color: Colors.white),
-          checked: true,
-          onTap: () {},
-        ),
-        BadCheckBox.icon(
-          size: 32,
-          icon: const Icon(Icons.close, size: 24, color: Colors.green),
-          border: Border.all(color: Colors.green, width: 2),
-          checked: true,
-          onTap: () {},
-        ),
-        BadCheckBox.icon(
-          size: 32,
-          icon: const Icon(Icons.accessibility, size: 24, color: Colors.white),
-          rounded: false,
-          fillChecked: Colors.orange,
-          checked: true,
-          onTap: () {},
-        ),
+        ObxValue((v) {
+          return BadCheckBox.icon(
+            size: 32,
+            fill: Colors.blue,
+            icon: const Icon(Icons.check, size: 24, color: Colors.white),
+            checked: v.isTrue,
+            onTap: v.toggle,
+          );
+        }, true.obs),
+        ObxValue((v) {
+          return BadCheckBox.icon(
+            size: 32,
+            icon: const Icon(Icons.close, size: 24, color: Colors.green),
+            border: Border.all(color: Colors.green, width: 2),
+            checked: v.isTrue,
+            onTap: v.toggle,
+          );
+        }, true.obs),
+        ObxValue((v) {
+          return BadCheckBox.iconBuilder(
+            size: 32,
+            iconBuilder: (c) => c
+                ? const Icon(Icons.surfing, size: 24, color: Colors.white)
+                : const Icon(Icons.kitesurfing, size: 24, color: Colors.white),
+            rounded: false,
+            fill: Colors.orange,
+            checked: v.isTrue,
+            onTap: v.toggle,
+          );
+        }, true.obs),
       ],
     ),
   );
