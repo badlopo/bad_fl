@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
       builder: (context, child) {
         return Scaffold(
           backgroundColor: Colors.lightGreen,
-          floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               setState(() {
