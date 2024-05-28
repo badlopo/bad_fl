@@ -9,12 +9,20 @@ class GalleryView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const BadText('Bad FL')),
-      body: ListView(
+      backgroundColor: const Color(0xFFF7FBF1),
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        children: [
-          GalleryItem.button,
-          GalleryItem.checkbox,
-        ].slotted(builder: (v) => v, slot: const SizedBox(height: 16)),
+        child: Wrap(
+          spacing: 12,
+          runSpacing: 12,
+          alignment: WrapAlignment.center,
+          children: [
+            // use a SizedBox with enough width to make the Wrap expand to the full width
+            const SizedBox(width: double.infinity),
+            GalleryItem.button,
+            GalleryItem.checkbox,
+          ],
+        ),
       ),
     );
   }
