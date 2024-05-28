@@ -5,6 +5,7 @@ abstract class NamedRoute {
 
   static const button = '/prefab/button';
   static const checkbox = '/prefab/checkbox';
+  static const katex = '/prefab/katex';
 
   static const boot = '/boot';
   static const misc = '/misc';

@@ -128,6 +128,7 @@ abstract class GalleryItem {
       ],
     ),
   );
+
   static final checkbox = GalleryBooth(
     name: 'BadCheckbox',
     route: NamedRoute.checkbox,
@@ -164,6 +165,19 @@ abstract class GalleryItem {
             onTap: v.toggle,
           );
         }, true.obs),
+      ],
+    ),
+  );
+
+  static final katex = GalleryBooth(
+    name: 'BadKatex',
+    route: NamedRoute.katex,
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        BadKatex(raw: r'$a \ne 0$'),
+        BadKatex(raw: r'$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$'),
+        BadKatex(raw: r'$ax^2 + bx + c = 0$'),
       ],
     ),
   );

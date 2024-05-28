@@ -21,6 +21,7 @@ class GalleryView extends StatelessWidget {
             const SizedBox(width: double.infinity),
             GalleryItem.button,
             GalleryItem.checkbox,
+            GalleryItem.katex,
           ],
         ),
       ),
