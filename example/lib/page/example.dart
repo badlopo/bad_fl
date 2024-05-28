@@ -1,5 +1,3 @@
-import 'package:bad_fl/bad_fl.dart';
-import 'package:bad_fl/core.dart';
 import 'package:bad_fl/layout/tree.dart';
 import 'package:flutter/material.dart';
 
@@ -60,6 +58,26 @@ import 'package:flutter/material.dart';
 //   }
 // }
 
+const treeData = {
+  'name': 'root',
+  'children': [
+    {
+      'name': 'child1',
+      'children': [
+        {'name': 'child1.1'},
+        {'name': 'child1.2'},
+      ],
+    },
+    {
+      'name': 'child2',
+      'children': [
+        {'name': 'child2.1'},
+        {'name': 'child2.2'},
+      ],
+    }
+  ],
+};
+
 class Example extends StatefulWidget {
   const Example({super.key});
 
@@ -78,22 +96,18 @@ class _ExampleState extends State<Example> {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () async {
-              // rerender the whole tree
-              controller.rerender();
-            },
+            // rerender the whole tree
+            onPressed: () => controller.rerender(),
             icon: const Icon(Icons.refresh),
           ),
           IconButton(
-            onPressed: () async {
-              controller.collapseAll();
-            },
+            // collapse all nodes
+            onPressed: () => controller.collapseAll(),
             icon: const Icon(Icons.unfold_less),
           ),
           IconButton(
-            onPressed: () async {
-              controller.expandAll();
-            },
+            // expand all nodes
+            onPressed: () => controller.expandAll(),
             icon: const Icon(Icons.unfold_more),
           ),
         ],
@@ -101,25 +115,7 @@ class _ExampleState extends State<Example> {
       body: SingleChildScrollView(
         child: BadTree<Map<String, dynamic>>(
           controller: controller,
-          tree: const {
-            'name': 'root',
-            'children': [
-              {
-                'name': 'child1',
-                'children': [
-                  {'name': 'child1.1'},
-                  {'name': 'child1.2'},
-                ],
-              },
-              {
-                'name': 'child2',
-                'children': [
-                  {'name': 'child2.1'},
-                  {'name': 'child2.2'},
-                ],
-              }
-            ],
-          },
+          tree: treeData,
           childrenProvider: (node) => node['children'],
           nodeBuilder: (node) {
             return Padding(
@@ -145,7 +141,7 @@ class _ExampleState extends State<Example> {
                               : selected.add(node.data);
 
                           // rerender subtree of the selected node
-                          // node.rerender();
+                          node.rerender();
                         },
                         child: Text(node.data['name']),
                       ),
