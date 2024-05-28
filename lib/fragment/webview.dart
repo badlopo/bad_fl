@@ -4,10 +4,22 @@ import 'package:webview_flutter/webview_flutter.dart';
 class Refresher {
   Future<void> Function()? _refresh;
 
+  void _attach(Future<void> Function() refresh) {
+    if (_refresh != null) {
+      throw StateError('the instance is already attached');
+    }
+
+    _refresh = refresh;
+  }
+
+  void _detach() {
+    _refresh = null;
+  }
+
   /// reload the webview (not refresh the page)
   refresh() {
     if (_refresh == null) {
-      throw StateError('No client attached');
+      throw StateError('the instance is not attached');
     }
     _refresh!();
   }
@@ -110,13 +122,11 @@ class _BadWebviewFragmentState extends State<BadWebviewFragment> {
       await controller.setUserAgent('${ua ?? ''} ${widget.userAgentPatch}');
     }
 
-    // load the source
-    widget.source.load(controller);
+    // attach the refresher
+    widget.refresher?._attach(() => widget.source.load(controller));
 
-    // update the refresher
-    if (widget.refresher != null) {
-      widget.refresher!._refresh = () => widget.source.load(controller);
-    }
+    // load the source
+    await widget.source.load(controller);
   }
 
   @override
@@ -124,6 +134,12 @@ class _BadWebviewFragmentState extends State<BadWebviewFragment> {
     super.initState();
 
     setup();
+  }
+
+  @override
+  void dispose() {
+    widget.refresher?._detach();
+    super.dispose();
   }
 
   @override

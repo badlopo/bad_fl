@@ -25,20 +25,16 @@ class TreeNode<TreeNodeData extends Object> {
   /// set expanded state of the node
   void setExpanded(bool to) {
     if (_expanded == to) {
-      BadFl.log('BadTree', 'expanded state is already $to');
+      BadFl.log('BadTree', 'node is already ${to ? 'expanded' : 'collapsed'}');
       return;
     }
 
-    _setStateDelegate(() {
-      _expanded = to;
-    });
+    _setStateDelegate(() => _expanded = to);
   }
 
   /// toggle expanded state of the node
   void toggleExpanded() {
-    _setStateDelegate(() {
-      _expanded = !_expanded;
-    });
+    _setStateDelegate(() => _expanded = !_expanded);
   }
 
   /// rerender the subtree of the node (including itself)
@@ -51,7 +47,7 @@ class TreeNode<TreeNodeData extends Object> {
 
   void _setStateDelegate([VoidCallback fn = _noop]) {
     if (_setState == null) {
-      BadFl.log('BadTree', 'setState is not available now');
+      throw Exception('lost reference to the setState function');
     } else {
       _setState!(fn);
     }
@@ -129,6 +125,8 @@ class _BadTreeNodeState<TreeNodeData extends Object>
 }
 
 /// controller for tree state management
+///
+/// Note: a controller can only be attached to one tree at a time
 class BadTreeController<TreeNodeData extends Object> {
   bool _attached = false;
   void Function(VoidCallback fn)? _setState;
@@ -140,6 +138,10 @@ class BadTreeController<TreeNodeData extends Object> {
     required Set<TreeNode<TreeNodeData>> nodes,
     required void Function(VoidCallback fn) setState,
   }) {
+    if (_attached) {
+      throw StateError('The instance is already attached');
+    }
+
     _data2node = WeakReference(data2node);
     _nodes = WeakReference(nodes);
     _setState = setState;
@@ -155,8 +157,7 @@ class BadTreeController<TreeNodeData extends Object> {
 
   bool _check() {
     if (!_attached) {
-      BadFl.log('BadTree', 'controller is not attached to any tree');
-      return false;
+      throw StateError('The instance is not attached');
     }
     return true;
   }
