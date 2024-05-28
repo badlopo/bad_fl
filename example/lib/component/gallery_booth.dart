@@ -2,9 +2,10 @@
 import 'dart:js' as js;
 
 import 'package:bad_fl/bad_fl.dart';
-import 'package:bad_fl_example/routes/name.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+const _docBase = 'https://github.com/badlopo/bad_fl?tab=readme-ov-file';
 
 const _gery = Color(0xFFF0F0F0);
 const _shadow = [
@@ -29,13 +30,13 @@ const _shadow = [
 
 class GalleryBooth extends StatefulWidget {
   final String name;
-  final String route;
+  final String anchor;
   final Widget child;
 
   const GalleryBooth({
     super.key,
     required this.name,
-    required this.route,
+    required this.anchor,
     required this.child,
   });
 
@@ -45,6 +46,10 @@ class GalleryBooth extends StatefulWidget {
 
 class _GalleryBoothState extends State<GalleryBooth> {
   bool _hover = false;
+
+  void handleCardClick() {
+    ExternalLinkImpl.openExternal('$_docBase#${widget.anchor}');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,10 +85,7 @@ class _GalleryBoothState extends State<GalleryBooth> {
       cursor: SystemMouseCursors.click,
       onEnter: (_) => setState(() => _hover = true),
       onExit: (_) => setState(() => _hover = false),
-      child: BadClickable(
-        onClick: () => Get.toNamed(widget.route),
-        child: inner,
-      ),
+      child: BadClickable(onClick: handleCardClick, child: inner),
     );
   }
 }
@@ -95,7 +97,7 @@ void showAlert(String message) {
 abstract class GalleryItem {
   static final button = GalleryBooth(
     name: 'BadButton',
-    route: NamedRoute.button,
+    anchor: 'badbutton',
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -131,7 +133,7 @@ abstract class GalleryItem {
 
   static final checkbox = GalleryBooth(
     name: 'BadCheckbox',
-    route: NamedRoute.checkbox,
+    anchor: 'badcheckbox',
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -171,7 +173,7 @@ abstract class GalleryItem {
 
   static final katex = GalleryBooth(
     name: 'BadKatex',
-    route: NamedRoute.katex,
+    anchor: 'badkatex',
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
