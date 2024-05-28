@@ -1268,8 +1268,3 @@ class _ExampleState extends State<Example> {
   }
 }
 ```
-
-## Useful Tips
-
-- When using input components, do not use `borderRadius` and non-fully enclosed `border` at the same time. (will result
-  in unexpected lines at the rounded corners)
