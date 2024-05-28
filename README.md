@@ -253,6 +253,131 @@ class Example extends StatelessWidget {
 
 ⏳ WIP
 
+#### BadTree
+
+[source code](./lib/layout/tree.dart)
+
+| Property           | Type                                              | Default | Description                                                                 |
+|--------------------|---------------------------------------------------|---------|-----------------------------------------------------------------------------|
+| `controller`       | `BadTreeController<TreeNodeData>?`                | -       | controller for tree state management                                        |
+| `tree`             | `TreeNodeData`                                    | -       | tree data                                                                   |
+| `childrenProvider` | `List<TreeNodeData>? Function(TreeNodeData node)` | -       | function to provide children of a node, return `null` if the node is a leaf |
+| `nodeBuilder`      | `Widget Function(TreeNode<TreeNodeData> node)`    | -       | builder for each node                                                       |
+
+It provides a very flexible way to build and control your tree widgets, which gives you as much control over the
+tree as possible (node rendering, expanded and collapsed states, etc.).
+
+When you modify a node, it will re-render the smallest subtree (that is, the subtree with the modified node as the root
+node).
+
+It internally maintains the mapping from `TreeNodeData` to `TreeNode`:
+
+- 😊 You can use `BadTreeController` to get control of the corresponding `TreeNode` from the original data (
+  via `BadTreeController.getTreeNodeByData`)
+- ⚠️ But this also requires that the `childrenProvider` you provide is idempotent.
+
+![](./media/tree.gif)
+
+```dart
+
+class Example extends StatefulWidget {
+  const Example({super.key});
+
+  @override
+  State<Example> createState() => _ExampleState();
+}
+
+class _ExampleState extends State<Example> {
+  final controller = BadTreeController<Map<String, dynamic>>();
+
+  Set<Map<String, dynamic>> selected = {};
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            // rerender the whole tree
+            onPressed: () => controller.rerender(),
+            icon: const Icon(Icons.refresh),
+          ),
+          IconButton(
+            // collapse all nodes
+            onPressed: () => controller.collapseAll(),
+            icon: const Icon(Icons.unfold_less),
+          ),
+          IconButton(
+            // expand all nodes
+            onPressed: () => controller.expandAll(),
+            icon: const Icon(Icons.unfold_more),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: BadTree<Map<String, dynamic>>(
+          controller: controller,
+          tree: const {
+            'name': 'root',
+            'children': [
+              {
+                'name': 'child1',
+                'children': [
+                  {'name': 'child1.1'},
+                  {'name': 'child1.2'},
+                ],
+              },
+              {
+                'name': 'child2',
+                'children': [
+                  {'name': 'child2.1'},
+                  {'name': 'child2.2'},
+                ],
+              }
+            ],
+          },
+          childrenProvider: (node) => node['children'],
+          nodeBuilder: (node) {
+            return Padding(
+              padding: EdgeInsets.only(left: 16.0 * node.depth),
+              child: Container(
+                width: double.infinity,
+                color: selected.contains(node.data)
+                    ? Colors.blue.withOpacity(0.5)
+                    : null,
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: node.toggleExpanded,
+                      icon: node.expanded
+                          ? const Icon(Icons.arrow_drop_down)
+                          : const Icon(Icons.arrow_right),
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          selected.contains(node.data)
+                              ? selected.remove(node.data)
+                              : selected.add(node.data);
+
+                          // rerender subtree of the selected node
+                          node.rerender();
+                        },
+                        child: Text(node.data['name']),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+```
+
 ### Mixin
 
 #### BadDisposeMixin

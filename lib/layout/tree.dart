@@ -205,7 +205,7 @@ class BadTree<TreeNodeData extends Object> extends StatefulWidget {
   /// controller for tree state management
   final BadTreeController<TreeNodeData>? controller;
 
-  /// root node of the tree
+  /// tree data
   final TreeNodeData tree;
 
   /// function to provide children of a node, return `null` if the node is a leaf
