@@ -9,4 +9,19 @@ jobs:
   publish:
     permissions:
       id-token: write
-    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Flutter SDK
+        uses: flutter-actions/setup-flutter@v3
+
+      - name: Setup pub.dev credentials
+        uses: flutter-actions/setup-pubdev-credentials@v1
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Publish package
+        run: flutter pub publish --force
