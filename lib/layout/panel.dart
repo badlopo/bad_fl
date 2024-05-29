@@ -3,9 +3,16 @@ import 'package:bad_fl/wrapper/clickable.dart';
 import 'package:flutter/material.dart';
 
 class BadPanelItem extends StatelessWidget {
+  /// label widget
   final Widget label;
+
+  /// body widget, `null` if no body
   final Widget? body;
+
+  /// suffix widget, `null` if no suffix
   final Widget? suffix;
+
+  /// callback when item is clicked, `null` if not clickable
   final VoidCallback? onTap;
 
   const BadPanelItem({
@@ -57,7 +64,7 @@ class BadPanelOptions {
   /// Default to `Divider(height: 0.5, thickness: 0.5, color: Colors.grey)`
   final Widget? divider;
 
-  /// height of panel item
+  /// height of each item
   ///
   /// Default to `54`
   final double itemHeight;
@@ -90,9 +97,10 @@ class _BadPanelScope extends InheritedWidget {
 }
 
 class BadPanel extends StatelessWidget {
+  /// options of the panel
   final BadPanelOptions options;
 
-  /// title of panel
+  /// title widget, `null` if no title
   final Widget? title;
 
   /// items in panel

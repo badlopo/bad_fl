@@ -251,7 +251,92 @@ class Example extends StatelessWidget {
 
 #### BadPanel
 
-⏳ WIP
+[source code](./lib/layout/panel.dart)
+
+👉 `BadPanel`
+
+| Property  | Type                 | Default             | Description                      |
+|-----------|----------------------|---------------------|----------------------------------|
+| `options` | `BadPanelOptions`    | `BadPanelOptions()` | options of the panel             |
+| `title`   | `Widget`             | -                   | title widget, `null` if no title |
+| `items`   | `List<BadPanelItem>` | -                   | items in panel                   |
+
+👉 `BadPanelOptions`
+
+| Property       | Type     | Default                                                    | Description               |
+|----------------|----------|------------------------------------------------------------|---------------------------|
+| `fill`         | `Color`  | `Colors.white`                                             | background color of panel |
+| `borderRadius` | `double` | `8`                                                        | border radius of panel    |
+| `divider`      | `Widget` | `Divider(height: 0.5, thickness: 0.5, color: Colors.grey)` | divider between items     |
+| `itemHeight`   | `double` | `54`                                                       | height of each item       |
+
+👉 `BadPanelItem`
+
+| Property | Type            | Default | Description                                            |
+|----------|-----------------|---------|--------------------------------------------------------|
+| `label`  | `Widget`        | -       | label widget                                           |
+| `body`   | `Widget?`       | -       | body widget, `null` if no body                         |
+| `suffix` | `Widget?`       | -       | suffix widget, `null` if no suffix                     |
+| `onTap`  | `VoidCallback?` | -       | callback when item is clicked, `null` if not clickable |
+
+> `BadPanelItem` layout logic:
+>
+> - If there is a `suffix`, prioritize the space for the `suffix`
+> - If there is a `body`, the `label` and `body` share the remaining space
+> - If there is no `body`, the `label` occupies the remaining space exclusively
+
+
+![](./media/panel.png)
+
+```dart
+class Example extends StatelessWidget {
+  const Example({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey[200],
+      body: ListView(
+        padding: const EdgeInsets.all(12),
+        children: [
+          BadPanel(
+            title: const Padding(
+              padding: EdgeInsets.only(bottom: 8),
+              child: Text('Profile'),
+            ),
+            items: const [
+              BadPanelItem(
+                label: Text('Avatar'),
+                suffix: CircleAvatar(
+                  radius: 18,
+                  backgroundImage: NetworkImage('https://picsum.photos/200'),
+                ),
+              ),
+              BadPanelItem(
+                label: Text('Nickname'),
+                body: Text('nickname', textAlign: TextAlign.end),
+                suffix: Icon(Icons.edit_note),
+              ),
+              BadPanelItem(
+                label: Text('HomePage'),
+                body: Text('https://example.com', textAlign: TextAlign.end),
+              ),
+              BadPanelItem(
+                label: Text('About'),
+                body: Text(
+                  'lorem ipsum dolor sit amet, consectetur adipiscing elit',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
 
 #### BadTree
 
