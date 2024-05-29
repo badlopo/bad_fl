@@ -30,10 +30,7 @@ class BadPanelItem extends StatelessWidget {
           Expanded(child: label),
           if (body != null) Expanded(child: body!),
           if (suffix != null)
-            Padding(
-              padding: const EdgeInsets.only(left: 4),
-              child: suffix,
-            ),
+            Padding(padding: const EdgeInsets.only(left: 4), child: suffix),
         ],
       ),
     );
