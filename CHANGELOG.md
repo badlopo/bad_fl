@@ -1,3 +1,7 @@
+## 0.0.3
+
+- `BadWebviewFragment` renamed to `BadWebview`
+
 ## 0.0.2
 
 - Updated README.md

@@ -55,7 +55,7 @@ class RemoteSource extends WebviewSource {
   }
 }
 
-class BadWebviewFragment extends StatefulWidget {
+class BadWebview extends StatefulWidget {
   /// a extra patch for the user agent
   final String? userAgentPatch;
 
@@ -71,7 +71,7 @@ class BadWebviewFragment extends StatefulWidget {
   /// callback when web resource error occurred
   final ValueChanged<WebResourceError>? onWebResourceError;
 
-  const BadWebviewFragment({
+  const BadWebview({
     super.key,
     this.userAgentPatch,
     this.refresher,
@@ -80,7 +80,7 @@ class BadWebviewFragment extends StatefulWidget {
     this.onWebResourceError,
   });
 
-  BadWebviewFragment.remote({
+  BadWebview.remote({
     super.key,
     this.refresher,
     this.userAgentPatch,
@@ -89,7 +89,7 @@ class BadWebviewFragment extends StatefulWidget {
     this.onWebResourceError,
   }) : source = RemoteSource(uri: uri);
 
-  BadWebviewFragment.local({
+  BadWebview.local({
     super.key,
     this.refresher,
     this.userAgentPatch,
@@ -99,10 +99,10 @@ class BadWebviewFragment extends StatefulWidget {
   }) : source = LocalSource(path: path);
 
   @override
-  State<BadWebviewFragment> createState() => _BadWebviewFragmentState();
+  State<BadWebview> createState() => _BadWebviewState();
 }
 
-class _BadWebviewFragmentState extends State<BadWebviewFragment> {
+class _BadWebviewState extends State<BadWebview> {
   final WebViewController controller = WebViewController();
 
   /// all steps here to avoid async in initState

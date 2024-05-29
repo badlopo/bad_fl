@@ -53,7 +53,7 @@ class Example extends StatelessWidget {
 
 Fragment is a large section of content on the interface.
 
-#### BadWebviewFragment
+#### BadWebview
 
 [source code](./lib/fragment/webview.dart)
 
@@ -84,7 +84,7 @@ class ExampleState extends State<Example> {
       body: Column(
         children: [
           LinearProgressIndicator(value: progress),
-          BadWebviewFragment.remote(
+          BadWebview.remote(
             onProgress: (v) => setState(() => progress = v),
             uri: Uri.parse('https://example.com/'),
           )
