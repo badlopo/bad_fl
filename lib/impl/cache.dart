@@ -53,7 +53,7 @@ abstract class CacheImpl {
     ResultType resultOnError,
   ) {
     if (_root == null) {
-      throw Exception('"prepare" must be called first before any operation.');
+      throw Exception('The "prepare" must be called before any operation.');
     }
     try {
       return task();

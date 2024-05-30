@@ -50,7 +50,7 @@ class TreeNode<TreeNodeData extends Object> {
 
   void _setStateDelegate([VoidCallback fn = _noop]) {
     if (_setState == null) {
-      throw Exception('lost reference to the "setState" function');
+      throw Exception('Lost reference to the "setState" function');
     } else {
       _setState!(fn);
     }
