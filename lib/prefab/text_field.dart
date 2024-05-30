@@ -116,7 +116,6 @@ class _BadTextFieldState extends State<BadTextField> {
 
   /// callback when the text in the text field changes
   void changeObserver() {
-    // OPT: here we rebuild every time the text changes, which is not efficient.
     // update the count widget
     setState(() {});
   }
@@ -126,12 +125,17 @@ class _BadTextFieldState extends State<BadTextField> {
     super.initState();
     _controller = widget.controller ?? TextEditingController();
     if (widget.initialValue != null) _controller.text = widget.initialValue!;
-    _controller.addListener(changeObserver);
+
+    // when the maxLength is not null, add a listener to the controller to observe the changes and update the count widget
+    if (widget.maxLength != null) _controller.addListener(changeObserver);
   }
 
   @override
   void dispose() {
-    _controller.removeListener(changeObserver);
+    // remove the listener when the widget is disposed
+    if (widget.maxLength != null) _controller.removeListener(changeObserver);
+
+    // only dispose the controller maintained by the widget
     _controller.dispose();
     super.dispose();
   }

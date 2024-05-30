@@ -1,3 +1,4 @@
+import 'package:bad_fl/core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,6 +9,10 @@ mixin BadDisposeScrollMixin on GetxController {
   @override
   void onClose() {
     sc.dispose();
+    BadFl.log(
+      module: 'BadDisposeScrollMixin',
+      message: 'auto execute dispose for "ScrollController"',
+    );
     super.onClose();
   }
 }
@@ -19,6 +24,10 @@ mixin BadDisposeTextEditingMixin on GetxController {
   @override
   void onClose() {
     tec.dispose();
+    BadFl.log(
+      module: 'BadDisposeScrollMixin',
+      message: 'auto execute dispose for "TextEditingController"',
+    );
     super.onClose();
   }
 }

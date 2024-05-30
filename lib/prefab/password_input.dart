@@ -115,8 +115,6 @@ class BadPasswordInput extends StatefulWidget {
 }
 
 class _BadPasswordInputState extends State<BadPasswordInput> {
-  final TextEditingController _controller = TextEditingController();
-
   // default to true here, but the real initialisation is done in [initState]
   bool _obscureText = true;
 
@@ -137,18 +135,11 @@ class _BadPasswordInputState extends State<BadPasswordInput> {
   }
 
   @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: widget.width,
       height: widget.height,
       child: CupertinoTextField(
-        controller: _controller,
         magnifierConfiguration: TextMagnifierConfiguration.disabled,
         keyboardType: TextInputType.visiblePassword,
         textInputAction: widget.textInputAction,

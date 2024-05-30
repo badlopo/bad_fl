@@ -25,7 +25,7 @@ class BadPanelItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scope = _BadPanelScope.of(context);
+    final scope = _BadPanelProvider.of(context);
     if (scope == null) {
       throw Exception('"BadPanelItem" should be used within "BadPanel"');
     }
@@ -81,17 +81,17 @@ class BadPanelOptions {
   });
 }
 
-class _BadPanelScope extends InheritedWidget {
-  final double itemHeight;
-
-  static _BadPanelScope? of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<_BadPanelScope>();
+class _BadPanelProvider extends InheritedWidget {
+  static _BadPanelProvider? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<_BadPanelProvider>();
   }
 
-  const _BadPanelScope({required super.child, required this.itemHeight});
+  final double itemHeight;
+
+  const _BadPanelProvider({required super.child, required this.itemHeight});
 
   @override
-  bool updateShouldNotify(covariant _BadPanelScope oldWidget) {
+  bool updateShouldNotify(covariant _BadPanelProvider oldWidget) {
     return itemHeight == oldWidget.itemHeight;
   }
 }
@@ -135,6 +135,6 @@ class BadPanel extends StatelessWidget {
       );
     }
 
-    return _BadPanelScope(itemHeight: options.itemHeight, child: panel);
+    return _BadPanelProvider(itemHeight: options.itemHeight, child: panel);
   }
 }

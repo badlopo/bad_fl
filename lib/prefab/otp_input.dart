@@ -99,21 +99,12 @@ class BadOTPInput extends StatefulWidget {
 }
 
 class _BadOTPInputState extends State<BadOTPInput> {
-  final TextEditingController _controller = TextEditingController();
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: widget.width,
       height: widget.height,
       child: CupertinoTextField(
-        controller: _controller,
         magnifierConfiguration: TextMagnifierConfiguration.disabled,
         keyboardType: widget.inputType,
         textInputAction: widget.textInputAction,
