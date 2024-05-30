@@ -25,7 +25,10 @@ class TreeNode<TreeNodeData extends Object> {
   /// set expanded state of the node
   void setExpanded(bool to) {
     if (_expanded == to) {
-      BadFl.log('BadTree', 'node is already ${to ? 'expanded' : 'collapsed'}');
+      BadFl.log(
+        module: 'BadTree',
+        message: 'node is already ${to ? 'expanded' : 'collapsed'}',
+      );
       return;
     }
 

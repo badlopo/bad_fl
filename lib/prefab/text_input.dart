@@ -1,3 +1,4 @@
+import 'package:bad_fl/core.dart';
 import 'package:bad_fl/wrapper/clickable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -114,13 +115,28 @@ class _BadTextInputState extends State<BadTextInput> {
   @override
   void initState() {
     super.initState();
-    _controller = widget.controller ?? TextEditingController();
+    if (widget.controller != null) {
+      _controller = widget.controller!;
+    } else {
+      _controller = TextEditingController();
+      BadFl.log(
+        module: 'BadTextInput',
+        message: 'maintains "TextEditingController" internally',
+      );
+    }
     if (widget.initialValue != null) _controller.text = widget.initialValue!;
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    // only dispose the controller maintained by the widget
+    if (widget.controller == null) {
+      _controller.dispose();
+      BadFl.log(
+        module: 'BadTextInput',
+        message: 'internally maintained "TextEditingController" disposed',
+      );
+    }
     super.dispose();
   }
 
