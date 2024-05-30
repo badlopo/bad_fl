@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -15,8 +16,15 @@ class BadSnapshotController {
     }
 
     final RenderRepaintBoundary boundary =
-        key.currentContext!.findRenderObject() as RenderRepaintBoundary;
+        ctx.findRenderObject() as RenderRepaintBoundary;
     return boundary.toImageSync(pixelRatio: pixelRatio);
+  }
+
+  /// capture a snapshot of the wrapped widget and convert it to PNG buffer
+  Future<Uint8List> captureAsPngBuffer([double pixelRatio = 1.0]) async {
+    final image = capture(pixelRatio);
+    final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    return byteData!.buffer.asUint8List();
   }
 }
 

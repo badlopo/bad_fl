@@ -66,10 +66,8 @@ class _ExampleState extends State<Example> {
   final controller = BadSnapshotController();
 
   void takeSnapshot() async {
-    final image = controller.capture();
-    final byteData = await image.toByteData(format: ImageByteFormat.png);
-    final bytes = byteData!.buffer.asUint8List();
-    saveImage(bytes.toJS);
+    final image = await controller.captureAsPngBuffer();
+    saveImage(image.toJS);
   }
 
   @override
