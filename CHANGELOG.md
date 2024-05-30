@@ -1,6 +1,12 @@
 ## 0.0.3
 
+BREAKING CHANGES:
+
 - `BadWebviewFragment` renamed to `BadWebview`
+
+Feat:
+
+- `BadSnapshot`: A wrapper for capturing snapshot of its child widget
 
 ## 0.0.2
 

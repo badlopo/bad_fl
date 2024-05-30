@@ -1353,3 +1353,109 @@ class _ExampleState extends State<Example> {
   }
 }
 ```
+
+#### BadSnapshot
+
+[source code](./lib/wrapper/snapshot.dart)
+
+A wrapper for capturing snapshot of its child widget.
+
+![](./media/snapshot.gif)
+
+```dart
+@JS('saveImage')
+external JSVoid saveImage(JSUint8Array bytes);
+
+class Example extends StatefulWidget {
+  const Example({super.key});
+
+  @override
+  State<Example> createState() => _ExampleState();
+}
+
+class _ExampleState extends State<Example> {
+  final controller = BadSnapshotController();
+
+  void takeSnapshot() async {
+    final image = controller.capture();
+    final byteData = await image.toByteData(format: ImageByteFormat.png);
+    final bytes = byteData!.buffer.asUint8List();
+    saveImage(bytes.toJS);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Example'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.camera_alt),
+            onPressed: takeSnapshot,
+          ),
+        ],
+      ),
+      backgroundColor: Colors.grey[200],
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          BadSnapshot(
+            controller: controller,
+            child: BadPanel(
+              title: const Padding(
+                padding: EdgeInsets.only(bottom: 8),
+                child: Text('Profile'),
+              ),
+              items: const [
+                BadPanelItem(
+                  label: Text('Avatar'),
+                  suffix: CircleAvatar(
+                    radius: 18,
+                    backgroundImage: NetworkImage('https://picsum.photos/200'),
+                  ),
+                ),
+                BadPanelItem(
+                  label: Text('Nickname'),
+                  body: Text('nickname', textAlign: TextAlign.end),
+                  suffix: Icon(Icons.edit_note),
+                ),
+                BadPanelItem(
+                  label: Text('HomePage'),
+                  body: Text('https://example.com', textAlign: TextAlign.end),
+                ),
+                BadPanelItem(
+                  label: Text('About'),
+                  body: Text(
+                    'lorem ipsum dolor sit amet, consectetur adipiscing elit',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+```js
+/**
+ * @param bytes {Uint8Array}
+ */
+function saveImage(bytes) {
+  const blob = new Blob([bytes], {type: 'image/png'});
+  const url = URL.createObjectURL(blob);
+
+  // open in new tab
+  window.open(url, '_blank')
+
+  // or download directly
+  // const a = document.createElement('a');
+  // a.href = url;
+  // a.download = 'image.png';
+  // a.click();
+}
+```
