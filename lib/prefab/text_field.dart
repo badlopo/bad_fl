@@ -1,3 +1,4 @@
+import 'package:bad_fl/core.dart';
 import 'package:bad_fl/wrapper/clickable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -136,7 +137,13 @@ class _BadTextFieldState extends State<BadTextField> {
     if (widget.maxLength != null) _controller.removeListener(changeObserver);
 
     // only dispose the controller maintained by the widget
-    _controller.dispose();
+    if (widget.controller == null) {
+      _controller.dispose();
+      BadFl.log(
+        module: 'BadTextField',
+        message: 'internally maintained "TextEditingController" disposed',
+      );
+    }
     super.dispose();
   }
 
