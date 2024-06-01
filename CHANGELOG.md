@@ -3,6 +3,8 @@
 BREAKING CHANGES:
 
 - `BadWebviewFragment`: renamed to `BadWebview`
+- `CacheImpl`: renamed to `FileCacheImpl`
+    - `CacheImpl.remove`: renamed to `FileCacheImpl.delete`
 
 NEW FEATURES:
 

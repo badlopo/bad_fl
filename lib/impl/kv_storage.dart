@@ -5,7 +5,7 @@ abstract class KVStorageImpl {
 
   static void _guard() {
     if (_box == null) {
-      throw Exception('The "prepare" must be called before any operation.');
+      throw StateError('The "prepare" must be called before any operation.');
     }
   }
 

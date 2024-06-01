@@ -174,7 +174,7 @@ user has accepted the privacy policy.
 
 | Class              | `prepare` | `extend` |
 |--------------------|-----------|----------|
-| `CacheImpl`        | ✅         | ❌        |
+| `FileCacheImpl`        | ✅         | ❌        |
 | `ClipboardImpl`    | ❌         | ❌        |
 | `EvCenterImpl`     | ❌         | ❌        |
 | `ExternalLinkImpl` | ❌         | ❌        |

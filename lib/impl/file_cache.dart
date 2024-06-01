@@ -28,7 +28,7 @@ class CachedEntry {
 /// cache file to `file_cache` folder under `getApplicationDocumentsDirectory` returned directory
 /// - iOS: `NSDocumentDirectory`
 /// - Android: `getDataDirectory()`
-abstract class CacheImpl {
+abstract class FileCacheImpl {
   static Directory? _root;
 
   /// initialization
@@ -53,7 +53,7 @@ abstract class CacheImpl {
     ResultType resultOnError,
   ) {
     if (_root == null) {
-      throw Exception('The "prepare" must be called before any operation.');
+      throw StateError('The "prepare" must be called before any operation.');
     }
     try {
       return task();
@@ -92,12 +92,12 @@ abstract class CacheImpl {
     }, null);
   }
 
-  /// remove cached file
+  /// delete cached file
   ///
   /// - return `true` if file exists and removed successfully
   /// - return `false` if file not exist
   /// - return `null` if error occurred
-  static bool? remove(String filename) {
+  static bool? delete(String filename) {
     return _task(() {
       final f = File(join(_root!.path, filename));
       if (f.existsSync()) {
