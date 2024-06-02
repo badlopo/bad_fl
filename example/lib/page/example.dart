@@ -1,5 +1,3 @@
-import 'dart:js_interop';
-
 import 'package:bad_fl/bad_fl.dart';
 import 'package:flutter/material.dart';
 
@@ -51,9 +49,6 @@ import 'package:flutter/material.dart';
 //   }
 // }
 
-@JS('saveImage')
-external JSVoid saveImage(JSUint8Array bytes);
-
 class Example extends StatefulWidget {
   const Example({super.key});
 
@@ -62,12 +57,7 @@ class Example extends StatefulWidget {
 }
 
 class _ExampleState extends State<Example> {
-  final controller = BadSnapshotController();
-
-  void takeSnapshot() async {
-    final image = await controller.captureAsPngBuffer();
-    saveImage(image.toJS);
-  }
+  final controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -75,51 +65,20 @@ class _ExampleState extends State<Example> {
       appBar: AppBar(
         title: const Text('Example'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.camera_alt),
-            onPressed: takeSnapshot,
-          ),
+          BadBackToTop(scrollController: controller),
+          BadBackToTop.animated(scrollController: controller),
         ],
       ),
-      backgroundColor: Colors.grey[200],
       body: ListView(
+        controller: controller,
         padding: const EdgeInsets.all(16),
         children: [
-          BadSnapshot(
-            controller: controller,
-            child: BadPanel(
-              title: const Padding(
-                padding: EdgeInsets.only(bottom: 8),
-                child: Text('Profile'),
-              ),
-              items: const [
-                BadPanelItem(
-                  label: Text('Avatar'),
-                  suffix: CircleAvatar(
-                    radius: 18,
-                    backgroundImage: NetworkImage('https://picsum.photos/200'),
-                  ),
-                ),
-                BadPanelItem(
-                  label: Text('Nickname'),
-                  body: Text('nickname', textAlign: TextAlign.end),
-                  suffix: Icon(Icons.edit_note),
-                ),
-                BadPanelItem(
-                  label: Text('HomePage'),
-                  body: Text('https://example.com', textAlign: TextAlign.end),
-                ),
-                BadPanelItem(
-                  label: Text('About'),
-                  body: Text(
-                    'lorem ipsum dolor sit amet, consectetur adipiscing elit',
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          Container(height: 100, color: Colors.orange),
+          Container(height: 300, color: Colors.blue),
+          Container(height: 400, color: Colors.grey),
+          Container(height: 200, color: Colors.green),
+          Container(height: 500, color: Colors.amber),
+          Container(height: 700, color: Colors.teal),
         ],
       ),
     );
