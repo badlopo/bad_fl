@@ -174,7 +174,7 @@ user has accepted the privacy policy.
 
 | Class              | `prepare` | `extend` |
 |--------------------|-----------|----------|
-| `FileCacheImpl`        | ✅         | ❌        |
+| `FileCacheImpl`    | ✅         | ❌        |
 | `ClipboardImpl`    | ❌         | ❌        |
 | `EvCenterImpl`     | ❌         | ❌        |
 | `ExternalLinkImpl` | ❌         | ❌        |
@@ -1203,6 +1203,62 @@ class Example extends StatelessWidget {
 
 Non-visual components that wrap other components.
 
+#### BadBackToTop
+
+[source code](./lib/wrapper/back_to_top.dart)
+
+Implement the back-to-top logic (show and hide, scroll to the top) according to the passed `ScrollController`
+
+There are two implementations, `BadBackToTop` will jump directly to the top when clicked, and `BadBackToTop.animated`
+will animate to the top when clicked
+
+![](./media/back_to_top.gif)
+
+```dart
+class Example extends StatefulWidget {
+  const Example({super.key});
+
+  @override
+  State<Example> createState() => _ExampleState();
+}
+
+class _ExampleState extends State<Example> {
+  final controller = ScrollController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Example')),
+      floatingActionButton: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          BadBackToTop(
+            scrollController: controller,
+            child: const Text('jump to top'),
+          ),
+          BadBackToTop.animated(
+            scrollController: controller,
+            child: const Text('animate to top'),
+          ),
+        ],
+      ),
+      body: ListView(
+        controller: controller,
+        padding: const EdgeInsets.all(16),
+        children: [
+          Container(height: 100, color: Colors.orange),
+          Container(height: 300, color: Colors.blue),
+          Container(height: 400, color: Colors.grey),
+          Container(height: 200, color: Colors.green),
+          Container(height: 500, color: Colors.amber),
+          Container(height: 700, color: Colors.teal),
+        ],
+      ),
+    );
+  }
+}
+```
+
 #### BadClickable
 
 [source code](./lib/wrapper/clickable.dart)
@@ -1444,16 +1500,16 @@ class _ExampleState extends State<Example> {
  * @param bytes {Uint8Array}
  */
 function saveImage(bytes) {
-  const blob = new Blob([bytes], {type: 'image/png'});
-  const url = URL.createObjectURL(blob);
+    const blob = new Blob([bytes], {type: 'image/png'});
+    const url = URL.createObjectURL(blob);
 
-  // open in new tab
-  window.open(url, '_blank')
+    // open in new tab
+    window.open(url, '_blank')
 
-  // or download directly
-  // const a = document.createElement('a');
-  // a.href = url;
-  // a.download = 'image.png';
-  // a.click();
+    // or download directly
+    // const a = document.createElement('a');
+    // a.href = url;
+    // a.download = 'image.png';
+    // a.click();
 }
 ```
