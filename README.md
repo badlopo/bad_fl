@@ -338,6 +338,186 @@ class Example extends StatelessWidget {
 }
 ```
 
+#### BadScrollAnchorScope
+
+[source code](./lib/layout/scroll_anchor.dart)
+
+This is a wrapper on top of `SingleChildScrollView`, allowing its child elements to act as anchors (children are wrapped
+with `Column`):
+
+- can be used as scroll target
+- can listen to its show/hide state changes
+
+👉 `BadScrollAnchorScope<AsKey extends Object>`
+
+| Property             | Type                               | Default                     | Description                                                                                                       |
+|----------------------|------------------------------------|-----------------------------|-------------------------------------------------------------------------------------------------------------------|
+| `scrollDirection`    | `Axis`                             | `Axis.vertical`             | passed into the inner `SingleChildScrollView`                                                                     |
+| `padding`            | `EdgeInsetsGeometry?`              | -                           | passed into the inner `SingleChildScrollView`                                                                     |
+| `physics`            | `ScrollPhysics?`                   | -                           | passed into the inner `SingleChildScrollView`                                                                     |
+| `scrollController`   | `ScrollController?`                | -                           | passed into the inner `SingleChildScrollView` (if not provided, a internal `ScrollController` will be maintained) |
+| `crossAxisAlignment` | `CrossAxisAlignment`               | `CrossAxisAlignment.center` | passed to the inner `Column`                                                                                      |
+| `controller`         | `BadScrollAnchorController<AsKey>` | -                           | controller for the scope                                                                                          |
+| `children`           | `List<Widget>`                     | -                           | widgets to be placed inside the inner `SingleChildScrollView` (wrapped in a `Column`)                             |
+
+👉 `BadScrollAnchor<AsKey extends Object>`
+
+| Property | Type     | Default | Description             |
+|----------|----------|---------|-------------------------|
+| `asKey`  | `AsKey`  | -       | value to be used as key |
+| `child`  | `Widget` | -       | child widget            |
+
+👉 `BadScrollAnchorController<AsKey extends Object>`
+
+| Property          | Type   | Default         | Description                                   |
+|-------------------|--------|-----------------|-----------------------------------------------|
+| `scrollDirection` | `Axis` | `Axis.vertical` | the scrollDirection of the inner `ScrollView` |
+
+| Property / Method | Type / Signature                                                                      | Description                                                                                            |
+|-------------------|---------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| `anchorCount`     | `int`                                                                                 | number of anchor in the scope                                                                          |
+| `anchors`         | `Iterable<AsKey>`                                                                     | all keys of the anchors                                                                                |
+| `jumpToAnchor`    | `void Function(AsKey key, [double offset])`                                           | jump to the anchor point related to the key with an optional offset                                    |
+| `animateToAnchor` | `FutureOr<void> Function(AsKey key, {Duration duration, Curve curve, double offset})` | animate to the anchor point related to the key with an optional offset                                 |
+| `updateAnchorPos` | `void Function()`                                                                     | update the position of the anchor points in the scope so that the observers can be notified accurately |
+| `addObserver`     | `void Function(void Function(AsKey key, AnchorStatus status) observer)`               | add an observer                                                                                        |
+| `removeObserver`  | `void Function(void Function(AsKey key, AnchorStatus status) observer)`               | remove an observer                                                                                     |
+
+![](./media/scroll_anchor.gif)
+
+```dart
+class Example extends StatefulWidget {
+  const Example({super.key});
+
+  @override
+  State<Example> createState() => _ExampleState();
+}
+
+class _ExampleState extends State<Example> {
+  int ptr = 0;
+  final sc = ScrollController();
+  final sac = BadScrollAnchorController<int>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    sac.addObserver((key, status) {
+      if (status == AnchorStatus.show) {
+        setState(() {
+          ptr = key;
+        });
+      } else {
+        setState(() {
+          ptr = key + 1;
+        });
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('top anchor: $ptr')),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () => sac.jumpToAnchor(2),
+                    child: const Text('jump to 2'),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () => sac.animateToAnchor(4),
+                    child: const Text('animate to 4'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: BadScrollAnchorScope(
+              controller: sac,
+              scrollController: sc,
+              padding: const EdgeInsets.all(16),
+              children: [
+                BadScrollAnchor(
+                  asKey: 0,
+                  child: Container(
+                    width: double.infinity,
+                    height: 300,
+                    color: Colors.blue,
+                    child: const Text('anchor 0'),
+                  ),
+                ),
+                BadScrollAnchor(
+                  asKey: 1,
+                  child: Container(
+                    width: double.infinity,
+                    height: 400,
+                    color: Colors.grey,
+                    padding: const EdgeInsets.all(50),
+                    child: Column(
+                      children: [
+                        const Text('anchor 1'),
+                        const SizedBox(height: 50),
+                        BadScrollAnchor(
+                          asKey: 2,
+                          child: Container(
+                            width: double.infinity,
+                            height: 100,
+                            color: Colors.cyan,
+                            child: const Text(
+                                    'anchor 2\nnested anchor works too!'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                BadScrollAnchor(
+                  asKey: 3,
+                  child: Container(
+                    width: double.infinity,
+                    height: 200,
+                    color: Colors.green,
+                    child: const Text('anchor 3'),
+                  ),
+                ),
+                BadScrollAnchor(
+                  asKey: 4,
+                  child: Container(
+                    width: double.infinity,
+                    height: 500,
+                    color: Colors.amber,
+                    child: const Text('anchor 4'),
+                  ),
+                ),
+                BadScrollAnchor(
+                  asKey: 5,
+                  child: Container(
+                    width: double.infinity,
+                    height: 700,
+                    color: Colors.teal,
+                    child: const Text('anchor 5'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
 #### BadTree
 
 [source code](./lib/layout/tree.dart)

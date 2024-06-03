@@ -1,7 +1,5 @@
 # 文档
 
-- BadScrollAnchor
-
 # 优化
 
 - 请求改造 -- 中间件形式

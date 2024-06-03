@@ -8,9 +8,11 @@ BREAKING CHANGES:
 
 NEW FEATURES:
 
-- `BadSnapshot`: A wrapper for capturing snapshot of its child widget
 - `BadBackToTop`: Implement the back-to-top logic (show and hide, scroll to the top) according to the
   passed `ScrollController`
+- `BadScrollAnchorScope`: A wrapper on top of `SingleChildScrollView`, allowing its child elements to act as anchors (be
+  used as scroll target, listen to its show/hide state changes)
+- `BadSnapshot`: A wrapper for capturing snapshot of its child widget
 
 ## 0.0.2
 
