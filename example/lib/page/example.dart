@@ -62,11 +62,18 @@ class _ExampleState extends State<Example> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Example'),
-        actions: [
-          BadBackToTop(scrollController: controller),
-          BadBackToTop.animated(scrollController: controller),
+      appBar: AppBar(title: const Text('Example')),
+      floatingActionButton: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          BadBackToTop(
+            scrollController: controller,
+            child: const Text('jump to top'),
+          ),
+          BadBackToTop.animated(
+            scrollController: controller,
+            child: const Text('animate to top'),
+          ),
         ],
       ),
       body: ListView(
