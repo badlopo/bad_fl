@@ -9,6 +9,8 @@ BREAKING CHANGES:
 NEW FEATURES:
 
 - `BadSnapshot`: A wrapper for capturing snapshot of its child widget
+- `BadBackToTop`: Implement the back-to-top logic (show and hide, scroll to the top) according to the
+  passed `ScrollController`
 
 ## 0.0.2
 

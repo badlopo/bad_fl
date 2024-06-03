@@ -1,12 +1,10 @@
 # 文档
 
 - BadScrollAnchor
-- BadBackToTop
 
 # 优化
 
 - 请求改造 -- 中间件形式
-- 列表锚点 -- 视口锚点变化通知
 
 # 新增
 
