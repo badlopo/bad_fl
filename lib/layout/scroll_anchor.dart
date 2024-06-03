@@ -49,10 +49,10 @@ class BadScrollAnchorController<AsKey extends Object> {
   /// we need to re-calculate the position real-time
   final Map<AsKey, GlobalKey> _valueToKey = <AsKey, GlobalKey>{};
 
-  /// number of anchor in the scope
+  /// number of anchors in the scope
   int get anchorCount => _valueToKey.length;
 
-  /// all the anchor points in the scope
+  /// all keys of the anchors
   Iterable<AsKey> get anchors => _valueToKey.keys;
 
   /// add a anchor point, ignore if the key already exists
@@ -235,10 +235,12 @@ class BadScrollAnchorController<AsKey extends Object> {
   /// a set of observers that will be notified when an anchor passes by
   final Set<BadScrollObserver<AsKey>> _observers = {};
 
+  /// add an observer
   void addObserver(BadScrollObserver<AsKey> observer) {
     _observers.add(observer);
   }
 
+  /// remove an observer
   void removeObserver(BadScrollObserver<AsKey> observer) {
     _observers.remove(observer);
   }
@@ -361,7 +363,7 @@ class BadScrollAnchorScope<AsKey extends Object> extends StatefulWidget {
   /// passed to the inner `Column`
   final CrossAxisAlignment crossAxisAlignment;
 
-  /// an object that can be used to control the anchor point that this scroll view scrolls to
+  /// controller for the scope
   final BadScrollAnchorController<AsKey> controller;
 
   /// widgets to be placed inside the inner `SingleChildScrollView` (wrapped in a `Column`)
@@ -369,12 +371,12 @@ class BadScrollAnchorScope<AsKey extends Object> extends StatefulWidget {
 
   const BadScrollAnchorScope({
     super.key,
-    required this.controller,
     this.scrollDirection = Axis.vertical,
     this.padding,
     this.physics,
     this.scrollController,
     this.crossAxisAlignment = CrossAxisAlignment.center,
+    required this.controller,
     required this.children,
   });
 
