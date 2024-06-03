@@ -2,7 +2,9 @@
 
 BREAKING CHANGES:
 
-- `BadWebviewFragment`: renamed to `BadWebview`
+- `BadWebviewFragment`:
+    - renamed to `BadWebview`
+    - moved to `prefab` collection
 - `CacheImpl`: renamed to `FileCacheImpl`
     - `CacheImpl.remove`: renamed to `FileCacheImpl.delete`
 

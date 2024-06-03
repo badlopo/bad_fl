@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -71,15 +73,6 @@ class BadWebview extends StatefulWidget {
   /// callback when web resource error occurred
   final ValueChanged<WebResourceError>? onWebResourceError;
 
-  const BadWebview({
-    super.key,
-    this.userAgentPatch,
-    this.refresher,
-    required this.source,
-    this.onProgress,
-    this.onWebResourceError,
-  });
-
   BadWebview.remote({
     super.key,
     this.refresher,
@@ -87,7 +80,11 @@ class BadWebview extends StatefulWidget {
     required Uri uri,
     this.onProgress,
     this.onWebResourceError,
-  }) : source = RemoteSource(uri: uri);
+  })  : assert(
+          Platform.isAndroid || Platform.isIOS,
+          'BadWebview only supports Android and iOS',
+        ),
+        source = RemoteSource(uri: uri);
 
   BadWebview.local({
     super.key,
@@ -96,7 +93,11 @@ class BadWebview extends StatefulWidget {
     required String path,
     this.onProgress,
     this.onWebResourceError,
-  }) : source = LocalSource(path: path);
+  })  : assert(
+          Platform.isAndroid || Platform.isIOS,
+          'BadWebview only supports Android and iOS',
+        ),
+        source = LocalSource(path: path);
 
   @override
   State<BadWebview> createState() => _BadWebviewState();

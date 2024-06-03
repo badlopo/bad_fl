@@ -49,52 +49,6 @@ class Example extends StatelessWidget {
 }
 ```
 
-### Fragment
-
-Fragment is a large section of content on the interface.
-
-#### BadWebview
-
-[source code](./lib/fragment/webview.dart)
-
-```dart
-class Example extends StatefulWidget {
-  const Example({super.key});
-
-  @override
-  State<StatefulWidget> createState() => ExampleState();
-}
-
-class ExampleState extends State<Example> {
-  final refresher = Refresher();
-  double progress = 0.0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const BadText('Example'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: refresher.refresh,
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          LinearProgressIndicator(value: progress),
-          BadWebview.remote(
-            onProgress: (v) => setState(() => progress = v),
-            uri: Uri.parse('https://example.com/'),
-          )
-        ],
-      ),
-    );
-  }
-}
-```
-
 ### Helper
 
 #### BadDebouncer
@@ -474,7 +428,7 @@ class _ExampleState extends State<Example> {
                             height: 100,
                             color: Colors.cyan,
                             child: const Text(
-                                    'anchor 2\nnested anchor works too!'),
+                                'anchor 2\nnested anchor works too!'),
                           ),
                         ),
                       ],
@@ -1379,9 +1333,53 @@ class Example extends StatelessWidget {
 }
 ```
 
+#### BadWebview
+
+[source code](./lib/prefab/webview.dart)
+
+// TODO: finish documentation after the implementation is completed
+
+```dart
+class Example extends StatefulWidget {
+  const Example({super.key});
+
+  @override
+  State<StatefulWidget> createState() => ExampleState();
+}
+
+class ExampleState extends State<Example> {
+  final refresher = Refresher();
+  double progress = 0.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const BadText('Example'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: refresher.refresh,
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          LinearProgressIndicator(value: progress),
+          BadWebview.remote(
+            onProgress: (v) => setState(() => progress = v),
+            uri: Uri.parse('https://example.com/'),
+          )
+        ],
+      ),
+    );
+  }
+}
+```
+
 ### Wrapper
 
-Non-visual components that wrap other components.
+Non-visual components that wrap other components to provide additional functionality.
 
 #### BadBackToTop
 
