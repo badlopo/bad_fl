@@ -152,8 +152,8 @@ class BadScrollAnchorController<AsKey extends Object> {
   /// animate to the anchor point related to the key with an optional offset
   FutureOr<void> animateToAnchor(
     AsKey key, {
-    required Duration duration,
-    required Curve curve,
+    Duration duration = const Duration(milliseconds: 500),
+    Curve curve = Curves.easeInOut,
     double offset = 0,
   }) {
     double? targetPos = _getAnchorPosInScrollable(key, offset);
