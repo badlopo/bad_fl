@@ -1459,6 +1459,57 @@ class Example extends StatelessWidget {
 }
 ```
 
+#### BadFloating
+
+[source code](./lib/wrapper/floating.dart)
+
+A wrapper that allows the components inside it to be dragged and placed anywhere on the screen.
+
+![](./media/floating.gif)
+
+```dart
+class Example extends StatefulWidget {
+  const Example({super.key});
+
+  @override
+  State<Example> createState() => _ExampleState();
+}
+
+class _ExampleState extends State<Example> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('BadFloating')),
+      body: LayoutBuilder(builder: (_, constraint) {
+        return Stack(
+          children: [
+            Container(
+              width: constraint.maxWidth,
+              height: constraint.maxHeight,
+              color: Colors.grey[200],
+            ),
+            BadFloating(
+              containerSize: Size(constraint.maxWidth, constraint.maxHeight),
+              floatingSize: const Size(50, 50),
+              initialPosition: const BadFloatingPosition.br(50, 50),
+              child: Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Colors.green[300],
+                ),
+                // child: Text('xxx'),
+              ),
+            ),
+          ],
+        );
+      }),
+    );
+  }
+}
+```
+
 #### BadHeroPreviewer
 
 [source code](./lib/wrapper/hero_previewer.dart)

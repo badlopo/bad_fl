@@ -12,6 +12,7 @@ NEW FEATURES:
 
 - `BadBackToTop`: Implement the back-to-top logic (show and hide, scroll to the top) according to the
   passed `ScrollController`
+- `BadFloating`: A wrapper that allows the components inside it to be dragged and placed anywhere on the screen
 - `BadScrollAnchorScope`: A wrapper on top of `SingleChildScrollView`, allowing its child elements to act as anchors (be
   used as scroll target, listen to its show/hide state changes)
 - `BadSnapshot`: A wrapper for capturing snapshot of its child widget
