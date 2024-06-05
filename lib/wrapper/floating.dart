@@ -176,9 +176,9 @@ class _BadFloatingState extends State<BadFloating> {
 
   late BadFloatingPosition _position = BadFloatingPosition.tl(
     widget.initialPosition.top ??
-        widget.containerSize.height - widget.initialPosition.bottom!,
+        _arena.freeHeight - widget.initialPosition.bottom!,
     widget.initialPosition.left ??
-        widget.containerSize.width - widget.initialPosition.right!,
+        _arena.freeWidth - widget.initialPosition.right!,
   );
 
   Duration _duration = Duration.zero;
