@@ -1,7 +1,6 @@
 import 'package:bad_fl/bad_fl.dart';
 import 'package:bad_fl/wrapper/floating.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 // class Example extends StatelessWidget {
 //   const Example({super.key});
@@ -62,6 +61,7 @@ class _ExampleState extends State<Example> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('BadFloating')),
       body: LayoutBuilder(builder: (_, constraint) {
         return Stack(
           children: [
@@ -73,7 +73,7 @@ class _ExampleState extends State<Example> {
             BadFloating(
               containerSize: Size(constraint.maxWidth, constraint.maxHeight),
               floatingSize: const Size(50, 50),
-              initialPosition: const BadFloatingPosition.tl(50, 50),
+              initialPosition: const BadFloatingPosition.br(50, 50),
               child: Container(
                 width: 50,
                 height: 50,
