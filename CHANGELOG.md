@@ -15,6 +15,7 @@ NEW FEATURES:
 - `BadFloating`: A wrapper that allows the components inside it to be dragged and placed anywhere on the screen
 - `BadScrollAnchorScope`: A wrapper on top of `SingleChildScrollView`, allowing its child elements to act as anchors (be
   used as scroll target, listen to its show/hide state changes)
+- `BadSignature`: A canvas component that can be used to make simple signatures
 - `BadSnapshot`: A wrapper for capturing snapshot of its child widget
 
 ## 0.0.2
