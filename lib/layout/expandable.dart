@@ -1,39 +1,21 @@
 import 'package:bad_fl/wrapper/clickable.dart';
 import 'package:flutter/material.dart';
 
+enum BadExpandableState { empty, open, close }
+
 class BadExpandable extends StatefulWidget {
   /// whether the panel is open initially
   ///
   /// Default to `true`
-  final bool initialOpen;
-
-  /// height of the header
-  ///
-  /// Default to `28`
-  final double headerHeight;
+  final bool openOnInit;
 
   /// gap between the header and the child
   ///
   /// Default to `0`
   final double gap;
 
-  /// title widget
-  final Widget title;
-
-  /// icon to be displayed when the panel is empty
-  ///
-  /// Note: required when [child] is `null`
-  final Widget? emptyIcon;
-
-  /// icon to be displayed when the panel is open
-  ///
-  /// Default to `Icon(Icons.arrow_drop_up, size: 24)`
-  final Widget openedIcon;
-
-  /// icon to be displayed when the panel is closed
-  ///
-  /// Default to `Icon(Icons.arrow_drop_down, size: 24)`
-  final Widget closedIcon;
+  /// builder for the header widget
+  final Widget Function(BadExpandableState state) headerBuilder;
 
   /// child widget to be displayed when the panel is open
   ///
@@ -42,64 +24,40 @@ class BadExpandable extends StatefulWidget {
 
   const BadExpandable({
     super.key,
-    this.initialOpen = true,
-    this.headerHeight = 28,
+    this.openOnInit = true,
     this.gap = 0,
-    required this.title,
-    this.openedIcon = const Icon(Icons.arrow_drop_up, size: 24),
-    this.closedIcon = const Icon(Icons.arrow_drop_down, size: 24),
+    required this.headerBuilder,
     required this.child,
-  })  : assert(child != null),
-        emptyIcon = null;
-
-  const BadExpandable.empty({
-    super.key,
-    this.initialOpen = true,
-    this.headerHeight = 28,
-    this.gap = 0,
-    required this.title,
-    this.openedIcon = const Icon(Icons.arrow_drop_up, size: 24),
-    this.closedIcon = const Icon(Icons.arrow_drop_down, size: 24),
-    required this.emptyIcon,
-  })  : assert(emptyIcon != null),
-        child = null;
+  });
 
   @override
   State<BadExpandable> createState() => _BadExpandableState();
 }
 
 class _BadExpandableState extends State<BadExpandable> {
-  bool _open = false;
+  late final bool _empty = widget.child == null;
+  late bool _open = widget.openOnInit;
 
   void toggle() {
-    setState(() {
-      _open = !_open;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    _open = widget.initialOpen;
+    setState(() => _open = !_open);
   }
 
   @override
   Widget build(BuildContext context) {
-    final header = SizedBox(
-      height: widget.headerHeight,
-      child: Row(
-        children: [
-          Expanded(child: widget.title),
-          if (widget.child == null)
-            widget.emptyIcon!
-          else
-            _open ? widget.openedIcon : widget.closedIcon,
-        ],
-      ),
+    final header = widget.headerBuilder(
+      _empty
+          ? BadExpandableState.empty
+          : _open
+              ? BadExpandableState.open
+              : BadExpandableState.close,
     );
 
-    if (widget.child == null) return header;
+    if (_empty) return header;
+
+    Widget child = BadClickable(onClick: toggle, child: widget.child!);
+    if (widget.gap > 0) {
+      child = Padding(padding: EdgeInsets.only(top: widget.gap), child: child);
+    }
 
     return AnimatedSize(
       duration: const Duration(milliseconds: 300),
@@ -109,8 +67,7 @@ class _BadExpandableState extends State<BadExpandable> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BadClickable(onClick: toggle, child: header),
-          if (_open && widget.gap > 0) SizedBox(height: widget.gap),
-          if (_open) widget.child!,
+          if (_open) child,
         ],
       ),
     );
