@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 
 enum BadExpandableState { empty, open, close }
 
-class BadExpandable extends StatefulWidget {
-  /// whether the panel is open initially
-  ///
-  /// Default to `true`
-  final bool openOnInit;
+class BadExpandable extends StatelessWidget {
+  /// whether the panel is open
+  final bool open;
+
+  /// callback when the header is clicked
+  final VoidCallback onToggle;
 
   /// gap between the header and the child
   ///
@@ -22,42 +23,28 @@ class BadExpandable extends StatefulWidget {
   /// Note: if [child] is `null`, this widget will be treated as an empty panel.
   final Widget? child;
 
+  final bool _empty;
+
   const BadExpandable({
     super.key,
-    this.openOnInit = true,
+    required this.open,
+    required this.onToggle,
     this.gap = 0,
     required this.headerBuilder,
     required this.child,
-  });
-
-  @override
-  State<BadExpandable> createState() => _BadExpandableState();
-}
-
-class _BadExpandableState extends State<BadExpandable> {
-  late final bool _empty = widget.child == null;
-  late bool _open = widget.openOnInit;
-
-  void toggle() {
-    setState(() => _open = !_open);
-  }
+  }) : _empty = child == null;
 
   @override
   Widget build(BuildContext context) {
-    final header = widget.headerBuilder(
+    final header = headerBuilder(
       _empty
           ? BadExpandableState.empty
-          : _open
+          : open
               ? BadExpandableState.open
               : BadExpandableState.close,
     );
 
     if (_empty) return header;
-
-    Widget child = BadClickable(onClick: toggle, child: widget.child!);
-    if (widget.gap > 0) {
-      child = Padding(padding: EdgeInsets.only(top: widget.gap), child: child);
-    }
 
     return AnimatedSize(
       duration: const Duration(milliseconds: 300),
@@ -66,8 +53,11 @@ class _BadExpandableState extends State<BadExpandable> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          BadClickable(onClick: toggle, child: header),
-          if (_open) child,
+          BadClickable(onClick: onToggle, child: header),
+          if (open)
+            gap > 0
+                ? Padding(padding: EdgeInsets.only(top: gap), child: child!)
+                : child!,
         ],
       ),
     );
