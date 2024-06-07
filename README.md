@@ -20,27 +20,42 @@ caution.
 
 Extension methods of built-in types, named in the form of `<Type>Ext`.
 
-#### ListExt
+#### IterableExt & IterableWidgetExt
 
-[source code](./lib/extension/list.dart)
+[source code](./lib/extension/iterable.dart)
 
-👉 `slotted`: build a new element from each element of the list and insert slot elements between every two elements.
+👉 `slotted`: build a new element from each element of the iterable and insert slot elements between every two elements.
 
 ```dart
-class Example extends StatelessWidget {
-  const Example({super.key});
+class Example1 extends StatelessWidget {
+  const Example1({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        children: const [
+        // mark as `List<Widget>` to use `slotted` with default builder (asIs)
+        children: const <Widget>[
           Text('item1'),
           Text('item2'),
           Text('item3'),
           Text('item4'),
-        ].slotted(
-          builder: (v) => v,
+        ].slotted(slot: const Divider()),
+      ),
+    );
+  }
+}
+
+class Example2 extends StatelessWidget {
+  const Example2({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        // custom builder for widget creation
+        children: const [1, 2, 3, 4].slotted(
+          builder: (int num) => Text('item$num'),
           slot: const Divider(),
         ),
       ),

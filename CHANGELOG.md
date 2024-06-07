@@ -1,3 +1,9 @@
+## 0.0.4
+
+BREAKING CHANGES:
+
+- `ListExt`: now `IterableExt` to support more flex usage
+
 ## 0.0.3
 
 BREAKING CHANGES:
