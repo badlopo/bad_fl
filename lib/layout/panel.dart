@@ -1,4 +1,4 @@
-import 'package:bad_fl/extension/list.dart';
+import 'package:bad_fl/extension/Iterable.dart';
 import 'package:bad_fl/wrapper/clickable.dart';
 import 'package:flutter/material.dart';
 
