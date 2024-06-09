@@ -24,3 +24,5 @@ pnpm-debug.log*
 .idea/
 
 .yarn/
+
+__test__

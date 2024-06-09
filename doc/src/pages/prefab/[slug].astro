@@ -1,0 +1,28 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+    const prefabs = await getCollection('prefabs');
+    return prefabs.map(entry => {
+        return {
+            // 提供动态路由的参数
+            params: { slug: entry.slug },
+            // 提供 props
+            props: { entry },
+        }
+    });
+}
+
+interface Props {
+    entry: any;
+}
+
+const { render, data } = Astro.props.entry
+const { Content } = await render()
+---
+
+<BaseLayout title={ data.name }>
+    <!-- TODO: render markdown -->
+    <Content/>
+</BaseLayout>
