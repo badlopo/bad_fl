@@ -1,9 +1,10 @@
 ---
 interface Props {
     title?: string
+    sourceUrl?: string
 }
 
-const { title = 'BadFL' } = Astro.props
+const { title = 'BadFL', sourceUrl } = Astro.props
 
 const description = 'document of BadFL (https://pub.dev/packages/bad_fl)'
 ---
@@ -54,14 +55,25 @@ const description = 'document of BadFL (https://pub.dev/packages/bad_fl)'
             'relative w-full h-[60px] px-8 bg-[linear-gradient(180deg,#13151A_0%,rgba(19,21,26,0.88)_100%)] ' +
             'flex items-center justify-between text-white'
         }>
-            <div class="text-[32px]">
-                { title }
+            <div class="flex items-center space-x-4">
+                <a href="/">
+                    <img src="/home.svg" width="32" height="32" alt="home">
+                </a>
+
+                <span class="text-[24px]">{ title }</span>
+                {
+                    sourceUrl && (
+                        <a href={ sourceUrl } target="_blank" title="View source code">
+                            <img src="/code.svg" width="32" height="32" alt="source">
+                        </a>
+                    )
+                }
             </div>
             <div class="flex items-center space-x-4">
-                <a href="https://github.com/badlopo/bad_fl" title="View on GitHub">
+                <a href="https://github.com/badlopo/bad_fl" target="_blank" title="View on GitHub">
                     <img src="/github.svg" width="32" height="32" alt="github">
                 </a>
-                <a href="https://pub.dev/packages/bad_fl" title="View on Pub.dev">
+                <a href="https://pub.dev/packages/bad_fl" target="_blank" title="View on Pub.dev">
                     <img src="/pub.svg" width="32" height="32" alt="pub">
                 </a>
             </div>
