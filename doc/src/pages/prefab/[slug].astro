@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import DartpadBox from "../../components/DartpadBox.astro";
 
 export async function getStaticPaths() {
     const prefabs = await getCollection('prefabs');
@@ -18,11 +19,17 @@ interface Props {
     entry: any;
 }
 
-const { render, data } = Astro.props.entry
-const { Content } = await render()
+const { entry } = Astro.props
+const { Content } = await entry.render()
+const { name, gistId, sourceUrl } = entry.data as FrontMatterData
 ---
 
-<BaseLayout title={ data.name }>
+<BaseLayout title={ name } sourceUrl={ sourceUrl }>
+    {
+        gistId &&
+        <DartpadBox gistId={ gistId }/>
+    }
+
     <!-- TODO: render markdown -->
     <Content/>
 </BaseLayout>
