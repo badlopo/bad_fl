@@ -1,0 +1,11 @@
+---
+interface Props {
+    gistId: string;
+}
+
+const { gistId } = Astro.props
+---
+
+<iframe
+    class="w-full h-[500px]"
+    src={ `https://dartpad.dev/?id=${ gistId }&embed=true&theme=light&run=true&channel=stable` }/>
