@@ -10,6 +10,9 @@ class BadExpandable extends StatelessWidget {
   /// callback when the header is clicked
   final VoidCallback onToggle;
 
+  /// callback when the animation is finished
+  final VoidCallback? onEnd;
+
   /// gap between the header and the child
   ///
   /// Default to `0`
@@ -29,6 +32,7 @@ class BadExpandable extends StatelessWidget {
     super.key,
     required this.open,
     required this.onToggle,
+    this.onEnd,
     this.gap = 0,
     required this.headerBuilder,
     required this.child,
@@ -48,6 +52,7 @@ class BadExpandable extends StatelessWidget {
 
     return AnimatedSize(
       duration: const Duration(milliseconds: 300),
+      onEnd: onEnd,
       alignment: Alignment.topCenter,
       child: Column(
         mainAxisSize: MainAxisSize.min,
