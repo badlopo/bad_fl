@@ -1,5 +1,8 @@
 # 文档
 
+- 签名画布
+- BadExpandable 文档修改
+
 # 优化
 
 - 请求改造 -- 中间件形式 + 单独集合
@@ -7,9 +10,8 @@
 # 新增
 
 - 轮播引导页
+- overlay相关 (popup, 下拉菜单)
 - form表单 (wrapper 而非 prefab)
-- overlay相关 (popup 弹出层组件, 下拉菜单, 可拖拽吸附的浮动按钮)
-- 签名画布 -- https://github.com/4Q-s-r-o/signature/blob/master/lib/signature.dart#L25
 - Marquee
 
 # 待定
