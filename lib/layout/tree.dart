@@ -14,6 +14,11 @@ class TreeNode<TreeNodeData extends Object> {
   /// inner data of the node
   final TreeNodeData data;
 
+  /// whether the node is a leaf
+  bool _isLeaf = false;
+
+  bool get isLeaf => _isLeaf;
+
   /// expanded state of the node
   ///
   /// Default to `true`
@@ -112,6 +117,7 @@ class _BadTreeNodeState<TreeNodeData extends Object>
   @override
   Widget build(BuildContext context) {
     final children = widget.childrenProvider(widget.data);
+    node._isLeaf = children == null;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -214,7 +220,10 @@ class BadTree<TreeNodeData extends Object> extends StatefulWidget {
   final BadTreeController<TreeNodeData>? controller;
 
   /// tree data
-  final TreeNodeData tree;
+  ///
+  /// - if you have a single tree, you can pass the root node here like `[root]`
+  /// - if you have a forest, you can pass the roots of the trees here like `[root1, root2, ...]`
+  final List<TreeNodeData> tree;
 
   /// function to provide children of a node, return `null` if the node is a leaf
   ///
@@ -230,7 +239,7 @@ class BadTree<TreeNodeData extends Object> extends StatefulWidget {
     required this.tree,
     required this.childrenProvider,
     required this.nodeBuilder,
-  });
+  }) : assert(tree.length > 0, 'at least one root node is required');
 
   @override
   State<BadTree<TreeNodeData>> createState() => _BadTreeState<TreeNodeData>();
@@ -263,13 +272,30 @@ class _BadTreeState<TreeNodeData extends Object>
 
   @override
   Widget build(BuildContext context) {
-    return _BadTreeNode<TreeNodeData>(
-      data2node: _data2node,
-      nodes: _nodes,
-      depth: 0,
-      data: widget.tree,
-      childrenProvider: widget.childrenProvider,
-      nodeBuilder: widget.nodeBuilder,
+    if (widget.tree.length == 1) {
+      return _BadTreeNode<TreeNodeData>(
+        data2node: _data2node,
+        nodes: _nodes,
+        depth: 0,
+        data: widget.tree[0],
+        childrenProvider: widget.childrenProvider,
+        nodeBuilder: widget.nodeBuilder,
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        for (final root in widget.tree)
+          _BadTreeNode<TreeNodeData>(
+            data2node: _data2node,
+            nodes: _nodes,
+            depth: 0,
+            data: root,
+            childrenProvider: widget.childrenProvider,
+            nodeBuilder: widget.nodeBuilder,
+          ),
+      ],
     );
   }
 }
