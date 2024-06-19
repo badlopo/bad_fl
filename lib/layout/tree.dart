@@ -57,6 +57,11 @@ class TreeNode<TreeNodeData extends Object> {
   }
 
   TreeNode._({required this.depth, required this.data});
+
+  @override
+  String toString() {
+    return '[TreeNode] <$depth> $data';
+  }
 }
 
 class _BadTreeNode<TreeNodeData extends Object> extends StatefulWidget {
