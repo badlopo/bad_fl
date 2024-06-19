@@ -32,6 +32,13 @@ class SaveResult {
       'errorMessage': errorMessage,
     };
   }
+
+  @override
+  String toString() {
+    return ok
+        ? '[SaveResult] ok ($filePath)'
+        : '[SaveResult] error ($errorMessage)';
+  }
 }
 
 /// image operation implementation
