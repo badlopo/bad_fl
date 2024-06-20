@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 enum SearchEvent {
   /// the inner [ScrollController] is not attached to any client
@@ -18,16 +17,50 @@ enum SearchEvent {
   fetcherFailed,
 }
 
-/// The [BadSearchMixin] provides a simple way to implement paging queries.
-mixin BadSearchMixin<ListItemType> on GetxController {
+/// combination of pending state and result container
+class BadSearchState<T> extends ChangeNotifier
+    implements ValueListenable<(bool, List<T>)> {
+  bool _pending = false;
+
+  bool get isPending => _pending;
+
+  set pending(bool to) {
+    _pending = to;
+    notifyListeners();
+  }
+
+  final List<T> _result = [];
+
+  List<T> get result => _result;
+
+  @override
+  get value => (_pending, _result);
+
+  void add(T item) {
+    _result.add(item);
+    notifyListeners();
+  }
+
+  void addAll(Iterable<T> iterable) {
+    _result.addAll(iterable);
+    notifyListeners();
+  }
+
+  void clear() {
+    _result.clear();
+    notifyListeners();
+  }
+}
+
+/// Provides everything you need for paged search
+/// (keywords, page numbers, page size, pending status, results, next page, re-search, etc.)
+///
+/// Recommended to use with [ValueListenableBuilder]
+mixin BadSearchMixin<ListItemType> {
   /// this should be attached to the list container the data is displayed in,
   /// whether it's a `ListView`, `GridView`, `CustomScrollView`, etc.
   @nonVirtual
   final ScrollController sc = ScrollController();
-
-  /// indicate if the search is pending.
-  @nonVirtual
-  final RxBool pending = false.obs;
 
   /// the page size to search
   ///
@@ -51,16 +84,16 @@ mixin BadSearchMixin<ListItemType> on GetxController {
   @nonVirtual
   int get pageNo => _pageNo;
 
-  /// result container
+  /// search state (pending state & result container)
   @nonVirtual
-  final RxList<ListItemType> resultList = <ListItemType>[].obs;
+  final BadSearchState<ListItemType> searchState = BadSearchState();
 
   /// reset the search status for a new search
   ///
   /// - scroll to top if the [sc] is attached
   /// - reset [_isEnd] to false
   /// - reset [_pageNo] to 1
-  /// - clear [resultList]
+  /// - clear [searchState]
   void _resetStatus() {
     if (sc.hasClients) {
       sc.jumpTo(0);
@@ -70,7 +103,7 @@ mixin BadSearchMixin<ListItemType> on GetxController {
 
     _isEnd = false;
     _pageNo = 1;
-    resultList.clear();
+    searchState.clear();
   }
 
   /// override this method to handle search event (do some log, toast, etc).
@@ -82,16 +115,16 @@ mixin BadSearchMixin<ListItemType> on GetxController {
   Future<Iterable<ListItemType>?> fetcher(String target, int pageNo);
 
   /// try using [fetcher] to get the next page data and process it.
-  /// - if still in pending state, trigger [SearchEvent.pending]
+  /// - if still in pending state, trigger [SearchEvent.rejected]
   /// - (else) if there is no more data, trigger [SearchEvent.noMoreData]
   /// - (else) call [fetcher] with [_target] and [_pageNo]
-  ///   - success: append the data to [resultList], update [_pageNo] and [_isEnd]
-  ///   - failed: trigger [SearchEvent.fetcherFailed]
+  /// - success: append the data to [searchState], update [_pageNo] and [_isEnd]
+  /// - failed: trigger [SearchEvent.fetcherFailed]
   ///
   /// see also: [reloadPage], [searchPage]
   @nonVirtual
   Future<void> nextPage() async {
-    if (pending.isTrue) {
+    if (searchState.isPending) {
       onSearchEvent(SearchEvent.rejected);
       return;
     } else if (_isEnd) {
@@ -100,7 +133,7 @@ mixin BadSearchMixin<ListItemType> on GetxController {
     }
 
     // lock the search
-    pending.value = true;
+    searchState.pending = true;
 
     // do search
     Iterable<ListItemType>? items = await fetcher(_target, _pageNo);
@@ -108,12 +141,12 @@ mixin BadSearchMixin<ListItemType> on GetxController {
       onSearchEvent(SearchEvent.fetcherFailed);
     } else {
       if (items.length < pageSize) _isEnd = true;
-      resultList.addAll(items);
+      searchState.addAll(items);
       _pageNo += 1;
     }
 
     // unlock the search
-    pending.value = false;
+    searchState.pending = false;
   }
 
   /// redo search with the same target from the first page.
