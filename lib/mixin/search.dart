@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bad_fl/core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -107,7 +108,9 @@ mixin BadSearchMixin<ListItemType> {
   }
 
   /// override this method to handle search event (do some log, toast, etc).
-  void onSearchEvent(SearchEvent event) {}
+  void onSearchEvent(SearchEvent event) {
+    BadFl.log(module: 'BadSearchMixin', message: 'SearchEvent(${event.name})');
+  }
 
   /// specific implementation of data request. It should return an `Iterable<ListItemType>` (success) or `null` (failed).
   ///
