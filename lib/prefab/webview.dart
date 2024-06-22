@@ -20,13 +20,116 @@ class _RemoteSource extends _WebviewSource {
 }
 
 class BadWebviewController {
+  WebViewController? _wvc;
   VoidCallback? _refreshFn;
+
+  final Set<void Function(String message)> _listeners = {};
+
+  /// the channel name for JavaScript communication
+  late final String _channel;
+
+  /// [channelName] the channel name for JavaScript communication, must be in range of 4 to 10 characters and only alphabet
+  BadWebviewController([String channelName = '@BadFL']) {
+    if (channelName == '@BadFL') {
+      _channel = '@BadFL';
+    } else {
+      if (!RegExp('^[a-zA-Z]{4,10}\$').hasMatch(channelName)) {
+        throw ArgumentError(
+          'channel name must be in range of 4 to 10 characters and only alphabet',
+          'channelName',
+        );
+      }
+      _channel = channelName;
+    }
+  }
+
+  void _attach(WebViewController wvc, VoidCallback refreshFn) {
+    _wvc = wvc;
+    _refreshFn = refreshFn;
+
+    wvc.addJavaScriptChannel(
+      _channel,
+      onMessageReceived: (JavaScriptMessage message) {
+        for (var listener in _listeners) {
+          listener(message.message);
+        }
+      },
+    );
+  }
+
+  void _detach() {
+    _wvc!.removeJavaScriptChannel(_channel);
+    _wvc = null;
+    _refreshFn = null;
+    _listeners.clear();
+  }
 
   void refresh() {
     if (_refreshFn == null) {
       throw StateError('the instance is not attached');
     }
     _refreshFn!();
+  }
+
+  /// add a listener to listen to the message from the webview
+  ///
+  /// Examples:
+  ///
+  /// ```js
+  /// // send a message from the webview to flutter
+  /// window['<your_channel_name>'].postMessage('<your_message>')
+  /// ```
+  void addListener(void Function(String message) listener) {
+    _listeners.add(listener);
+  }
+
+  /// remove a listener
+  void removeListener(void Function(String message) listener) {
+    _listeners.remove(listener);
+  }
+
+  /// clear all listeners
+  void clearListeners() {
+    _listeners.clear();
+  }
+
+  /// send some message into the webview
+  ///
+  /// Example:
+  ///
+  /// ```js
+  /// // listen to the message from flutter in the webview
+  /// window.addEventListener(
+  ///   '<your_channel_name>',
+  ///   /**
+  ///    * @param ev {CustomEvent}
+  ///    */
+  ///   function (ev) {
+  ///     console.log('receive a message from flutter:', ev.detail)
+  ///   },
+  /// )
+  /// ```
+  void postMessage(String message) {
+    if (_wvc == null) {
+      throw StateError('the instance is not attached');
+    }
+    _wvc!.runJavaScript(
+      'window.dispatchEvent(new CustomEvent("$_channel",{detail: "$message"}))',
+    );
+  }
+
+  Future<void> runJavaScript(String code) {
+    if (_wvc == null) {
+      throw StateError('the instance is not attached');
+    }
+    return _wvc!.runJavaScript(code);
+  }
+
+  Future<Object> runJavaScriptReturningResult(String code) {
+    if (_wvc == null) {
+      throw StateError('the instance is not attached');
+    }
+    return _wvc!.runJavaScriptReturningResult(code);
   }
 }
 
@@ -106,10 +209,6 @@ class _BadWebviewState extends State<BadWebview> {
       await wvc.setUserAgent(widget.userAgentBuilder!(ua));
     }
 
-    if (widget.controller != null) {
-      widget.controller!._refreshFn = loadTarget;
-    }
-
     // load the source
     await loadTarget();
   }
@@ -118,11 +217,16 @@ class _BadWebviewState extends State<BadWebview> {
   void initState() {
     super.initState();
 
+    // attach the controller
+    widget.controller?._attach(wvc, loadTarget);
+    // setup the webview
     setup();
   }
 
   @override
   void dispose() {
+    // detach the controller
+    widget.controller?._detach();
     super.dispose();
   }
 
