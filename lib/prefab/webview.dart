@@ -3,69 +3,41 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class Refresher {
-  Future<void> Function()? _refresh;
-
-  void _attach(Future<void> Function() refresh) {
-    if (_refresh != null) {
-      throw StateError('the instance is already attached');
-    }
-
-    _refresh = refresh;
-  }
-
-  void _detach() {
-    _refresh = null;
-  }
-
-  /// reload the webview (not refresh the page)
-  refresh() {
-    if (_refresh == null) {
-      throw StateError('the instance is not attached');
-    }
-    _refresh!();
-  }
+sealed class _WebviewSource {
+  const _WebviewSource();
 }
 
-// TODO: bridge (add when needed)
-
-sealed class WebviewSource {
-  const WebviewSource();
-
-  Future<void> load(WebViewController controller);
-}
-
-class LocalSource extends WebviewSource {
+class _LocalSource extends _WebviewSource {
   final String path;
 
-  const LocalSource({required this.path});
-
-  @override
-  Future<void> load(WebViewController controller) {
-    return controller.loadFile(path);
-  }
+  const _LocalSource({required this.path});
 }
 
-class RemoteSource extends WebviewSource {
+class _RemoteSource extends _WebviewSource {
   final Uri uri;
 
-  const RemoteSource({required this.uri});
+  const _RemoteSource({required this.uri});
+}
 
-  @override
-  Future<void> load(WebViewController controller) {
-    return controller.loadRequest(uri);
+class BadWebviewController {
+  VoidCallback? _refreshFn;
+
+  void refresh() {
+    if (_refreshFn == null) {
+      throw StateError('the instance is not attached');
+    }
+    _refreshFn!();
   }
 }
 
 class BadWebview extends StatefulWidget {
-  /// a extra patch for the user agent
-  final String? userAgentPatch;
+  final BadWebviewController? controller;
 
-  /// the refresher for the webview
-  final Refresher? refresher;
+  /// build the user agent string based on the original user agent (if any)
+  final String Function(String? userAgent)? userAgentBuilder;
 
   /// the source of the webview
-  final WebviewSource source;
+  final _WebviewSource _source;
 
   /// callback when progress changed (0.0 ~ 1.0)
   final ValueChanged<double>? onProgress;
@@ -75,8 +47,8 @@ class BadWebview extends StatefulWidget {
 
   BadWebview.remote({
     super.key,
-    this.refresher,
-    this.userAgentPatch,
+    this.controller,
+    this.userAgentBuilder,
     required Uri uri,
     this.onProgress,
     this.onWebResourceError,
@@ -84,12 +56,12 @@ class BadWebview extends StatefulWidget {
           Platform.isAndroid || Platform.isIOS,
           'BadWebview only supports Android and iOS',
         ),
-        source = RemoteSource(uri: uri);
+        _source = _RemoteSource(uri: uri);
 
   BadWebview.local({
     super.key,
-    this.refresher,
-    this.userAgentPatch,
+    this.controller,
+    this.userAgentBuilder,
     required String path,
     this.onProgress,
     this.onWebResourceError,
@@ -97,19 +69,30 @@ class BadWebview extends StatefulWidget {
           Platform.isAndroid || Platform.isIOS,
           'BadWebview only supports Android and iOS',
         ),
-        source = LocalSource(path: path);
+        _source = _LocalSource(path: path);
 
   @override
   State<BadWebview> createState() => _BadWebviewState();
 }
 
 class _BadWebviewState extends State<BadWebview> {
-  final WebViewController controller = WebViewController();
+  final WebViewController wvc = WebViewController();
+
+  Future<void> loadTarget() {
+    final source = widget._source;
+
+    switch (source) {
+      case _LocalSource():
+        return wvc.loadFile(source.path);
+      case _RemoteSource():
+        return wvc.loadRequest(source.uri);
+    }
+  }
 
   /// all steps here to avoid async in initState
   void setup() async {
     // config the webview
-    controller
+    wvc
       ..enableZoom(false)
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(NavigationDelegate(
@@ -118,16 +101,17 @@ class _BadWebviewState extends State<BadWebview> {
       ));
 
     // patch the user agent if needed
-    if (widget.userAgentPatch != null) {
-      final String? ua = await controller.getUserAgent();
-      await controller.setUserAgent('${ua ?? ''} ${widget.userAgentPatch}');
+    if (widget.userAgentBuilder != null) {
+      final String? ua = await wvc.getUserAgent();
+      await wvc.setUserAgent(widget.userAgentBuilder!(ua));
     }
 
-    // attach the refresher
-    widget.refresher?._attach(() => widget.source.load(controller));
+    if (widget.controller != null) {
+      widget.controller!._refreshFn = loadTarget;
+    }
 
     // load the source
-    await widget.source.load(controller);
+    await loadTarget();
   }
 
   @override
@@ -139,12 +123,11 @@ class _BadWebviewState extends State<BadWebview> {
 
   @override
   void dispose() {
-    widget.refresher?._detach();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return WebViewWidget(controller: controller);
+    return WebViewWidget(controller: wvc);
   }
 }
