@@ -16,7 +16,6 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_math_fork: ^0.7.2
-  get: ^4.6.6
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   image_gallery_saver: ^2.0.3
