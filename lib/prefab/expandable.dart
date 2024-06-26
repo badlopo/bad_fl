@@ -1,5 +1,6 @@
-import 'package:bad_fl/wrapper/clickable.dart';
 import 'package:flutter/material.dart';
+
+import 'clickable.dart';
 
 enum BadExpandableState { empty, open, close }
 

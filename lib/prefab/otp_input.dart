@@ -1,7 +1,8 @@
-import 'package:bad_fl/wrapper/clickable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'clickable.dart';
 
 class BadOTPInput extends StatefulWidget {
   /// width of the input field

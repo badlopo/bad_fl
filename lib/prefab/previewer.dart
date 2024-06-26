@@ -1,7 +1,8 @@
-import 'package:bad_fl/wrapper/clickable.dart';
 import 'package:flutter/material.dart';
 
-class BadHeroPreviewer extends StatefulWidget {
+import 'clickable.dart';
+
+class BadPreviewer extends StatefulWidget {
   /// the color to use as mask when previewing the widget
   final Color maskColor;
 
@@ -11,7 +12,7 @@ class BadHeroPreviewer extends StatefulWidget {
   /// the widget to display as a preview, if not provided, [displayWidget] will be used
   final Widget? previewWidget;
 
-  const BadHeroPreviewer({
+  const BadPreviewer({
     super.key,
     this.maskColor = Colors.black,
     required this.displayWidget,
@@ -19,10 +20,10 @@ class BadHeroPreviewer extends StatefulWidget {
   });
 
   @override
-  State<BadHeroPreviewer> createState() => _BadHeroPreviewerState();
+  State<BadPreviewer> createState() => _BadPreviewerState();
 }
 
-class _BadHeroPreviewerState extends State<BadHeroPreviewer> {
+class _BadPreviewerState extends State<BadPreviewer> {
   final tag = UniqueKey();
 
   void handlePreview() {

@@ -1,8 +1,9 @@
 import 'package:bad_fl/core.dart';
-import 'package:bad_fl/wrapper/clickable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'clickable.dart';
 
 class BadTextInput extends StatefulWidget {
   /// provide a [TextEditingController] to control the input field outside of the widget

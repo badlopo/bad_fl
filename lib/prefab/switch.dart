@@ -1,5 +1,6 @@
-import 'package:bad_fl/wrapper/clickable.dart';
 import 'package:flutter/material.dart';
+
+import 'clickable.dart';
 
 class BadSwitch extends StatelessWidget {
   /// whether the switch is active

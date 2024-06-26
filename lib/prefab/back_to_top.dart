@@ -1,6 +1,7 @@
 import 'package:bad_fl/core.dart';
-import 'package:bad_fl/wrapper/clickable.dart';
 import 'package:flutter/material.dart';
+
+import 'clickable.dart';
 
 class BadBackToTop extends StatefulWidget {
   /// the scroll controller to listen to

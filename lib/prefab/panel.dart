@@ -1,6 +1,7 @@
-import 'package:bad_fl/extension/Iterable.dart';
-import 'package:bad_fl/wrapper/clickable.dart';
+import 'package:bad_fl/extension/iterable.dart';
 import 'package:flutter/material.dart';
+
+import 'clickable.dart';
 
 class BadPanelItem extends StatelessWidget {
   /// label widget
