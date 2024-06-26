@@ -1,8 +1,6 @@
-## 0.0.4
+## 0.1.0
 
-BREAKING CHANGES:
-
-- `ListExt`: now `IterableExt` to support more flex usage
+I restructured the whole project (although everything is still importable via `import 'package:bad_fl/bad_fl.dart'`)
 
 ## 0.0.3
 
