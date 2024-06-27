@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -139,6 +140,9 @@ class BadWebview extends StatefulWidget {
   /// build the user agent string based on the original user agent (if any)
   final String Function(String? userAgent)? userAgentBuilder;
 
+  /// task to run before the target loaded
+  final FutureOr<void> Function()? beforeTargetLoad;
+
   /// the source of the webview
   final _WebviewSource _source;
 
@@ -152,6 +156,7 @@ class BadWebview extends StatefulWidget {
     super.key,
     this.controller,
     this.userAgentBuilder,
+    this.beforeTargetLoad,
     required Uri uri,
     this.onProgress,
     this.onWebResourceError,
@@ -165,6 +170,7 @@ class BadWebview extends StatefulWidget {
     super.key,
     this.controller,
     this.userAgentBuilder,
+    this.beforeTargetLoad,
     required String path,
     this.onProgress,
     this.onWebResourceError,
@@ -181,9 +187,10 @@ class BadWebview extends StatefulWidget {
 class _BadWebviewState extends State<BadWebview> {
   final WebViewController wvc = WebViewController();
 
-  Future<void> loadTarget() {
-    final source = widget._source;
+  Future<void> loadTarget() async {
+    await widget.beforeTargetLoad?.call();
 
+    final source = widget._source;
     switch (source) {
       case _LocalSource():
         return wvc.loadFile(source.path);

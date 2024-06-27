@@ -19,5 +19,4 @@ export 'text.dart';
 export 'text_field.dart';
 export 'text_input.dart';
 export 'tree.dart';
-
-export 'webview/mobile.dart' if (dart.library.html) 'webview/web.dart';
+export 'webview.dart';
