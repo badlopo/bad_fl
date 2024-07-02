@@ -26,20 +26,37 @@ class BadWebviewController {
 
   final Set<void Function(String message)> _listeners = {};
 
-  /// the channel name for JavaScript communication
+  /// name of injected object in the webview, access it by `window.<injectName>`
+  late final String _inject;
+
+  /// name of the channel in the webview, listen to the message by `window.addEventListener('<channelName>', ...)`
   late final String _channel;
 
   /// [channelName] the channel name for JavaScript communication, must be in range of 4 to 10 characters and only alphabet
-  BadWebviewController([String channelName = '@BadFL']) {
-    if (channelName == '@BadFL') {
+  BadWebviewController({
+    /// name of injected object in the webview, access it by `window.<injectName>`
+    String injectName = '@BadFL',
+
+    /// name of the channel in the webview, listen to the message by `window.addEventListener('<channelName>', ...)`
+    String channelName = '@BadFL',
+  }) {
+    if (injectName == '@BadFL' && channelName == '@BadFL') {
+      _inject = '@BadFL';
       _channel = '@BadFL';
     } else {
+      if (!RegExp('^[a-zA-Z]{4,20}\$').hasMatch(injectName)) {
+        throw ArgumentError(
+          'must be in range of 4 to 20 characters and only alphabet',
+          'injectName',
+        );
+      }
       if (!RegExp('^[a-zA-Z]{4,20}\$').hasMatch(channelName)) {
         throw ArgumentError(
-          'channel name must be in range of 4 to 20 characters and only alphabet',
+          'must be in range of 4 to 20 characters and only alphabet',
           'channelName',
         );
       }
+      _inject = injectName;
       _channel = channelName;
     }
   }
@@ -49,7 +66,7 @@ class BadWebviewController {
     _refreshFn = refreshFn;
 
     wvc.addJavaScriptChannel(
-      _channel,
+      _inject,
       onMessageReceived: (JavaScriptMessage message) {
         for (var listener in _listeners) {
           listener(message.message);
@@ -59,7 +76,7 @@ class BadWebviewController {
   }
 
   void _detach() {
-    _wvc!.removeJavaScriptChannel(_channel);
+    _wvc!.removeJavaScriptChannel(_inject);
     _wvc = null;
     _refreshFn = null;
     _listeners.clear();
@@ -78,7 +95,7 @@ class BadWebviewController {
   ///
   /// ```js
   /// // send a message from the webview to flutter
-  /// window['<your_channel_name>'].postMessage('<your_message>')
+  /// window['<your_inject_name>'].postMessage('<your_message>')
   /// ```
   void addListener(void Function(String message) listener) {
     _listeners.add(listener);
@@ -110,12 +127,13 @@ class BadWebviewController {
   ///   },
   /// )
   /// ```
-  void postMessage(String message) {
+  Future<void> postMessage(String message) {
     if (_wvc == null) {
       throw StateError('the instance is not attached');
     }
-    _wvc!.runJavaScript(
-      'window.dispatchEvent(new CustomEvent("$_channel",{detail: "$message"}))',
+    print('window.dispatchEvent(new CustomEvent("$_channel",{detail: "$message"}))');
+    return _wvc!.runJavaScript(
+      'window.dispatchEvent(new CustomEvent("$_channel",{detail: $message}))',
     );
   }
 
