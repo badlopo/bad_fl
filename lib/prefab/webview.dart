@@ -131,7 +131,6 @@ class BadWebviewController {
     if (_wvc == null) {
       throw StateError('the instance is not attached');
     }
-    print('window.dispatchEvent(new CustomEvent("$_channel",{detail: "$message"}))');
     return _wvc!.runJavaScript(
       'window.dispatchEvent(new CustomEvent("$_channel",{detail: $message}))',
     );
