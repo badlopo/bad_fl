@@ -34,9 +34,9 @@ class BadWebviewController {
     if (channelName == '@BadFL') {
       _channel = '@BadFL';
     } else {
-      if (!RegExp('^[a-zA-Z]{4,10}\$').hasMatch(channelName)) {
+      if (!RegExp('^[a-zA-Z]{4,20}\$').hasMatch(channelName)) {
         throw ArgumentError(
-          'channel name must be in range of 4 to 10 characters and only alphabet',
+          'channel name must be in range of 4 to 20 characters and only alphabet',
           'channelName',
         );
       }
