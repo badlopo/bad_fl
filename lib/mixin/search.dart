@@ -94,7 +94,6 @@ mixin BadSearchMixin<ListItemType> {
   /// - scroll to top if the [sc] is attached
   /// - reset [_isEnd] to false
   /// - reset [_pageNo] to 1
-  /// - clear [_target]
   /// - clear [searchState]
   void _resetStatus() {
     if (sc.hasClients) {
@@ -105,7 +104,6 @@ mixin BadSearchMixin<ListItemType> {
 
     _isEnd = false;
     _pageNo = 1;
-    _target = '';
     searchState.clear();
   }
 
@@ -145,9 +143,17 @@ mixin BadSearchMixin<ListItemType> {
     if (items == null) {
       onSearchEvent(SearchEvent.fetcherFailed);
     } else {
-      if (items.length < pageSize) _isEnd = true;
-      searchState.addAll(items);
-      _pageNo += 1;
+      final int count = items.length;
+
+      if (count < pageSize) _isEnd = true;
+      if (count == 0) {
+        // trigger 'SearchEvent.noMoreData' if no data returned
+        onSearchEvent(SearchEvent.noMoreData);
+      } else {
+        // add the data to the search result and move the page ptr to the next
+        searchState.addAll(items);
+        _pageNo += 1;
+      }
     }
 
     // unlock the search
@@ -173,9 +179,10 @@ mixin BadSearchMixin<ListItemType> {
     return nextPage();
   }
 
-  /// clear the search result and reset the status
+  /// clear the search target and reset the search status.
   @nonVirtual
   void clearPage() {
+    _target = '';
     _resetStatus();
   }
 }
