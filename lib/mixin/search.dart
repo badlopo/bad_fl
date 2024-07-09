@@ -94,6 +94,7 @@ mixin BadSearchMixin<ListItemType> {
   /// - scroll to top if the [sc] is attached
   /// - reset [_isEnd] to false
   /// - reset [_pageNo] to 1
+  /// - clear [_target]
   /// - clear [searchState]
   void _resetStatus() {
     if (sc.hasClients) {
@@ -104,6 +105,7 @@ mixin BadSearchMixin<ListItemType> {
 
     _isEnd = false;
     _pageNo = 1;
+    _target = '';
     searchState.clear();
   }
 
@@ -169,5 +171,11 @@ mixin BadSearchMixin<ListItemType> {
     _resetStatus();
     _target = newTarget;
     return nextPage();
+  }
+
+  /// clear the search result and reset the status
+  @nonVirtual
+  void clearPage() {
+    _resetStatus();
   }
 }
