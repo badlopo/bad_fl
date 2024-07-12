@@ -87,3 +87,72 @@ class _BadCarouselState extends State<BadCarousel> {
     return pages;
   }
 }
+
+class BadCarouselCyclic extends StatefulWidget {
+  /// called whenever the page in the center of the viewport changes
+  final ValueChanged<int>? onPageChanged;
+
+  /// builder for the indicator widget
+  ///
+  /// you can return a [Positioned] widget to place the indicator
+  final IndicatorBuilder? indicatorBuilder;
+
+  /// children to display in the carousel
+  final List<Widget> children;
+
+  const BadCarouselCyclic({
+    super.key,
+    this.onPageChanged,
+    this.indicatorBuilder,
+    required this.children,
+  });
+
+  @override
+  State<BadCarouselCyclic> createState() => _BadCarouselCyclicState();
+}
+
+class _BadCarouselCyclicState extends State<BadCarouselCyclic> {
+  late final int pageCount;
+
+  late final ValueNotifier? _notifier;
+
+  void _pageChangeDelegate(int index) {
+    index %= pageCount;
+    _notifier?.value = index;
+    widget.onPageChanged?.call(index);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    pageCount = widget.children.length;
+    _notifier = widget.indicatorBuilder == null ? null : ValueNotifier(0);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Widget pages = PageView.builder(
+      // FIXME: here we use a large number to make the carousel cyclic, this is a hack
+      controller: PageController(initialPage: pageCount * 100),
+      onPageChanged: _pageChangeDelegate,
+      itemBuilder: (_, index) => widget.children[index % pageCount],
+    );
+
+    if (widget.indicatorBuilder != null) {
+      pages = Stack(
+        children: [
+          pages,
+          ValueListenableBuilder(
+            valueListenable: _notifier!,
+            builder: (context, index, _) {
+              return widget.indicatorBuilder!(context, index);
+            },
+          ),
+        ],
+      );
+    }
+
+    return pages;
+  }
+}
