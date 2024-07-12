@@ -1,5 +1,6 @@
 export 'back_to_top.dart';
 export 'button.dart';
+export 'carousel.dart';
 export 'checkbox.dart';
 export 'clickable.dart';
 export 'expandable.dart';
