@@ -1,4 +1,4 @@
-## extension -- Iterable
+## extension/iterable
 
 - [Source Code](../../lib/extension/iterable.dart)
 - [GitHub Gist](https://gist.github.com/lopo12123/fa2d412f12dff1c555853c60b49ff22f)

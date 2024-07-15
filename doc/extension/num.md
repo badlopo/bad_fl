@@ -1,4 +1,4 @@
-## extension -- num
+## extension/num
 
 - [Source Code](../../lib/extension/num.dart)
 - [GitHub Gist](https://gist.github.com/lopo12123/f7d87e05f90d43eed76feaee75d821b1)
