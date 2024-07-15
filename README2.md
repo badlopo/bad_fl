@@ -21,6 +21,7 @@ caution.
     - [num](./doc/extension/num.md)
 - helper
     - [debounce](./doc/helper/debounce.md)
+    - [throttle](./doc/helper/throttle.md)
 - impl
 - mixin
 - prefab
