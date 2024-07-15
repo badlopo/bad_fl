@@ -18,7 +18,9 @@ caution.
 
 - extension
     - [iterable](./doc/extension/iterable.md)
+    - [num](./doc/extension/num.md)
 - helper
+    - [debounce](./doc/helper/debounce.md)
 - impl
 - mixin
 - prefab
