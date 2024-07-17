@@ -39,6 +39,9 @@ class BadTextInput extends StatefulWidget {
   /// input formatters to restrict input
   final List<TextInputFormatter>? formatters;
 
+  /// maximum length of the input field
+  final int? maxLength;
+
   /// text style of the input field
   final TextStyle? style;
 
@@ -94,6 +97,7 @@ class BadTextInput extends StatefulWidget {
     this.inputType = TextInputType.text,
     this.textInputAction = TextInputAction.done,
     this.formatters,
+    this.maxLength,
     this.style,
     this.placeholderStyle,
     this.padding = 8.0,
@@ -158,6 +162,7 @@ class _BadTextInputState extends State<BadTextInput> {
         keyboardType: widget.inputType,
         textInputAction: widget.textInputAction,
         inputFormatters: widget.formatters,
+        maxLength: widget.maxLength,
         style: widget.style,
         placeholder: widget.placeholder,
         placeholderStyle: widget.placeholderStyle,

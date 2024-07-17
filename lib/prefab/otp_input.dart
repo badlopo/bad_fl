@@ -33,6 +33,9 @@ class BadOTPInput extends StatefulWidget {
   /// input formatters to restrict input
   final List<TextInputFormatter>? formatters;
 
+  /// maximum length of the input field
+  final int? maxLength;
+
   /// text style of the input field
   final TextStyle? style;
 
@@ -83,6 +86,7 @@ class BadOTPInput extends StatefulWidget {
     this.inputType = TextInputType.text,
     this.textInputAction = TextInputAction.done,
     this.formatters,
+    this.maxLength,
     this.style,
     this.placeholderStyle,
     this.padding = 8.0,
@@ -111,6 +115,7 @@ class _BadOTPInputState extends State<BadOTPInput> {
         textInputAction: widget.textInputAction,
         inputFormatters: widget.formatters,
         style: widget.style,
+        maxLength: widget.maxLength,
         placeholder: widget.placeholder,
         placeholderStyle: widget.placeholderStyle,
         padding: EdgeInsets.symmetric(horizontal: widget.space),
