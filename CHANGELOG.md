@@ -1,6 +1,9 @@
 ## 0.1.0
 
-I restructured the whole project (although everything is still importable via `import 'package:bad_fl/bad_fl.dart'`)
+Reorganized the entire project and renamed most of the classes (prefixed with bad).
+
+- Everything can still be imported via `import 'package:bad_fl/bad_fl.dart'`
+- Still not stable, so the major version is still `0`
 
 ## 0.0.3
 
