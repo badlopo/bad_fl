@@ -1,7 +1,7 @@
 library bad_fl;
 
-export 'extension/_extensions.dart';
-export 'helper/_helper.dart';
-export 'impl/_impl.dart';
-export 'mixin/_mixin.dart';
-export 'prefab/_prefab.dart';
+export 'extension/extensions.dart';
+export 'helper/helper.dart';
+export 'impl/impl.dart';
+export 'mixin/mixin.dart';
+export 'prefab/prefab.dart';

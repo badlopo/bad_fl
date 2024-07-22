@@ -1,4 +1,4 @@
-import 'package:bad_fl/extension/iterable.dart';
+import 'package:bad_fl/extension/src/iterable.dart';
 import 'package:flutter/material.dart';
 
 import 'clickable.dart';
