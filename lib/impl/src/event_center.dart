@@ -2,8 +2,8 @@ typedef EventHandler = void Function(dynamic eventData);
 
 typedef StopListen = void Function();
 
-/// event center implementation
-abstract class EvCenterImpl {
+/// `impl::event_center`: event center implementation
+abstract class BadEventCenter {
   static final Map<String, Set<EventHandler>> _handlers = {};
 
   /// register [handler] on [eventName]

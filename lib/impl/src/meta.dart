@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-abstract class MetaImpl {
+/// `impl::meta`: meta data of the app
+abstract class BadMeta {
   /// version (e.g. 1.0.0)
   static String _version = '??.??.??';
 
@@ -37,7 +38,8 @@ abstract class MetaImpl {
 
   static String get device => _device;
 
-  static Future<bool> extend() async {
+  /// deepen the meta data (get device info)
+  static Future<bool> deepen() async {
     try {
       final info = DeviceInfoPlugin();
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-abstract class MeasureImpl {
+/// `impl::measurer`: measurer for text
+abstract class BadMeasurer {
   static Size measure(
     String text, {
     TextStyle? style,

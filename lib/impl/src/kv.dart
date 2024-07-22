@@ -1,6 +1,7 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
-abstract class KVStorageImpl {
+/// `impl::kv`: key-value storage implementation
+abstract class BadKV {
   static Box? _box;
 
   static void _guard() {
@@ -54,7 +55,7 @@ abstract class KVStorageImpl {
     return Map<String, dynamic>.from(_box!.toMap());
   }
 
-  /// remove somethings and put somethings
+  /// remove some things and put some things
   static applyPatch({
     Iterable<String>? removeItems,
     Map<String, dynamic>? putItems,

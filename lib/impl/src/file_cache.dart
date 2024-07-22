@@ -4,12 +4,13 @@ import 'dart:typed_data';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
-class CachedEntry {
+/// represent a cached file entry
+class BadCacheEntry {
   final String filename;
   final String filepath;
   final int bytes;
 
-  const CachedEntry(this.filename, this.filepath, this.bytes);
+  const BadCacheEntry(this.filename, this.filepath, this.bytes);
 
   Map<String, dynamic> toJson() {
     return {
@@ -21,14 +22,16 @@ class CachedEntry {
 
   @override
   String toString() {
-    return '[CachedEntry] $filename ($bytes bytes)';
+    return '[BadCacheEntry] $filename ($bytes bytes)';
   }
 }
 
+/// `impl::file_cache`: file cache interaction
+///
 /// cache file to `file_cache` folder under `getApplicationDocumentsDirectory` returned directory
 /// - iOS: `NSDocumentDirectory`
 /// - Android: `getDataDirectory()`
-abstract class FileCacheImpl {
+abstract class BadFileCache {
   static Directory? _root;
 
   /// initialization
@@ -109,12 +112,12 @@ abstract class FileCacheImpl {
   }
 
   /// list all cached files, return null if error occurred
-  static List<CachedEntry>? files() {
+  static List<BadCacheEntry>? files() {
     return _task(() {
-      List<CachedEntry> entries = [];
+      List<BadCacheEntry> entries = [];
       for (var entry in _root!.listSync()) {
         if (entry is File) {
-          entries.add(CachedEntry(
+          entries.add(BadCacheEntry(
             basename(entry.path),
             entry.path,
             entry.lengthSync(),

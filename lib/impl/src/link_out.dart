@@ -1,7 +1,7 @@
 import 'package:url_launcher/url_launcher.dart';
 
-/// open external link
-abstract class ExternalLinkImpl {
+/// `impl::link_out`: external link interaction
+abstract class BadLinkOut {
   /// open external link, the return value is as follows:
   ///
   /// - 0: success
@@ -11,7 +11,7 @@ abstract class ExternalLinkImpl {
   /// ---
   ///
   /// known issue: always return -2 on web (https://github.com/flutter/flutter/issues/139783)
-  static Future<int> openExternal(String uri) async {
+  static Future<int> open(String uri) async {
     try {
       final url = Uri.tryParse(uri);
       if (url == null) return -1;

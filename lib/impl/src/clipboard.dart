@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 
-abstract class ClipboardImpl {
+/// `impl::clipboard`: clipboard interaction
+abstract class BadClipboard {
   static Future<String?> readText() async {
     final t = await Clipboard.getData(Clipboard.kTextPlain);
     return t?.text;
