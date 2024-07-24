@@ -28,4 +28,10 @@ extension NumExt on num {
   }
 
   String get readable => readableFixed();
+
+  String get segmented {
+    String str = toString();
+    RegExp regExp = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+    return str.replaceAllMapped(regExp, (Match match) => '${match[1]},');
+  }
 }
