@@ -154,6 +154,9 @@ class BadWebviewController {
 class BadWebview extends StatefulWidget {
   final BadWebviewController? controller;
 
+  /// provide a [WebViewController] from outside, you can do some operations on the webview controller
+  final WebViewController? webViewController;
+
   /// build the user agent string based on the original user agent (if any)
   final String Function(String? userAgent)? userAgentBuilder;
 
@@ -172,6 +175,7 @@ class BadWebview extends StatefulWidget {
   BadWebview.remote({
     super.key,
     this.controller,
+    this.webViewController,
     this.userAgentBuilder,
     this.beforeTargetLoad,
     required Uri uri,
@@ -186,6 +190,7 @@ class BadWebview extends StatefulWidget {
   BadWebview.local({
     super.key,
     this.controller,
+    this.webViewController,
     this.userAgentBuilder,
     this.beforeTargetLoad,
     required String path,
@@ -202,7 +207,7 @@ class BadWebview extends StatefulWidget {
 }
 
 class _BadWebviewState extends State<BadWebview> {
-  final WebViewController wvc = WebViewController();
+  late final WebViewController wvc;
 
   Future<void> loadTarget() async {
     await widget.beforeTargetLoad?.call();
@@ -240,6 +245,8 @@ class _BadWebviewState extends State<BadWebview> {
   @override
   void initState() {
     super.initState();
+
+    wvc = widget.webViewController ?? WebViewController();
 
     // attach the controller
     widget.controller?._attach(wvc, loadTarget);
