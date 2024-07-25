@@ -1,3 +1,4 @@
+import 'package:bad_fl/core.dart';
 import 'package:flutter/material.dart';
 
 class NamedStackController extends ChangeNotifier {
@@ -15,11 +16,8 @@ class NamedStackController extends ChangeNotifier {
     // filter
     if (_active == v) return;
 
-    // guards
-    if (_candidates == null) {
-      throw StateError('the instance is not attached');
-    }
-    if (!_candidates!.contains(v)) {
+    // check if the name is supported, directly pass if instance has not attached
+    if (_candidates != null && !_candidates!.contains(v)) {
       throw UnsupportedError('unsupported name "$v", expected $_candidates');
     }
 
