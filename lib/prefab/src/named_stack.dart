@@ -92,6 +92,7 @@ class _NamedStackState extends State<NamedStack> {
 
   @override
   Widget build(BuildContext context) {
-    return IndexedStack(index: index, children: layers);
+    // return IndexedStack(index: index, children: layers);
+    return layers[index];
   }
 }
