@@ -1,4 +1,5 @@
 extension NumExt on num {
+  /// to readable string with fixed fraction digits
   String readableFixed([int fractionDigits = 1]) {
     final absVal = abs();
 
