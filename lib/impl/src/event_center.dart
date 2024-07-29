@@ -6,7 +6,7 @@ typedef StopListen = void Function();
 abstract class BadEventCenter {
   static final Map<String, Set<EventHandler>> _handlers = {};
 
-  /// register [handler] on [eventName]
+  /// add a [handler] on [eventName]
   static StopListen listen(String eventName, EventHandler handler) {
     var handlers = _handlers[eventName];
     if (handlers == null) {
@@ -21,7 +21,7 @@ abstract class BadEventCenter {
   }
 
   /// remove specific [handler] on [eventName],
-  /// if [handler] is null, remove all handlers in [eventName]
+  /// if [handler] is null, remove all handlers on [eventName]
   static void unListen(String eventName, [EventHandler? handler]) {
     if (handler == null) {
       _handlers.remove(eventName);
@@ -30,12 +30,12 @@ abstract class BadEventCenter {
     }
   }
 
-  /// remove all handlers in all events
+  /// remove all handlers on all events
   static void unListenAll() {
     _handlers.clear();
   }
 
-  /// trigger the [eventName] with [eventData]
+  /// trigger all handlers on [eventName] with [eventData]
   static void trigger(String evName, [dynamic eventData]) {
     var handlers = _handlers[evName];
     if (handlers == null) {
