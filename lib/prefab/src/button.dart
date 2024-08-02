@@ -7,6 +7,7 @@ class BadButton extends StatelessWidget {
   final double height;
   final EdgeInsets? margin;
   final EdgeInsets? padding;
+  final BoxConstraints? constraints;
   final Border? border;
   final double borderRadius;
   final Color? fill;
@@ -19,6 +20,7 @@ class BadButton extends StatelessWidget {
     required this.height,
     this.margin,
     this.padding,
+    this.constraints,
     this.border,
     this.borderRadius = 0,
     this.fill,
@@ -33,6 +35,7 @@ class BadButton extends StatelessWidget {
       height: height,
       margin: margin,
       padding: padding,
+      constraints: constraints,
       decoration: BoxDecoration(
         borderRadius:
             borderRadius == 0 ? null : BorderRadius.circular(borderRadius),
