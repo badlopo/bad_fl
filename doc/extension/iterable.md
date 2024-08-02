@@ -1,4 +1,4 @@
-## extension/iterable
+# extension/iterable
 
 - [Source Code](../../lib/extension/src/iterable.dart)
 - [GitHub Gist](https://gist.github.com/lopo12123/fa2d412f12dff1c555853c60b49ff22f)
@@ -8,22 +8,12 @@
 
 ### slotted
 
-```dart
-List<Product> slotted<Product>({
-  required Product Function(Item item) builder,
-  required Product slot,
-})
-```
-
 build a new `List<T>` from each element of the iterable and insert slot elements between every two elements.
 
-```dart
-Widget asIs(Widget it) => it;
+> For `List<Widget>`, builder can be omitted (there is a default asIs implementation)
 
-List<Widget> slotted({
-  Widget Function(Widget item) builder = asIs,
-  required Widget slot,
-})
-```
+### enumerate
 
-similar to `slotted` but for `Widget` with default `asIs` builder.
+> something like https://doc.rust-lang.org/std/iter/struct.Enumerate.html
+
+return a new iterator that yields the current index and the current element of the iterable.
