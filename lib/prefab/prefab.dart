@@ -15,6 +15,7 @@ export 'src/radio.dart';
 export 'src/refreshable.dart';
 export 'src/scroll_anchor.dart';
 export 'src/signature.dart';
+export 'src/slide_to_delete.dart';
 export 'src/snapshot.dart';
 export 'src/switch.dart';
 export 'src/text.dart';
