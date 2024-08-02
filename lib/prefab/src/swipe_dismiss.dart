@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-class BadSlideToDelete<T> extends StatelessWidget {
+class BadSwipeDismiss<T> extends StatelessWidget {
   /// the key of the item, used as value of [ValueKey]
   final T keyValue;
 
-  /// try to perform delete action, return true if success, false if failed.
-  /// if success, [onDismissed] will be triggered
-  final Future<bool> Function() performDelete;
+  /// callback to check if the item can be dismissed
+  /// - if true, the [onDismissed] will be called
+  /// - if false, the item will be restored to its original position
+  final Future<bool> Function() canDismiss;
 
   /// callback when the item is dismissed, you can remove the item from the list here
   final VoidCallback onDismissed;
@@ -14,10 +15,10 @@ class BadSlideToDelete<T> extends StatelessWidget {
   /// the widget to be displayed
   final Widget child;
 
-  const BadSlideToDelete({
+  const BadSwipeDismiss({
     super.key,
     required this.keyValue,
-    required this.performDelete,
+    required this.canDismiss,
     required this.onDismissed,
     required this.child,
   });
@@ -27,7 +28,7 @@ class BadSlideToDelete<T> extends StatelessWidget {
     return Dismissible(
       key: ValueKey(keyValue),
       direction: DismissDirection.endToStart,
-      confirmDismiss: (_) => performDelete(),
+      confirmDismiss: (_) => canDismiss(),
       onDismissed: (_) => onDismissed(),
       background: Container(
         color: Colors.red,
