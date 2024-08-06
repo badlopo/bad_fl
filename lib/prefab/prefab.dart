@@ -10,6 +10,7 @@ export 'src/named_stack.dart';
 export 'src/otp_input.dart';
 export 'src/panel.dart';
 export 'src/password_input.dart';
+export 'src/popup.dart';
 export 'src/previewer.dart';
 export 'src/radio.dart';
 export 'src/refreshable.dart';
