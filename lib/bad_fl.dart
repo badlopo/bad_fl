@@ -5,3 +5,4 @@ export 'helper/helper.dart';
 export 'impl/impl.dart';
 export 'mixin/mixin.dart';
 export 'prefab/prefab.dart';
+export 'search_kit/search_kit.dart';
