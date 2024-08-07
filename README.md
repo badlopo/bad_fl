@@ -1,6 +1,6 @@
 # BadFL
 
-[![Pub Version](https://img.shields.io/pub/v/bad_fl)](https://github.com/badlopo/bad_fl)
+[![Pub Version](https://img.shields.io/pub/v/bad_fl)](https://pub.dev/packages/bad_fl)
 
 A flutter package, including components, implementations, helper functions and extensions. Designed to provide a simple
 way to develop with flutter.
