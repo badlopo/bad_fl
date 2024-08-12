@@ -6,6 +6,8 @@ part 'common.dart';
 
 part 'phone.dart';
 
+part 'simple.dart';
+
 sealed class BadInput extends StatefulWidget {
   final BadInputController controller;
   final TextInputAction action;
@@ -102,14 +104,16 @@ mixin _BadInputStateMixin<T extends BadInput> on State<T> {
 
 class BadInputController<T extends BadInput> {
   late final TextEditingController _textEditingController;
-  late final _BadInputStateMixin _state;
+  late final _BadInputStateMixin<T> _state;
+
+  Type get inputType => _state.widget.runtimeType;
 
   BadInputController();
 
   /// set content
   void setText(String text) {
     // not allowed to set phone input directly
-    if (T is BadPhoneInput) {
+    if (inputType == BadPhoneInput) {
       throw UnsupportedError('Cannot set text for phone input');
     }
 
@@ -118,6 +122,10 @@ class BadInputController<T extends BadInput> {
 
   /// set error message, pass `null` to clear the error message
   void setError([String? error]) {
+    if (inputType == BadSimpleInput) {
+      throw UnsupportedError('Cannot set error for simple input');
+    }
+
     if (_state._error != error) {
       _state._error = error;
       _state.update();
