@@ -2,7 +2,9 @@ import 'package:bad_fl/prefab/src/clickable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
-part '_phone.dart';
+part 'common.dart';
+
+part 'phone.dart';
 
 sealed class BadInput extends StatefulWidget {
   final BadInputController controller;
@@ -10,12 +12,14 @@ sealed class BadInput extends StatefulWidget {
 
   final double? width;
   final double height;
+  final Border? border;
   final double borderRadius;
   final Color? fill;
 
-  final Widget prefixIcon;
-  final Widget errorIcon;
+  final Widget? prefixIcon;
+  final Widget? errorIcon;
   final Widget clearIcon;
+
   final String? placeholder;
 
   final TextStyle? textStyle;
@@ -30,13 +34,14 @@ sealed class BadInput extends StatefulWidget {
   const BadInput({
     super.key,
     required this.controller,
-    required this.action,
+    this.action = TextInputAction.done,
     this.width,
     required this.height,
+    this.border,
     this.borderRadius = 0.0,
     this.fill,
-    required this.prefixIcon,
-    required this.errorIcon,
+    this.prefixIcon,
+    this.errorIcon,
     required this.clearIcon,
     this.placeholder,
     this.textStyle,
@@ -46,10 +51,7 @@ sealed class BadInput extends StatefulWidget {
     this.onChanged,
     this.onSubmitted,
     this.onCleared,
-  }) : assert(
-          placeholderStyle == null || placeholder != null,
-          'missing placeholder while placeholderStyle is provided',
-        );
+  });
 }
 
 mixin _BadInputStateMixin<T extends BadInput> on State<T> {
@@ -71,8 +73,13 @@ mixin _BadInputStateMixin<T extends BadInput> on State<T> {
     } else if (_hasFocus) {
       return const Border.fromBorderSide(BorderSide(color: Color(0xFF332CF5)));
     } else {
-      return null;
+      return widget.border;
     }
+  }
+
+  void handleClear() {
+    widget.controller.clear();
+    widget.onCleared?.call();
   }
 
   void update() {

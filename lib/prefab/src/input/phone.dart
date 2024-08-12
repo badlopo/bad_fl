@@ -6,14 +6,14 @@ class BadPhoneInput extends BadInput {
   const BadPhoneInput({
     super.key,
     required super.controller,
-    super.action = TextInputAction.done,
+    super.action,
     super.width,
     required super.height,
     super.borderRadius,
     super.fill,
     super.placeholder,
-    required super.prefixIcon,
-    required super.errorIcon,
+    required Widget super.prefixIcon,
+    required Widget super.errorIcon,
     required super.clearIcon,
     this.separator = ' ',
     super.textStyle,
@@ -31,11 +31,6 @@ class BadPhoneInput extends BadInput {
 
 class _BadPhoneInputState extends State<BadPhoneInput>
     with _BadInputStateMixin<BadPhoneInput> {
-  void handleClear() {
-    widget.controller.clear();
-    widget.onCleared?.call();
-  }
-
   void _reformat() {
     final text = widget.controller._textEditingController.text;
 
@@ -123,7 +118,7 @@ class _BadPhoneInputState extends State<BadPhoneInput>
             padding: const EdgeInsets.only(top: 4),
             child: Row(
               children: [
-                widget.errorIcon,
+                widget.errorIcon!,
                 const SizedBox(width: 4),
                 Expanded(child: Text(_error!, style: widget.errorMessageStyle)),
               ],
