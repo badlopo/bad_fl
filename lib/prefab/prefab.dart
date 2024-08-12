@@ -5,6 +5,7 @@ export 'src/checkbox.dart';
 export 'src/clickable.dart';
 export 'src/expandable.dart';
 export 'src/floating.dart';
+export 'src/input/input.dart';
 export 'src/katex.dart';
 export 'src/named_stack.dart';
 export 'src/otp_input.dart';
