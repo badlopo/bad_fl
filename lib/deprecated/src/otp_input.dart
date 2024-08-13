@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'clickable.dart';
+import '../../prefab/src/clickable.dart';
 
-class BadOTPInput extends StatefulWidget {
+class BadOTPInputLegacy extends StatefulWidget {
   /// width of the input field
   final double? width;
 
@@ -76,7 +76,7 @@ class BadOTPInput extends StatefulWidget {
   /// callback when the user taps on the send widget
   final VoidCallback onSendTapped;
 
-  const BadOTPInput({
+  const BadOTPInputLegacy({
     super.key,
     this.width,
     required this.height,
@@ -100,10 +100,10 @@ class BadOTPInput extends StatefulWidget {
   }) : assert(inputType != TextInputType.multiline, 'Use TextField instead.');
 
   @override
-  State<BadOTPInput> createState() => _BadOTPInputState();
+  State<BadOTPInputLegacy> createState() => _BadOTPInputLegacyState();
 }
 
-class _BadOTPInputState extends State<BadOTPInput> {
+class _BadOTPInputLegacyState extends State<BadOTPInputLegacy> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(

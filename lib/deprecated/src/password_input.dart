@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'clickable.dart';
+import '../../prefab/src/clickable.dart';
 
-class BadPasswordInput extends StatefulWidget {
+class BadPasswordInputLegacy extends StatefulWidget {
   /// width of the input field
   final double? width;
 
@@ -85,7 +85,7 @@ class BadPasswordInput extends StatefulWidget {
   /// Default to `Icon(Icons.visibility_off_outlined, size: 16, color: Colors.grey)`
   final Widget hiddenWidget;
 
-  const BadPasswordInput({
+  const BadPasswordInputLegacy({
     super.key,
     this.width,
     required this.height,
@@ -112,10 +112,10 @@ class BadPasswordInput extends StatefulWidget {
   });
 
   @override
-  State<BadPasswordInput> createState() => _BadPasswordInputState();
+  State<BadPasswordInputLegacy> createState() => _BadPasswordInputLegacyState();
 }
 
-class _BadPasswordInputState extends State<BadPasswordInput> {
+class _BadPasswordInputLegacyState extends State<BadPasswordInputLegacy> {
   // default to true here, but the real initialisation is done in [initState]
   bool _obscureText = true;
 

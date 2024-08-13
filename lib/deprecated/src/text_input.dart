@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'clickable.dart';
+import '../../prefab/src/clickable.dart';
 
-class BadTextInput extends StatefulWidget {
+class BadTextInputLegacy extends StatefulWidget {
   /// provide a [TextEditingController] to control the input field outside of the widget
   final TextEditingController? controller;
 
@@ -84,7 +84,7 @@ class BadTextInput extends StatefulWidget {
   /// Note: there is no constraint on the size of the widget, be careful to its size if you provide a custom widget
   final Widget clearWidget;
 
-  const BadTextInput({
+  const BadTextInputLegacy({
     super.key,
     this.controller,
     this.width,
@@ -111,10 +111,10 @@ class BadTextInput extends StatefulWidget {
   }) : assert(inputType != TextInputType.multiline, 'Use TextField instead.');
 
   @override
-  State<BadTextInput> createState() => _BadTextInputState();
+  State<BadTextInputLegacy> createState() => _BadTextInputLegacyState();
 }
 
-class _BadTextInputState extends State<BadTextInput> {
+class _BadTextInputLegacyState extends State<BadTextInputLegacy> {
   late final TextEditingController _controller;
 
   @override
@@ -125,7 +125,7 @@ class _BadTextInputState extends State<BadTextInput> {
     } else {
       _controller = TextEditingController();
       BadFl.log(
-        module: 'BadTextInput',
+        module: 'BadTextInputLegacy',
         message: 'maintains "TextEditingController" internally',
       );
     }
@@ -138,7 +138,7 @@ class _BadTextInputState extends State<BadTextInput> {
     if (widget.controller == null) {
       _controller.dispose();
       BadFl.log(
-        module: 'BadTextInput',
+        module: 'BadTextInputLegacy',
         message: 'internally maintained "TextEditingController" disposed',
       );
     }
