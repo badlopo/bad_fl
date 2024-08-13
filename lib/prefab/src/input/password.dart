@@ -1,12 +1,17 @@
 part of 'input.dart';
 
-class BadPhoneInput extends BadInput {
-  final String separator;
+class BadPasswordInput extends BadInput {
+  final int? maxLength;
+  final String obscuringCharacter;
 
-  const BadPhoneInput({
+  final Widget visibleIcon;
+  final Widget invisibleIcon;
+
+  const BadPasswordInput({
     super.key,
     required super.controller,
     super.action,
+    this.maxLength,
     super.width,
     required super.height,
     super.borderRadius,
@@ -14,58 +19,38 @@ class BadPhoneInput extends BadInput {
     super.placeholder,
     required Widget super.prefixIcon,
     required Widget super.errorIcon,
-    required Widget super.clearIcon,
-    this.separator = ' ',
+    required this.visibleIcon,
+    required this.invisibleIcon,
+    this.obscuringCharacter = '•',
     super.textStyle,
     super.errorStyle,
     super.placeholderStyle,
     super.errorMessageStyle,
     super.onChanged,
     super.onSubmitted,
-    super.onCleared,
-  }) : assert(separator.length == 1, 'separator must be a single character');
+  });
 
   @override
-  State<BadPhoneInput> createState() => _BadPhoneInputState();
+  State<BadPasswordInput> createState() => _BadPasswordInputState();
 }
 
-class _BadPhoneInputState extends State<BadPhoneInput>
-    with _BadInputStateMixin<BadPhoneInput> {
-  void _reformat() {
-    final text = widget.controller._textEditingController.text;
+class _BadPasswordInputState extends State<BadPasswordInput>
+    with _BadInputStateMixin<BadPasswordInput> {
+  bool _visible = false;
 
-    final formatted = text
-        .replaceAll(RegExp(r'\D'), '')
-        .split('')
-        .fold<StringBuffer>(StringBuffer(), (buffer, char) {
-      // 3-3-4 (3 digits, separator, 3 digits, separator, 4 digits)
-      if (buffer.length == 3 || buffer.length == 8) {
-        buffer.write(widget.separator);
-      }
-      buffer.write(char);
-      return buffer;
-    }).toString();
-
-    if (text != formatted) {
-      widget.controller._textEditingController.text = formatted;
-      // widget.controller._textEditingController.value = TextEditingValue(
-      //   text: formatted,
-      //   selection: TextSelection.collapsed(offset: formatted.length),
-      // );
-    }
+  void toggleVisibility() {
+    setState(() => _visible = !_visible);
   }
 
   @override
   void initState() {
     super.initState();
-    widget.controller._textEditingController = TextEditingController()
-      ..addListener(_reformat);
+    widget.controller._textEditingController = TextEditingController();
     widget.controller._state = this;
   }
 
   @override
   void dispose() {
-    widget.controller._textEditingController.removeListener(_reformat);
     widget.controller._textEditingController.dispose();
     super.dispose();
   }
@@ -80,10 +65,11 @@ class _BadPhoneInputState extends State<BadPhoneInput>
         controller: widget.controller._textEditingController,
         magnifierConfiguration: TextMagnifierConfiguration.disabled,
         enableInteractiveSelection: false,
-        keyboardType: TextInputType.phone,
+        keyboardType: TextInputType.visiblePassword,
         textInputAction: widget.action,
-        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-        maxLength: 11,
+        obscureText: !_visible,
+        obscuringCharacter: widget.obscuringCharacter,
+        maxLength: widget.maxLength,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
           border: _border,
@@ -96,9 +82,12 @@ class _BadPhoneInputState extends State<BadPhoneInput>
         ),
         suffix: Padding(
           padding: const EdgeInsets.only(right: 12),
-          child: BadClickable(onClick: handleClear, child: widget.clearIcon!),
+          child: BadClickable(
+            onClick: toggleVisibility,
+            child: _visible ? widget.visibleIcon : widget.invisibleIcon,
+          ),
         ),
-        suffixMode: OverlayVisibilityMode.editing,
+        suffixMode: OverlayVisibilityMode.always,
         placeholder: widget.placeholder,
         style: _error == null ? widget.textStyle : widget.errorStyle,
         placeholderStyle: widget.placeholderStyle,

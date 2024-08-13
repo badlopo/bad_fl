@@ -15,8 +15,8 @@ class BadCommonInput extends BadInput {
     super.fill,
     super.placeholder,
     super.prefixIcon,
-    required super.errorIcon,
-    required super.clearIcon,
+    required Widget super.errorIcon,
+    required Widget super.clearIcon,
     super.textStyle,
     super.errorStyle,
     super.placeholderStyle,
@@ -59,7 +59,6 @@ class _BadCommonInputState extends State<BadCommonInput>
         enableInteractiveSelection: false,
         keyboardType: widget.keyboardType,
         textInputAction: widget.action,
-        maxLines: 1,
         padding: hasPrefix
             ? const EdgeInsets.symmetric(horizontal: 16)
             : const EdgeInsets.only(left: 12, right: 16),
@@ -76,7 +75,7 @@ class _BadCommonInputState extends State<BadCommonInput>
             : null,
         suffix: Padding(
           padding: const EdgeInsets.only(right: 12),
-          child: BadClickable(onClick: handleClear, child: widget.clearIcon),
+          child: BadClickable(onClick: handleClear, child: widget.clearIcon!),
         ),
         suffixMode: OverlayVisibilityMode.editing,
         placeholder: widget.placeholder,

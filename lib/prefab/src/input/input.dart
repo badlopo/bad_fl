@@ -4,6 +4,10 @@ import 'package:flutter/services.dart';
 
 part 'common.dart';
 
+part 'otp.dart';
+
+part 'password.dart';
+
 part 'phone.dart';
 
 part 'simple.dart';
@@ -20,7 +24,7 @@ sealed class BadInput extends StatefulWidget {
 
   final Widget? prefixIcon;
   final Widget? errorIcon;
-  final Widget clearIcon;
+  final Widget? clearIcon;
 
   final String? placeholder;
 
@@ -44,7 +48,7 @@ sealed class BadInput extends StatefulWidget {
     this.fill,
     this.prefixIcon,
     this.errorIcon,
-    required this.clearIcon,
+    this.clearIcon,
     this.placeholder,
     this.textStyle,
     this.errorStyle,
