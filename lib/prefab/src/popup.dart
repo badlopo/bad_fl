@@ -28,12 +28,15 @@ class BadPopupController {
   }
 
   /// hide the popup widget
-  void hide() {
+  void hide() async {
     if (_entry == null) {
       throw StateError('BadPopupController not attached to any BadPopup');
     }
 
-    // remove the popup
+    // ignore if not mounted
+    if (!_entry!.mounted) return;
+
+    // hide the popup
     _entry!.remove();
   }
 }
@@ -111,8 +114,9 @@ class _BadPopupState extends State<BadPopup> {
   void dispose() {
     widget.controller._entry = null;
     widget.controller._show = null;
-    entry.remove();
+    if (entry.mounted) entry.remove();
     entry.dispose();
+
     super.dispose();
   }
 
