@@ -20,6 +20,11 @@ class GalleryView extends StatelessWidget {
             items: [
               BadPanelItem(
                 onTap: () =>
+                    Navigator.pushNamed(context, NamedRoute.prefabBackToTop),
+                label: const BadText('BackToTop'),
+              ),
+              BadPanelItem(
+                onTap: () =>
                     Navigator.pushNamed(context, NamedRoute.prefabButton),
                 label: const BadText('Button'),
               ),
