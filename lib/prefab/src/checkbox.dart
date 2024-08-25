@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'clickable.dart';
 
-class BadCheckBox extends StatelessWidget {
+class BadCheckbox extends StatelessWidget {
   /// size of the checkbox
   final double size;
 
@@ -40,7 +40,7 @@ class BadCheckBox extends StatelessWidget {
   /// whether to use [icon] or [iconBuilder]
   final bool _useBuilder;
 
-  const BadCheckBox.icon({
+  const BadCheckbox.icon({
     super.key,
     required this.size,
     required this.icon,
@@ -57,7 +57,7 @@ class BadCheckBox extends StatelessWidget {
         _useBuilder = false,
         assert(icon != null, 'icon must be provided');
 
-  const BadCheckBox.iconBuilder({
+  const BadCheckbox.iconBuilder({
     super.key,
     required this.size,
     required this.iconBuilder,
