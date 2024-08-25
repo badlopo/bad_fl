@@ -1,14 +1,14 @@
 import 'package:bad_fl/bad_fl.dart';
 import 'package:flutter/material.dart';
 
-class BackToTopView extends StatefulWidget {
-  const BackToTopView({super.key});
+class PrefabBackToTopView extends StatefulWidget {
+  const PrefabBackToTopView({super.key});
 
   @override
-  State<StatefulWidget> createState() => _BackToTopViewState();
+  State<StatefulWidget> createState() => _PrefabBackToTopViewState();
 }
 
-class _BackToTopViewState extends State<BackToTopView> {
+class _PrefabBackToTopViewState extends State<PrefabBackToTopView> {
   final List<Color> colors = [Colors.red, Colors.blue, Colors.orange];
   final ScrollController sc = ScrollController();
 
@@ -23,6 +23,7 @@ class _BackToTopViewState extends State<BackToTopView> {
             scrollController: sc,
             child: const BadText('animated'),
           ),
+          const SizedBox(width: 16),
           BadBackToTop(scrollController: sc, child: const BadText('jump')),
         ],
       ),
