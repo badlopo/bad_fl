@@ -38,6 +38,11 @@ class GalleryView extends StatelessWidget {
                     Navigator.pushNamed(context, NamedRoute.prefabCheckbox),
                 label: const BadText('Checkbox'),
               ),
+              BadPanelItem(
+                onTap: () =>
+                    Navigator.pushNamed(context, NamedRoute.prefabClickable),
+                label: const BadText('Clickable'),
+              ),
             ],
           ),
         ],
