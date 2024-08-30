@@ -116,6 +116,11 @@ class BadInputController<T extends BadInput> {
 
   BadInputController();
 
+  /// focus on the input
+  void focus() {
+    _state._focusNode.requestFocus();
+  }
+
   /// set content
   void setText(String text) {
     // not allowed to set phone input directly
