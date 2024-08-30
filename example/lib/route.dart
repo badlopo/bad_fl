@@ -4,6 +4,7 @@ import 'package:example/page/prefab/button.dart';
 import 'package:example/page/prefab/carousel.dart';
 import 'package:example/page/prefab/checkbox.dart';
 import 'package:example/page/prefab/clickable.dart';
+import 'package:example/page/prefab/expandable.dart';
 
 abstract class NamedRoute {
   static const String gallery = '/';
@@ -12,6 +13,7 @@ abstract class NamedRoute {
   static const String prefabCarousel = '/prefab/carousel';
   static const String prefabCheckbox = '/prefab/checkbox';
   static const String prefabClickable = '/prefab/clickable';
+  static const String prefabExpandable = '/prefab/expandable';
 
   static final routes = {
     gallery: (context) => const GalleryView(),
@@ -20,5 +22,6 @@ abstract class NamedRoute {
     prefabCarousel: (context) => const PrefabCarouselView(),
     prefabCheckbox: (context) => const PrefabCheckboxView(),
     prefabClickable: (context) => const PrefabClickableView(),
+    prefabExpandable: (context) => const PrefabExpandableView(),
   };
 }
