@@ -2,14 +2,9 @@ import 'package:bad_fl/bad_fl.dart';
 import 'package:example/constant.dart';
 import 'package:flutter/material.dart';
 
-class PrefabExpandableView extends StatefulWidget {
+class PrefabExpandableView extends StatelessWidget {
   const PrefabExpandableView({super.key});
 
-  @override
-  State<PrefabExpandableView> createState() => _PrefabExpandableViewState();
-}
-
-class _PrefabExpandableViewState extends State<PrefabExpandableView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
