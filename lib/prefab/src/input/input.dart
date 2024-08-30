@@ -107,10 +107,12 @@ mixin _BadInputStateMixin<T extends BadInput> on State<T> {
 }
 
 class BadInputController<T extends BadInput> {
-  late final TextEditingController _textEditingController;
   late final _BadInputStateMixin<T> _state;
+  late final TextEditingController _textEditingController;
 
   Type get inputType => _state.widget.runtimeType;
+
+  String get text => _textEditingController.text;
 
   BadInputController();
 
