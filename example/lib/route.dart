@@ -6,6 +6,7 @@ import 'package:example/page/prefab/checkbox.dart';
 import 'package:example/page/prefab/clickable.dart';
 import 'package:example/page/prefab/expandable.dart';
 import 'package:example/page/prefab/floating.dart';
+import 'package:example/page/prefab/katex.dart';
 
 abstract class NamedRoute {
   static const String gallery = '/';
@@ -16,6 +17,7 @@ abstract class NamedRoute {
   static const String prefabClickable = '/prefab/clickable';
   static const String prefabExpandable = '/prefab/expandable';
   static const String prefabFloating = '/prefab/floating';
+  static const String prefabKatex = '/prefab/katex';
 
   static final routes = {
     gallery: (context) => const GalleryView(),
@@ -26,5 +28,6 @@ abstract class NamedRoute {
     prefabClickable: (context) => const PrefabClickableView(),
     prefabExpandable: (context) => const PrefabExpandableView(),
     prefabFloating: (context) => const PrefabFloatingView(),
+    prefabKatex: (context) => const PrefabKatexView(),
   };
 }

@@ -53,6 +53,11 @@ class GalleryView extends StatelessWidget {
                     Navigator.pushNamed(context, NamedRoute.prefabFloating),
                 label: const BadText('Floating'),
               ),
+              BadPanelItem(
+                onTap: () =>
+                    Navigator.pushNamed(context, NamedRoute.prefabKatex),
+                label: const BadText('Katex'),
+              ),
             ],
           ),
         ],
