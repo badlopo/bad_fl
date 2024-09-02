@@ -110,9 +110,14 @@ class BadInputController<T extends BadInput> {
   late final _BadInputStateMixin<T> _state;
   late final TextEditingController _textEditingController;
 
+  /// runtime type of the input, more for internal use
   Type get inputType => _state.widget.runtimeType;
 
+  /// current input content
   String get text => _textEditingController.text;
+
+  /// whether the input is in error state
+  bool get hasError => _state._error != null;
 
   BadInputController();
 
