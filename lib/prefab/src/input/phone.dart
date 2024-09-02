@@ -55,6 +55,20 @@ class _BadPhoneInputState extends State<BadPhoneInput>
     }
   }
 
+  /// recover the original text without separators
+  void _onChangeDelegate(String s) {
+    if (widget.onChanged != null) {
+      widget.onChanged!(s.replaceAll(RegExp(r'\D'), ''));
+    }
+  }
+
+  /// recover the original text without separators
+  void _onSubmitDelegate(String s) {
+    if (widget.onSubmitted != null) {
+      widget.onSubmitted!(s.replaceAll(RegExp(r'\D'), ''));
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -103,8 +117,8 @@ class _BadPhoneInputState extends State<BadPhoneInput>
         style: _error == null ? widget.textStyle : widget.errorStyle,
         placeholderStyle: widget.placeholderStyle,
         onTapOutside: (_) => _focusNode.unfocus(),
-        onChanged: widget.onChanged,
-        onSubmitted: widget.onSubmitted,
+        onChanged: _onChangeDelegate,
+        onSubmitted: _onSubmitDelegate,
       ),
     );
 
