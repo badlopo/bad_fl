@@ -72,15 +72,14 @@ class _BadPhoneInputState extends State<BadPhoneInput>
   @override
   void initState() {
     super.initState();
-    widget.controller._textEditingController = TextEditingController()
-      ..addListener(_reformat);
-    widget.controller._state = this;
+    widget.controller._attach(state: this);
+    widget.controller._textEditingController.addListener(_reformat);
   }
 
   @override
   void dispose() {
     widget.controller._textEditingController.removeListener(_reformat);
-    widget.controller._textEditingController.dispose();
+    widget.controller._detach();
     super.dispose();
   }
 

@@ -1,3 +1,4 @@
+import 'package:bad_fl/core.dart';
 import 'package:bad_fl/prefab/src/clickable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -107,23 +108,50 @@ mixin _BadInputStateMixin<T extends BadInput> on State<T> {
 }
 
 class BadInputController<T extends BadInput> {
-  late final _BadInputStateMixin<T> _state;
   late final TextEditingController _textEditingController;
 
+  /// hold the state of the widget which is using this controller
+  _BadInputStateMixin<T>? _state;
+
   /// runtime type of the input, more for internal use
-  Type get inputType => _state.widget.runtimeType;
+  Type? get inputType => _state?.widget.runtimeType;
 
   /// current input content
   String get text => _textEditingController.text;
 
   /// whether the input is in error state
-  bool get hasError => _state._error != null;
+  bool get hasError => _state?._error != null;
+
+  bool _oncelock = false;
 
   BadInputController();
 
+  void _attach({required _BadInputStateMixin<T> state, String? defaultText}) {
+    if (!_oncelock) {
+      BadFl.log(
+        module: 'BadInput',
+        message: 'initialize TextEditingController',
+      );
+
+      _textEditingController = TextEditingController(text: defaultText);
+      _oncelock = true;
+    }
+
+    _state = state;
+  }
+
+  void _detach() {
+    _textEditingController.clear();
+    _state = null;
+  }
+
   /// focus on the input
   void focus() {
-    _state._focusNode.requestFocus();
+    if (_state == null) {
+      throw StateError('Cannot focus before attaching to a widget');
+    }
+
+    _state!._focusNode.requestFocus();
   }
 
   /// set content
@@ -138,17 +166,25 @@ class BadInputController<T extends BadInput> {
 
   /// set error message, pass `null` to clear the error message
   void setError([String? error]) {
+    if (_state == null) {
+      throw StateError('Cannot set error before attaching to a widget');
+    }
+
     if (inputType == BadSimpleInput) {
       throw UnsupportedError('Cannot set error for simple input');
     }
 
-    if (_state._error != error) {
-      _state._error = error;
-      _state.update();
+    if (_state!._error != error) {
+      _state!._error = error;
+      _state!.update();
     }
   }
 
   void clear() {
     _textEditingController.clear();
+  }
+
+  void dispose() {
+    _textEditingController.dispose();
   }
 }

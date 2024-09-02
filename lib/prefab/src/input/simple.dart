@@ -32,13 +32,12 @@ class _BadSimpleInputState extends State<BadSimpleInput>
   @override
   void initState() {
     super.initState();
-    widget.controller._textEditingController = TextEditingController();
-    widget.controller._state = this;
+    widget.controller._attach(state: this);
   }
 
   @override
   void dispose() {
-    widget.controller._textEditingController.dispose();
+    widget.controller._detach();
     super.dispose();
   }
 
