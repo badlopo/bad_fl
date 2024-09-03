@@ -117,7 +117,18 @@ class BadInputController<T extends BadInput> {
   Type? get inputType => _state?.widget.runtimeType;
 
   /// current input content
-  String get text => _textEditingController.text;
+  String get text {
+    if (!_oncelock) {
+      throw StateError('Cannot get text before attaching to a widget');
+    }
+
+    // remove all non-digit characters for phone input
+    if (inputType == BadPhoneInput) {
+      return _textEditingController.text.replaceAll(RegExp(r'\D'), '');
+    }
+
+    return _textEditingController.text;
+  }
 
   /// whether the input is in error state
   bool get hasError => _state?._error != null;
