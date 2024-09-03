@@ -119,7 +119,8 @@ class BadInputController<T extends BadInput> {
   /// current input content
   String get text {
     if (!_oncelock) {
-      throw StateError('Cannot get text before attaching to a widget');
+      throw StateError(
+          'Cannot get text before TextEditingController has been initialized');
     }
 
     // remove all non-digit characters for phone input
@@ -177,9 +178,7 @@ class BadInputController<T extends BadInput> {
 
   /// set error message, pass `null` to clear the error message
   void setError([String? error]) {
-    if (_state == null) {
-      throw StateError('Cannot set error before attaching to a widget');
-    }
+    if (_state == null) return;
 
     if (inputType == BadSimpleInput) {
       throw UnsupportedError('Cannot set error for simple input');
