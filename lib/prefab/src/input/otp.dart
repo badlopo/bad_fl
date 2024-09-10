@@ -71,7 +71,7 @@ class _BadOTPInputState extends State<BadOTPInput>
           padding: const EdgeInsets.only(right: 12),
           child: widget.suffixWidget,
         ),
-        suffixMode: OverlayVisibilityMode.editing,
+        suffixMode: OverlayVisibilityMode.always,
         placeholder: widget.placeholder,
         style: _error == null ? widget.textStyle : widget.errorStyle,
         placeholderStyle: widget.placeholderStyle,
