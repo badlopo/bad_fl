@@ -11,3 +11,8 @@ _flutter.loader.load({
         // Make this `app` object available to your JS app.
     }
 });
+
+// https://docs.flutter.cn/platform-integration/web/embedding-flutter-web/
+// https://docs.flutter.dev/platform-integration/web/embedding-flutter-web#embedded-mode
+// https://docs.flutter.dev/platform-integration/web/initialization
+// https://docs.flutter.cn/platform-integration/web/initialization
