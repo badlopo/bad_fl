@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImagePickResult {
@@ -66,7 +66,7 @@ abstract class BadImageOP {
   /// save image to gallery
   static Future<ImageSaveResult> saveToGallery(Uint8List buffer) async {
     try {
-      final r = await ImageGallerySaver.saveImage(buffer);
+      final r = await ImageGallerySaverPlus.saveImage(buffer);
       return ImageSaveResult.fromJson(Map<String, dynamic>.from(r));
     } catch (err) {
       return ImageSaveResult.fromJson(
