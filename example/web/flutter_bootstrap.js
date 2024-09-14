@@ -3,11 +3,13 @@
 
 _flutter.loader.load({
     onEntrypointLoaded: async function onEntrypointLoaded(engineInitializer) {
-        let engine = await engineInitializer.initializeEngine({
+        const engine = await engineInitializer.initializeEngine({
             multiViewEnabled: true, // Enables embedded mode.
         });
-        let app = await engine.runApp();
-        console.log(app)
+        const app = await engine.runApp();
+        window.app = app
+        // const viewId = app.addView({hostElement: document.getElementById('app')})
+        // console.log('addView', viewId)
         // Make this `app` object available to your JS app.
     }
 });
