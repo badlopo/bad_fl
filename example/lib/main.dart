@@ -2,29 +2,7 @@ import 'package:example/route.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  // runApp(const MyApp());
-  runWidget(const SimpleApp());
-}
-
-class SimpleApp extends StatelessWidget {
-  const SimpleApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(title: 'SimpleApp', home: SimpleAppView());
-  }
-}
-
-class SimpleAppView extends StatelessWidget {
-  const SimpleAppView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    print('SimpleAppView.build');
-    return Scaffold(
-      appBar: AppBar(title: const Text('SimpleAppView')),
-    );
-  }
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
