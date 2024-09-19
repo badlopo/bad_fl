@@ -46,7 +46,10 @@ class ContributionCalendarConfig {
     this.cellGap = 3,
     this.borderRadius = 2,
     ColorGetter cellColorGetter = _defaultCellColorGetter,
-  })  : assert(cellSize > 0 && cellGap > 0),
+  })  : assert(cellSize > 0, 'cellSize must be greater than 0'),
+        assert(cellGap > 0, 'cellGap must be greater than 0'),
+        assert(borderRadius >= 0,
+            'borderRadius must be greater than or equal to 0'),
         height = cellSize * 7 + cellGap * 6,
         getCellColor = cellColorGetter;
 }
