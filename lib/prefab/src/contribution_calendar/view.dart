@@ -1,7 +1,14 @@
-import 'package:flutter/material.dart';
+part of 'contribution_calendar.dart';
 
 class ContributionCalendar extends StatefulWidget {
-  const ContributionCalendar({super.key});
+  final ContributionCalendarController? controller;
+  final ContributionCalendarConfig config;
+
+  const ContributionCalendar({
+    super.key,
+    this.controller,
+    required this.config,
+  });
 
   @override
   State<ContributionCalendar> createState() => _ContributionCalendarState();
