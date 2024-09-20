@@ -1,3 +1,6 @@
+export 'src/contribution_calendar/contribution_calendar.dart';
+export 'src/input/input.dart';
+
 export 'src/back_to_top.dart';
 export 'src/button.dart';
 export 'src/carousel.dart';
@@ -5,7 +8,6 @@ export 'src/checkbox.dart';
 export 'src/clickable.dart';
 export 'src/expandable.dart';
 export 'src/floating.dart';
-export 'src/input/input.dart';
 export 'src/katex.dart';
 export 'src/named_stack.dart';
 export 'src/panel.dart';
