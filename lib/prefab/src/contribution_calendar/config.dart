@@ -1,5 +1,6 @@
 part of 'contribution_calendar.dart';
 
+// region color getter
 /// github style colors in 5 shades
 const _colors = [
   /// color for empty cell
@@ -32,7 +33,9 @@ Color _defaultColorGetter(int? value, (int? min, int? max) range) {
 
   return _colors[value * 4 ~/ range.$2! + 1];
 }
+// endregion
 
+// region cell builder
 typedef CellBuilder = Widget Function({
   required int? value,
   required double size,
@@ -53,6 +56,59 @@ Widget _defaultCellBuilder({
     decoration: BoxDecoration(color: color, borderRadius: borderRadius),
   );
 }
+// endregion
+
+// region axis
+enum WeekAxisPosition { left, right }
+
+enum MonthAxisPosition { top, bottom }
+
+/// internal usage
+extension _ModValue on MonthAxisPosition {
+  int get modValue {
+    switch (this) {
+      case MonthAxisPosition.top:
+        return 0;
+      case MonthAxisPosition.bottom:
+        return 7;
+    }
+  }
+}
+
+typedef WeekAxisBuilder = Widget Function({
+  required WeekAxisPosition position,
+  required int firstDayOfWeek,
+  required double cellSize,
+  required double cellGap,
+});
+
+Widget _defaultWeekAxisBuilder({
+  required WeekAxisPosition position,
+  required int firstDayOfWeek,
+  required double cellSize,
+  required double cellGap,
+}) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      for (var i = firstDayOfWeek - 1; i < firstDayOfWeek + 6; i++)
+        SizedBox(
+          // width: cellSize,
+          height: cellSize,
+          child: Text(
+            ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][i % 7],
+            style: TextStyle(
+              fontSize: cellSize / 1.2,
+              fontWeight: FontWeight.w400,
+              height: 1.2,
+            ),
+          ),
+        ),
+    ],
+  );
+}
+// endregion
 
 /// configuration for [ContributionCalendar]
 class ContributionCalendarConfig {
@@ -80,6 +136,14 @@ class ContributionCalendarConfig {
   /// build a single cell of the calendar
   final CellBuilder cellBuilder;
 
+  /// position of the week axis, takes effect only if [weekAxis] is not null
+  final WeekAxisPosition weekAxisPosition;
+
+  final MonthAxisPosition monthAxisPosition;
+
+  /// build the week axis widget
+  final WeekAxisBuilder weekAxisBuilder;
+
   const ContributionCalendarConfig({
     this.firstDayOfWeek = DateTime.sunday,
     this.cellSize = 10,
@@ -87,6 +151,9 @@ class ContributionCalendarConfig {
     this.borderRadius = 2,
     this.colorGetter = _defaultColorGetter,
     this.cellBuilder = _defaultCellBuilder,
+    this.weekAxisPosition = WeekAxisPosition.left,
+    this.monthAxisPosition = MonthAxisPosition.bottom,
+    this.weekAxisBuilder = _defaultWeekAxisBuilder,
   })  : assert(
           firstDayOfWeek >= 1 && firstDayOfWeek <= 7,
           'firstDayOfWeek must be between monday(1) and sunday(7)',

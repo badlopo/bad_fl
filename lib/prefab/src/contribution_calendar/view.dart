@@ -1,35 +1,11 @@
 part of 'contribution_calendar.dart';
 
-enum WeekAxisPosition { left, right }
-
-enum MonthAxisPosition { top, bottom }
-
-/// internal usage
-extension _ModValue on MonthAxisPosition {
-  int get modValue {
-    switch (this) {
-      case MonthAxisPosition.top:
-        return 0;
-      case MonthAxisPosition.bottom:
-        return 7;
-    }
-  }
-}
-
+/// TODO: WIP!
 class ContributionCalendar extends StatefulWidget {
   final ContributionCalendarController? controller;
   final ContributionCalendarConfig config;
   final DateTimeRange dateTimeRange;
   final Map<DateTime, int> dateTimeValues;
-
-  /// widget to render as the week axis,
-  /// this will be fixed at the start(or end) of the calendar
-  final Widget? weekAxis;
-
-  /// position of the week axis, takes effect only if [weekAxis] is not null
-  final WeekAxisPosition weekAxisPosition;
-
-  final MonthAxisPosition monthAxisPosition;
 
   const ContributionCalendar({
     super.key,
@@ -37,9 +13,6 @@ class ContributionCalendar extends StatefulWidget {
     this.config = const ContributionCalendarConfig(),
     required this.dateTimeRange,
     required this.dateTimeValues,
-    this.weekAxis,
-    this.weekAxisPosition = WeekAxisPosition.left,
-    this.monthAxisPosition = MonthAxisPosition.bottom,
   });
 
   @override
@@ -157,60 +130,43 @@ class _ContributionCalendarState extends State<ContributionCalendar> {
     int padding = blankCells;
     int count = 0;
 
+    final Widget weekAxis = SizedBox(
+      height: widget.config.calendarHeight,
+      child: widget.config.weekAxisBuilder(
+        position: widget.config.weekAxisPosition,
+        firstDayOfWeek: widget.config.firstDayOfWeek,
+        cellSize: widget.config.cellSize,
+        cellGap: widget.config.cellGap,
+      ),
+    );
+
     return SizedBox(
       height: widget.config.widgetHeight,
       child: Row(
-        crossAxisAlignment: widget.monthAxisPosition == MonthAxisPosition.top
-            ? CrossAxisAlignment.end
-            : CrossAxisAlignment.start,
+        crossAxisAlignment:
+            widget.config.monthAxisPosition == MonthAxisPosition.top
+                ? CrossAxisAlignment.end
+                : CrossAxisAlignment.start,
         children: [
           // conditionally render: week axis
-          if (widget.weekAxis != null &&
-              widget.weekAxisPosition == WeekAxisPosition.left)
-            SizedBox(
-              height: widget.config.calendarHeight,
-              child: widget.weekAxis!,
+          if (widget.config.weekAxisPosition == WeekAxisPosition.left)
+            Padding(
+              padding: EdgeInsets.only(right: widget.config.cellGap),
+              child: weekAxis,
             ),
           Expanded(
             child: GridView.builder(
               scrollDirection: Axis.horizontal,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 8,
+                crossAxisCount: 7,
                 mainAxisSpacing: widget.config.cellGap,
                 crossAxisSpacing: widget.config.cellGap,
                 childAspectRatio: 1,
               ),
               // here we don't provide the itemCount,
               // instead we return null in itemBuilder to indicate the end of the list
+              itemCount: blankCells + dateCells,
               itemBuilder: (_, index) {
-                // render month axis if needed
-                if (index % 8 == widget.monthAxisPosition.modValue) {
-                  // TODO: render month name at the center of the month
-                  // if (index == 15) {
-                  //   return UnconstrainedBox(
-                  //     // we only overflow in the horizontal direction,
-                  //     // so we keep the vertical direction constrained
-                  //     constrainedAxis: Axis.vertical,
-                  //     child: SizedOverflowBox(
-                  //       size: Size(
-                  //         widget.config.cellSize + 6,
-                  //         widget.config.cellSize,
-                  //       ),
-                  //       child: Container(
-                  //         width: widget.config.cellSize + 6,
-                  //         height: widget.config.cellSize,
-                  //         // color: Colors.orange,
-                  //         child: Text('Jan'),
-                  //       ),
-                  //     ),
-                  //   );
-                  // }
-
-                  return Container(
-                    color: Colors.orange,
-                  );
-                }
-
                 // render blank cells before the first day
                 if (padding > 0) {
                   padding -= 1;
@@ -235,11 +191,10 @@ class _ContributionCalendarState extends State<ContributionCalendar> {
             ),
           ),
           // conditionally render: week axis
-          if (widget.weekAxis != null &&
-              widget.weekAxisPosition == WeekAxisPosition.right)
-            SizedBox(
-              height: widget.config.calendarHeight,
-              child: widget.weekAxis!,
+          if (widget.config.weekAxisPosition == WeekAxisPosition.right)
+            Padding(
+              padding: EdgeInsets.only(left: widget.config.cellGap),
+              child: weekAxis,
             ),
         ],
       ),
