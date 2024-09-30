@@ -35,10 +35,28 @@ const List<String> _defaultWeekAxisLabels = [
   'Sun'
 ];
 
+const List<String> _defaultMonthAxisLabels = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec'
+];
+
 class CalendarConfig {
   final int firstDayOfWeek;
   final List<String> weekAxisLabels;
   final Color weekAxisColor;
+
+  final List<String> monthAxisLabels;
+  final Color monthAxisColor;
 
   final double cellSize;
   final double cellGap;
@@ -49,6 +67,8 @@ class CalendarConfig {
     this.firstDayOfWeek = DateTime.monday,
     this.weekAxisLabels = _defaultWeekAxisLabels,
     this.weekAxisColor = const Color(0xFF333333),
+    this.monthAxisLabels = _defaultMonthAxisLabels,
+    this.monthAxisColor = const Color(0xFF333333),
     this.cellSize = 12,
     this.cellGap = 3,
     this.cellRadius = const Radius.circular(2),
@@ -65,6 +85,9 @@ class CalendarLayoutConfig {
 
   /// first date in the calendar
   final DateTime dateBase;
+
+  /// number of weeks (columns) in the calendar
+  final int weeks;
 
   /// values of the calendar
   final Map<DateTime, int?> values;
@@ -90,6 +113,7 @@ class CalendarLayoutConfig {
   const CalendarLayoutConfig._({
     required this.rawConfig,
     required this.dateBase,
+    required this.weeks,
     required this.values,
     required this.paintOffset,
     required this.size,
@@ -134,6 +158,7 @@ class CalendarLayoutConfig {
 
     return CalendarLayoutConfig._(
       rawConfig: config,
+      weeks: weeks,
       dateBase: range.start,
       values: values,
       paintOffset: config.cellSize + config.cellGap,

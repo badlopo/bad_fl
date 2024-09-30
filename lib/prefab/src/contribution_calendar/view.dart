@@ -18,19 +18,22 @@ class _CalendarPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint();
-    int ptr = -layoutConfig.blankCells;
+    int cellPtr = -layoutConfig.blankCells;
 
-    draw:
+    int month = layoutConfig.dateBase.month;
+    final List<int> monthAxisLabelIndex = [0];
+
+    draw_date_cell:
     for (int c = 0;; c += 1) {
       for (int r = 0; r < 7; r += 1) {
-        ptr += 1;
+        cellPtr += 1;
 
         // blank cell
-        if (ptr <= 0) continue;
-        // finish drawing
-        if (ptr > layoutConfig.dateCells) break draw;
+        if (cellPtr <= 0) continue;
+        // finish drawing cells
+        if (cellPtr > layoutConfig.dateCells) break draw_date_cell;
 
-        final date = layoutConfig.dateBase.add(Duration(days: ptr - 1));
+        final date = layoutConfig.dateBase.add(Duration(days: cellPtr - 1));
         paint.color = cellColorGetter(
           layoutConfig.values[date],
           layoutConfig.minValue,
@@ -43,8 +46,32 @@ class _CalendarPainter extends CustomPainter {
           ),
           paint,
         );
+
+        if (date.month != month) {
+          monthAxisLabelIndex.add(c);
+          month = date.month;
+        }
       }
     }
+
+    final painter = TextPainter();
+    final double monthAxisYBase = paintOffset * 7;
+    int axisPtr = layoutConfig.weeks;
+    for (int monthIndex in monthAxisLabelIndex.reversed) {
+      // draw month axis labels if there is enough space
+      if (axisPtr - monthIndex > 2) {
+        // TODO: draw month axis labels
+        // FIXME: test
+        // painter
+        //   ..text = TextSpan(text: 'M')
+        //   ..layout()
+        //   ..paint(canvas, Offset(paintOffset * monthIndex, monthAxisYBase));
+      }
+
+      // move the ptr
+      axisPtr = monthIndex;
+    }
+    // print(monthAxisLabelIndex);
   }
 
   @override
