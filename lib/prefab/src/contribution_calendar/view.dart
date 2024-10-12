@@ -18,11 +18,16 @@ class _CalendarPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint();
-    int cellPtr = -layoutConfig.blankCells;
 
-    int month = layoutConfig.dateBase.month;
+    // 日期单元格计数游标, 正数表示日期计数, 负数为前置空白单元格
+    int cellPtr = -layoutConfig.blankCells;
+    // 月份游标 (当前列游标对应的月份, 正向统计/反向绘制 时使用)
+    int monthPtr = layoutConfig.dateBase.month;
+
+    // index of columns where a new month starts
     final List<int> monthAxisLabelIndex = [0];
 
+    // 绘制日期单元格 & 统计月份信息
     draw_date_cell:
     for (int c = 0;; c += 1) {
       for (int r = 0; r < 7; r += 1) {
@@ -33,6 +38,7 @@ class _CalendarPainter extends CustomPainter {
         // finish drawing cells
         if (cellPtr > layoutConfig.dateCells) break draw_date_cell;
 
+        // 绘制日期单元格
         final date = layoutConfig.dateBase.add(Duration(days: cellPtr - 1));
         paint.color = cellColorGetter(
           layoutConfig.values[date],
@@ -47,29 +53,43 @@ class _CalendarPainter extends CustomPainter {
           paint,
         );
 
-        if (date.month != month) {
+        // 统计月份信息
+        if (date.month != monthPtr) {
           monthAxisLabelIndex.add(c);
-          month = date.month;
+          monthPtr = date.month;
         }
       }
     }
 
-    final painter = TextPainter();
+    // 绘制月份坐标轴
+    final painter = TextPainter()..textDirection = TextDirection.ltr;
     final double monthAxisYBase = paintOffset * 7;
-    int axisPtr = layoutConfig.weeks;
-    for (int monthIndex in monthAxisLabelIndex.reversed) {
-      // draw month axis labels if there is enough space
-      if (axisPtr - monthIndex > 2) {
-        // TODO: draw month axis labels
-        // FIXME: test
-        // painter
-        //   ..text = TextSpan(text: 'M')
-        //   ..layout()
-        //   ..paint(canvas, Offset(paintOffset * monthIndex, monthAxisYBase));
+
+    // 月份坐标轴标签
+    final axisLabels = layoutConfig.rawConfig.monthAxisLabels;
+    // 上一次绘制了月份标签的列的下标
+    int colIndexPtr = layoutConfig.weeks;
+    for (int colIndex in monthAxisLabelIndex.reversed) {
+      // colIndex 是离散的值, 为了避免最右侧绘制时没有足够的空间,
+      // 此处限制至少有两列的空间才进行绘制
+      if (colIndexPtr - colIndex > 2) {
+        // draw month axis labels
+        painter
+          ..text = TextSpan(
+            text: axisLabels[monthPtr - 1],
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: cellSize,
+              height: 1,
+            ),
+          )
+          ..layout()
+          ..paint(canvas, Offset(paintOffset * colIndex, monthAxisYBase));
       }
 
       // move the ptr
-      axisPtr = monthIndex;
+      colIndexPtr = colIndex;
+      monthPtr = (monthPtr == 1) ? 12 : (monthPtr - 1);
     }
     // print(monthAxisLabelIndex);
   }
