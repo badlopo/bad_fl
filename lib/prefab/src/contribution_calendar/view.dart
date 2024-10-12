@@ -103,6 +103,7 @@ class ContributionCalendar extends StatefulWidget {
   final CalendarConfig config;
   final DateTimeRange range;
   final Map<DateTime, int> values;
+  final void Function(DateTime date, int? value)? onDateTap;
 
   const ContributionCalendar({
     super.key,
@@ -110,6 +111,7 @@ class ContributionCalendar extends StatefulWidget {
     this.config = const CalendarConfig(),
     required this.range,
     required this.values,
+    this.onDateTap,
   });
 
   @override
@@ -215,8 +217,10 @@ class _ContributionCalendarState extends State<ContributionCalendar> {
               scrollDirection: Axis.horizontal,
               child: GestureDetector(
                 onTapDown: (ev) {
-                  // TODO: implement tap down event
-                  print('tap down: ${ev.localPosition}');
+                  final cell = _layoutConfig.getDateAt(ev.localPosition);
+                  if (cell != null && widget.onDateTap != null) {
+                    widget.onDateTap!(cell.$1, cell.$2);
+                  }
                 },
                 child: RepaintBoundary(
                   child: CustomPaint(

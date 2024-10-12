@@ -110,19 +110,7 @@ class CalendarLayoutConfig {
   /// maximum value in the calendar, if any
   final int? maxValue;
 
-  const CalendarLayoutConfig._({
-    required this.rawConfig,
-    required this.dateBase,
-    required this.weeks,
-    required this.values,
-    required this.paintOffset,
-    required this.size,
-    required this.blankCells,
-    required this.dateCells,
-    required this.minValue,
-    required this.maxValue,
-  });
-
+  /// calculate the layout configuration for the calendar from other configurations
   factory CalendarLayoutConfig.calculate({
     required CalendarConfig config,
     required DateTimeRange range,
@@ -171,5 +159,41 @@ class CalendarLayoutConfig {
       minValue: min,
       maxValue: max,
     );
+  }
+
+  const CalendarLayoutConfig._({
+    required this.rawConfig,
+    required this.dateBase,
+    required this.weeks,
+    required this.values,
+    required this.paintOffset,
+    required this.size,
+    required this.blankCells,
+    required this.dateCells,
+    required this.minValue,
+    required this.maxValue,
+  });
+
+  /// get the date (and it's value) at the given position, return null if the position is not on a cell
+  (DateTime date, int? value)? getDateAt(Offset position) {
+    // check if the point is on a cell
+    if (position.dx < 0 ||
+        position.dy < 0 ||
+        position.dx % paintOffset > rawConfig.cellSize ||
+        position.dy % paintOffset > rawConfig.cellSize) return null;
+
+    final x = (position.dx / paintOffset).ceil();
+    final y = (position.dy / paintOffset).ceil();
+
+    // check if the position is outside the calendar
+    if (x > weeks || y > 7) return null;
+
+    final dateOffset = (x - 1) * 7 + y - blankCells - 1;
+
+    // check if the date is outside the range (in the blank cells)
+    if (dateOffset < 0 || dateOffset >= dateCells) return null;
+
+    final date = dateBase.add(Duration(days: dateOffset));
+    return (date, values[date]);
   }
 }
