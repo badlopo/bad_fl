@@ -2,7 +2,7 @@ import 'package:bad_fl/core.dart';
 import 'package:flutter/material.dart';
 
 /// builder for each node
-typedef TreeNodeBuilder<T extends Object> = Widget Function(TreeNode<T> node);
+typedef TreeNodeBuilderLegacy<T extends Object> = Widget Function(TreeNode<T> node);
 
 void _noop() {}
 
@@ -76,7 +76,7 @@ class _BadTreeNode<TreeNodeData extends Object> extends StatefulWidget {
   final int depth;
   final TreeNodeData data;
   final Iterable<TreeNodeData>? Function(TreeNodeData node) childrenProvider;
-  final TreeNodeBuilder<TreeNodeData> nodeBuilder;
+  final TreeNodeBuilderLegacy<TreeNodeData> nodeBuilder;
 
   const _BadTreeNode({
     super.key,
@@ -231,7 +231,7 @@ class BadTreeLegacy<TreeNodeData extends Object> extends StatefulWidget {
   final List<TreeNodeData>? Function(TreeNodeData node) childrenProvider;
 
   /// builder for each node
-  final TreeNodeBuilder<TreeNodeData> nodeBuilder;
+  final TreeNodeBuilderLegacy<TreeNodeData> nodeBuilder;
 
   const BadTreeLegacy({
     super.key,
