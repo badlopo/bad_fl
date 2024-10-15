@@ -22,5 +22,4 @@ export 'src/swipe_dismiss.dart';
 export 'src/switch.dart';
 export 'src/text.dart';
 export 'src/text_field.dart';
-export 'src/tree.dart';
 export 'src/webview.dart';

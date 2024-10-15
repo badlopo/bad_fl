@@ -141,7 +141,7 @@ class _BadTreeNodeState<TreeNodeData extends Object>
 /// controller for tree state management
 ///
 /// Note: a controller can only be attached to one tree at a time
-class BadTreeController<TreeNodeData extends Object> {
+class BadTreeLegacyController<TreeNodeData extends Object> {
   bool _attached = false;
   void Function(VoidCallback fn)? _setState;
   WeakReference<Expando<TreeNode<TreeNodeData>>>? _data2node;
@@ -215,9 +215,9 @@ class BadTreeController<TreeNodeData extends Object> {
 }
 
 /// tree widget
-class BadTree<TreeNodeData extends Object> extends StatefulWidget {
+class BadTreeLegacy<TreeNodeData extends Object> extends StatefulWidget {
   /// controller for tree state management
-  final BadTreeController<TreeNodeData>? controller;
+  final BadTreeLegacyController<TreeNodeData>? controller;
 
   /// tree data
   ///
@@ -233,7 +233,7 @@ class BadTree<TreeNodeData extends Object> extends StatefulWidget {
   /// builder for each node
   final TreeNodeBuilder<TreeNodeData> nodeBuilder;
 
-  const BadTree({
+  const BadTreeLegacy({
     super.key,
     this.controller,
     required this.tree,
@@ -242,11 +242,11 @@ class BadTree<TreeNodeData extends Object> extends StatefulWidget {
   }) : assert(tree.length > 0, 'at least one root node is required');
 
   @override
-  State<BadTree<TreeNodeData>> createState() => _BadTreeState<TreeNodeData>();
+  State<BadTreeLegacy<TreeNodeData>> createState() => _BadTreeLegacyState<TreeNodeData>();
 }
 
-class _BadTreeState<TreeNodeData extends Object>
-    extends State<BadTree<TreeNodeData>> {
+class _BadTreeLegacyState<TreeNodeData extends Object>
+    extends State<BadTreeLegacy<TreeNodeData>> {
   /// `data` to `node` mapping, used to store the state of the node (especially the expanded state)
   final _data2node = Expando<TreeNode<TreeNodeData>>('BadTreeNodes');
 
