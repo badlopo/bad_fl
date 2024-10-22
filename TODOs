@@ -4,7 +4,6 @@
 
 # 问题 & 改进
 
-- BadTree 无法动态更新
 - request 模块重构
 
 # 新增
@@ -15,10 +14,6 @@
 - Marquee
 
 # 待定
-
-- 字体测量
-
-
 
 # Examples
 
