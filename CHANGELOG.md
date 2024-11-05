@@ -1,3 +1,10 @@
+## 0.2.0
+
+> 2024.11.05
+
+- Add date in the changelog
+- The project structure is about to change. This version is available for use in existing projects
+
 ## 0.1.0
 
 Reorganized the entire project and renamed most of the classes (prefixed with bad).
