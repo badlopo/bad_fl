@@ -1,8 +1,10 @@
-import 'package:example/route.dart';
+import 'package:example/multi_view_wrapper.dart';
+import 'package:example/page/home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
+  // runWidget(MultiViewWrapper(appBuilder: (_, initialData) => const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -11,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'BadFL Gallery',
+      title: 'BadFL',
       theme: ThemeData(
         useMaterial3: true,
         appBarTheme: const AppBarTheme(
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: const Color(0xFFF9F8F0),
       ),
-      routes: NamedRoute.routes,
+      home: const HomePage(),
     );
   }
 }
