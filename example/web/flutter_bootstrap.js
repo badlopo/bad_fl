@@ -1,15 +1,23 @@
 {{flutter_js}}
 {{flutter_build_config}}
 
-_flutter.loader.load({
-    onEntrypointLoaded: async function onEntrypointLoaded(engineInitializer) {
-        // Initialize the engine.
-        const engine = await engineInitializer.initializeEngine({
-            // Enables embedded mode.
-            multiViewEnabled: true,
-        });
+// https://docs.flutter.dev/platform-integration/web/initialization
 
-        // Run the app and make this `app` object available to your JS app.
-        window.$flApp = await engine.runApp();
-    }
-});
+/**
+ * @param {boolean} multiViewEnabled
+ */
+const setup_flutter=  (multiViewEnabled) => {
+    _flutter.loader.load({
+        onEntrypointLoaded: async function(engineInitializer) {
+            // Initialize the engine.
+            const engine = await engineInitializer.initializeEngine({
+                multiViewEnabled: multiViewEnabled,
+            });
+
+            // Run the app and make this `app` object available to your JS app.
+            window.$flApp = await engine.runApp();
+        }
+    });
+}
+
+setup_flutter(false);
