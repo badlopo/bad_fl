@@ -14,14 +14,22 @@ making it easier for web developers to get started.
 express a `Button` rather than build-in ones) People who have related needs or care about this should use it with
 caution.
 
-## Documentation
+## Architecture
 
-- extension
-    - [iterable](./doc/extension/iterable.md)
-    - [num](./doc/extension/num.md)
-- helper
-    - [debounce](./doc/helper/debounce.md)
-    - [throttle](./doc/helper/throttle.md)
-- impl
-- mixin
-- prefab
+The project mainly has the following modules:
+
+- `/ext`: Extensions
+- `/impl`: Implementation of common functions
+- `/kit`: Encapsulation of multiple components for specific functions
+- `/util`: Utility functions/classes
+- `/widget`: Widget components
+
+### ext
+
+### impl
+
+### kit
+
+### util
+
+### widget
