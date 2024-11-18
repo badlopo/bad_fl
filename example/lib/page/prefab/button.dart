@@ -43,7 +43,9 @@ class PrefabButtonView extends StatelessWidget {
             child: const BadText('Button4'),
             onPressed: () => Utils.showSnackBar(context, 'Button4 pressed'),
           ),
-        ].slotted(slot: const SizedBox(height: 16)),
+        ]
+            .separate(separator: const SizedBox(height: 16), convert: asIs)
+            .toList(),
       ),
     );
   }
