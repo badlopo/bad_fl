@@ -1,7 +1,7 @@
 extension IterableExt<E> on Iterable<E> {
   /// Returns a new lazy [Iterable] whose elements are a [Record] containing the element and its index.
   ///
-  /// Examples:
+  /// Example:
   /// ```dart
   /// final animals = ["cat", "dot", "rabbit"];
   /// for (final animal in animals.enumerate) {
@@ -26,7 +26,7 @@ extension IterableExt<E> on Iterable<E> {
   ///
   /// Returns a new [Iterable] (not lazy) with the converted items and separators.
   ///
-  /// Examples:
+  /// Example:
   /// ```dart
   /// final nums = [1, 2, 3];
   /// final result = nums.separate(convert: (n) => n * 2, separator: -1);
