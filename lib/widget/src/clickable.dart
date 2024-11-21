@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 
-/// a wrapper to add click event to a widget
+/// A wrapper widget that makes its child clickable.
 class BadClickable extends StatelessWidget {
   final Widget child;
   final VoidCallback onClick;
 
-  const BadClickable({
-    super.key,
-    required this.child,
-    required this.onClick,
-  });
+  const BadClickable({super.key, required this.child, required this.onClick});
 
   @override
   Widget build(BuildContext context) {
