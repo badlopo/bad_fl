@@ -1,1 +1,1 @@
-export 'search_kit/search_kit.dart';
+export 'src/search_kit.dart';
