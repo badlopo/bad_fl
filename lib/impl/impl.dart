@@ -4,6 +4,5 @@ export 'src/file_storage.dart';
 export 'src/image_io.dart';
 export 'src/kv_storage.dart';
 export 'src/launcher.dart';
-
-export 'src/measure.dart';
 export 'src/meta.dart';
+export 'src/text_measure.dart';

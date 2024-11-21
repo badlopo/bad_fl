@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 
-/// `impl::measurer`: measurer for text
-abstract class BadMeasurer {
+/// Text measure implementation
+abstract class TextMeasureImpl {
+  /// Measure the size of the text with the given configuration
   static Size measure(
     String text, {
     TextStyle? style,
@@ -9,6 +10,7 @@ abstract class BadMeasurer {
     double minWidth = 0.0,
     double maxWidth = double.infinity,
   }) {
+    // obviously, empty text always has zero size
     if (text.isEmpty) return Size.zero;
 
     final painter = TextPainter(
