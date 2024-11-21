@@ -1,8 +1,8 @@
 import 'package:flutter/painting.dart';
 
-/// Text measure implementation
+/// Text measure implementation.
 abstract class TextMeasureImpl {
-  /// Measure the size of the text with the given configuration
+  /// Measure the size of the text with the given configuration.
   static Size measure(
     String text, {
     TextStyle? style,
