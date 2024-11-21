@@ -4,7 +4,8 @@ extension NumExt on num {
   /// - [fractionDigits]: the (max) number of digits after the decimal point.
   /// - [forceFraction]: force to display fraction digits even if it's zero. if `false`, trailing zeros will be removed.
   ///
-  /// Examples:
+  /// ## Example
+  ///
   /// ```dart
   /// 10203.toReadable(1);  // "10.2K"
   /// 10203.toReadable(2);  // "10.2K"
@@ -48,7 +49,8 @@ extension NumExt on num {
   ///
   /// - [separator]: the separator between each group. should be a single character.
   ///
-  /// Examples:
+  /// ## Example
+  ///
   /// ```dart
   /// 12345678.toGrouped();  // "12,345,678"
   /// 12345678.toGrouped('-');  // "12-345-678"
@@ -62,6 +64,6 @@ extension NumExt on num {
     return str.replaceAllMapped(reg, (Match match) => '${match[1]}$separator');
   }
 
-  /// alias of `toGroupedString()`
+  /// Alias of `toGroupedString()`
   String get grouped => toGrouped();
 }
