@@ -1,5 +1,6 @@
 export 'src/clipboard.dart';
-export 'src/event_center.dart';
+export 'src/event_bus.dart';
+
 export 'src/file_cache.dart';
 export 'src/image_op.dart';
 export 'src/kv.dart';
