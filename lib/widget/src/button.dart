@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'clickable.dart';
-
+/// A combination of [Container] and [GestureDetector]
+/// that provides a facade configuration for a button.
 class BadButton extends StatelessWidget {
   final double? width;
   final double height;
@@ -9,6 +9,8 @@ class BadButton extends StatelessWidget {
   final EdgeInsets? padding;
   final BoxConstraints? constraints;
   final Border? border;
+
+  /// Default to `0`.
   final double borderRadius;
   final Color? fill;
   final Widget child;
@@ -46,6 +48,10 @@ class BadButton extends StatelessWidget {
       child: child,
     );
 
-    return BadClickable(onClick: onPressed, child: inner);
+    return GestureDetector(
+      onTap: onPressed,
+      behavior: HitTestBehavior.opaque,
+      child: inner,
+    );
   }
 }
