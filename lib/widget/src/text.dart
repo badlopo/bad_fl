@@ -1,29 +1,25 @@
 import 'package:flutter/material.dart';
 
+/// A wrapper around [Text] and [SelectableText]
+/// that provides a facade configuration.
 class BadText extends StatelessWidget {
   final String text;
   final String? fontFamily;
 
-  /// whether the text is selectable
+  /// Whether the text is selectable.
   ///
   /// - `false` for `BadText`
   /// - `true` for `BadText.selectable`
   final bool selectable;
   final Color? color;
 
-  /// font size
-  ///
   /// Default to `16`
   final double fontSize;
 
-  /// font weight
-  ///
-  /// Default to `FontWeight.w400`
+  /// Default to `FontWeight.w400`.
   final FontWeight fontWeight;
 
-  /// line height
-  ///
-  /// Default to `fontSize * 1.2`
+  /// Default to `fontSize * 1.2`.
   final double lineHeight;
 
   double get height => lineHeight / fontSize;
@@ -37,7 +33,7 @@ class BadText extends StatelessWidget {
   final TextOverflow? overflow;
   final int? maxLines;
 
-  /// If `overflow` is not specified, its default value depends on [maxLines]:
+  /// NOTE: if `overflow` is not specified, its default value depends on [maxLines]:
   ///
   /// - if [maxLines] is null, [overflow] is null
   /// - if [maxLines] is not null, [overflow] is [TextOverflow.ellipsis]
@@ -62,7 +58,7 @@ class BadText extends StatelessWidget {
         overflow =
             overflow ?? (maxLines == null ? null : TextOverflow.ellipsis);
 
-  /// If `maxLines` is specified, the text may scroll horizontally.
+  /// NOTE: if `maxLines` is specified, the text may scroll horizontally.
   const BadText.selectable(
     this.text, {
     super.key,
