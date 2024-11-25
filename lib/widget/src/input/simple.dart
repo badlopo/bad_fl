@@ -1,37 +1,38 @@
 part of 'input.dart';
 
-class BadOTPInput extends BadInput {
-  final int? maxLength;
-  final Widget suffixWidget;
+/// Simple input widget without error state.
+///
+/// Features: `Base`, `Prefix icon` (refer to [BadInput] for all features)
+class BadSimpleInput extends BadInput {
+  final TextInputType keyboardType;
 
-  const BadOTPInput({
+  const BadSimpleInput({
     super.key,
     required super.controller,
+    this.keyboardType = TextInputType.text,
     super.action,
-    this.maxLength,
     super.width,
     required super.height,
     super.border,
+    super.focusBorder,
     super.borderRadius,
     super.fill,
     super.placeholder,
-    required Widget super.prefixIcon,
-    required Widget super.errorIcon,
-    required this.suffixWidget,
+    super.prefixIcon,
+    required Widget super.clearIcon,
     super.textStyle,
-    super.errorStyle,
     super.placeholderStyle,
-    super.errorMessageStyle,
     super.onChanged,
     super.onSubmitted,
-  });
+    super.onCleared,
+  }) : assert(keyboardType != TextInputType.multiline);
 
   @override
-  State<BadOTPInput> createState() => _BadOTPInputState();
+  State<BadSimpleInput> createState() => _BadSimpleInputState();
 }
 
-class _BadOTPInputState extends State<BadOTPInput>
-    with _BadInputStateMixin<BadOTPInput> {
+class _BadSimpleInputState extends State<BadSimpleInput>
+    with _BadInputStateMixin<BadSimpleInput> {
   @override
   void initState() {
     super.initState();
@@ -46,7 +47,9 @@ class _BadOTPInputState extends State<BadOTPInput>
 
   @override
   Widget build(BuildContext context) {
-    final input = SizedBox(
+    final hasPrefix = widget.prefixIcon != null;
+
+    return SizedBox(
       width: widget.width,
       height: widget.height,
       child: CupertinoTextField(
@@ -54,24 +57,27 @@ class _BadOTPInputState extends State<BadOTPInput>
         controller: widget.controller._textEditingController,
         magnifierConfiguration: TextMagnifierConfiguration.disabled,
         enableInteractiveSelection: false,
-        keyboardType: TextInputType.number,
+        keyboardType: widget.keyboardType,
         textInputAction: widget.action,
-        maxLength: widget.maxLength,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: hasPrefix
+            ? const EdgeInsets.symmetric(horizontal: 16)
+            : const EdgeInsets.only(left: 12, right: 16),
         decoration: BoxDecoration(
           border: _border,
           borderRadius: BorderRadius.circular(widget.borderRadius),
           color: widget.fill,
         ),
-        prefix: Padding(
-          padding: const EdgeInsets.only(left: 12),
-          child: widget.prefixIcon,
-        ),
+        prefix: hasPrefix
+            ? Padding(
+                padding: const EdgeInsets.only(left: 12),
+                child: widget.prefixIcon,
+              )
+            : null,
         suffix: Padding(
           padding: const EdgeInsets.only(right: 12),
-          child: widget.suffixWidget,
+          child: BadClickable(onClick: handleClear, child: widget.clearIcon!),
         ),
-        suffixMode: OverlayVisibilityMode.always,
+        suffixMode: OverlayVisibilityMode.editing,
         placeholder: widget.placeholder,
         style: _error == null ? widget.textStyle : widget.errorStyle,
         placeholderStyle: widget.placeholderStyle,
@@ -79,24 +85,6 @@ class _BadOTPInputState extends State<BadOTPInput>
         onChanged: widget.onChanged,
         onSubmitted: widget.onSubmitted,
       ),
-    );
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        input,
-        if (_error != null)
-          Padding(
-            padding: const EdgeInsets.only(top: 4),
-            child: Row(
-              children: [
-                widget.errorIcon!,
-                const SizedBox(width: 4),
-                Expanded(child: Text(_error!, style: widget.errorMessageStyle)),
-              ],
-            ),
-          ),
-      ],
     );
   }
 }

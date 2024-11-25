@@ -1,5 +1,8 @@
 part of 'input.dart';
 
+/// Common input widget with customizable prefix icon.
+///
+/// Features: `Base`, `Prefix icon`, `Error state` (refer to [BadInput] for all features)
 class BadCommonInput extends BadInput {
   final TextInputType keyboardType;
 
@@ -11,6 +14,8 @@ class BadCommonInput extends BadInput {
     super.width,
     required super.height,
     super.border,
+    super.focusBorder,
+    super.errorBorder,
     super.borderRadius,
     super.fill,
     super.placeholder,

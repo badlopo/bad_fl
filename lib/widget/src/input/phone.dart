@@ -1,6 +1,13 @@
 part of 'input.dart';
 
+/// Phone number input widget with customizable separator.
+///
+/// Features: `Base`, `Prefix icon`, `Error state` (refer to [BadInput] for all features).
+/// Extra features: `Separator`.
 class BadPhoneInput extends BadInput {
+  /// A single character to separate phone number digits for better readability.
+  ///
+  /// Default to `' '`
   final String separator;
 
   const BadPhoneInput({
@@ -9,6 +16,9 @@ class BadPhoneInput extends BadInput {
     super.action,
     super.width,
     required super.height,
+    super.border,
+    super.focusBorder,
+    super.errorBorder,
     super.borderRadius,
     super.fill,
     super.placeholder,
@@ -31,6 +41,7 @@ class BadPhoneInput extends BadInput {
 
 class _BadPhoneInputState extends State<BadPhoneInput>
     with _BadInputStateMixin<BadPhoneInput> {
+  // OPTIMIZE: 去除格式化 (不适用于国际化手机号)
   void _reformat() {
     final text = widget.controller._textEditingController.text;
 
@@ -96,6 +107,7 @@ class _BadPhoneInputState extends State<BadPhoneInput>
         keyboardType: TextInputType.phone,
         textInputAction: widget.action,
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        // FIXME: loose the maxLength constraint for foreign phone numbers
         maxLength: 11,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(

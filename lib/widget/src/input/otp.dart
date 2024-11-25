@@ -1,27 +1,27 @@
 part of 'input.dart';
 
-class BadPasswordInput extends BadInput {
+/// OTP input widget with customizable suffix widget.
+/// TODO: refactor to cubic style
+class BadOTPInput extends BadInput {
   final int? maxLength;
-  final String obscuringCharacter;
+  final Widget suffixWidget;
 
-  final Widget visibleIcon;
-  final Widget invisibleIcon;
-
-  const BadPasswordInput({
+  const BadOTPInput({
     super.key,
     required super.controller,
     super.action,
     this.maxLength,
     super.width,
     required super.height,
+    super.border,
+    super.focusBorder,
+    super.errorBorder,
     super.borderRadius,
     super.fill,
     super.placeholder,
     required Widget super.prefixIcon,
     required Widget super.errorIcon,
-    required this.visibleIcon,
-    required this.invisibleIcon,
-    this.obscuringCharacter = '•',
+    required this.suffixWidget,
     super.textStyle,
     super.errorStyle,
     super.placeholderStyle,
@@ -31,17 +31,11 @@ class BadPasswordInput extends BadInput {
   });
 
   @override
-  State<BadPasswordInput> createState() => _BadPasswordInputState();
+  State<BadOTPInput> createState() => _BadOTPInputState();
 }
 
-class _BadPasswordInputState extends State<BadPasswordInput>
-    with _BadInputStateMixin<BadPasswordInput> {
-  bool _visible = false;
-
-  void toggleVisibility() {
-    setState(() => _visible = !_visible);
-  }
-
+class _BadOTPInputState extends State<BadOTPInput>
+    with _BadInputStateMixin<BadOTPInput> {
   @override
   void initState() {
     super.initState();
@@ -64,10 +58,8 @@ class _BadPasswordInputState extends State<BadPasswordInput>
         controller: widget.controller._textEditingController,
         magnifierConfiguration: TextMagnifierConfiguration.disabled,
         enableInteractiveSelection: false,
-        keyboardType: TextInputType.visiblePassword,
+        keyboardType: TextInputType.number,
         textInputAction: widget.action,
-        obscureText: !_visible,
-        obscuringCharacter: widget.obscuringCharacter,
         maxLength: widget.maxLength,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
@@ -81,10 +73,7 @@ class _BadPasswordInputState extends State<BadPasswordInput>
         ),
         suffix: Padding(
           padding: const EdgeInsets.only(right: 12),
-          child: BadClickable(
-            onClick: toggleVisibility,
-            child: _visible ? widget.visibleIcon : widget.invisibleIcon,
-          ),
+          child: widget.suffixWidget,
         ),
         suffixMode: OverlayVisibilityMode.always,
         placeholder: widget.placeholder,

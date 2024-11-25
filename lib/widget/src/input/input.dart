@@ -1,9 +1,11 @@
-import 'package:bad_fl/core.dart';
-import 'package:bad_fl/prefab/src/clickable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
+import '../clickable.dart';
+
 part 'common.dart';
+
+part 'intl_phone.dart';
 
 part 'otp.dart';
 
@@ -13,13 +15,47 @@ part 'phone.dart';
 
 part 'simple.dart';
 
+const Border _defaultFocusBorder =
+    Border.fromBorderSide(BorderSide(color: Color(0xFF332CF5)));
+const Border _defaultErrorBorder =
+    Border.fromBorderSide(BorderSide(color: Color(0xFFEB0555)));
+
+/// Features:
+/// - Base:
+///   - controller ([controller])
+///   - style ([width], [height], [border], [fill], [textStyle])
+///   - placeholder ([placeholder], [placeholderStyle])
+///   - action ([action])
+///   - clear button ([clearIcon])
+///   - focus highlight ([focusBorder])
+///   - interaction ([onChanged], [onSubmitted], [onCleared])
+/// - Prefix icon ([prefixIcon])
+/// - Error state ([errorStyle], [errorBorder], [errorIcon], [errorMessageStyle])
 sealed class BadInput extends StatefulWidget {
   final BadInputController controller;
   final TextInputAction action;
 
   final double? width;
   final double height;
+
+  /// The border to display when the input is not focused or in error state.
+  ///
+  /// Default to `null`
   final Border? border;
+
+  /// The border to display when the input is focused.
+  ///
+  /// Default to `Border.fromBorderSide(BorderSide(color: Color(0xFF332CF5)))`,
+  /// set to `null` to disable focus border.
+  final Border? focusBorder;
+
+  /// The border to display when the input is in error state.
+  ///
+  /// Default to `Border.fromBorderSide(BorderSide(color: Color(0xFFEB0555)))`,
+  /// set to `null` to disable error border.
+  final Border? errorBorder;
+
+  /// Default to `0.0`
   final double borderRadius;
   final Color? fill;
 
@@ -45,6 +81,8 @@ sealed class BadInput extends StatefulWidget {
     this.width,
     required this.height,
     this.border,
+    this.focusBorder = _defaultFocusBorder,
+    this.errorBorder = _defaultErrorBorder,
     this.borderRadius = 0.0,
     this.fill,
     this.prefixIcon,
@@ -76,9 +114,9 @@ mixin _BadInputStateMixin<T extends BadInput> on State<T> {
 
   Border? get _border {
     if (_error != null) {
-      return const Border.fromBorderSide(BorderSide(color: Color(0xFFEB0555)));
+      return widget.errorBorder;
     } else if (_hasFocus) {
-      return const Border.fromBorderSide(BorderSide(color: Color(0xFF332CF5)));
+      return widget.focusBorder;
     } else {
       return widget.border;
     }
@@ -118,7 +156,7 @@ class BadInputController<T extends BadInput> {
 
   /// current input content
   String get text {
-    if (!_oncelock) {
+    if (!_onceLock) {
       throw StateError(
           'Cannot get text before TextEditingController has been initialized');
     }
@@ -134,19 +172,14 @@ class BadInputController<T extends BadInput> {
   /// whether the input is in error state
   bool get hasError => _state?._error != null;
 
-  bool _oncelock = false;
+  bool _onceLock = false;
 
   BadInputController();
 
   void _attach({required _BadInputStateMixin<T> state, String? defaultText}) {
-    if (!_oncelock) {
-      BadFl.log(
-        module: 'BadInput',
-        message: 'initialize TextEditingController',
-      );
-
+    if (!_onceLock) {
       _textEditingController = TextEditingController(text: defaultText);
-      _oncelock = true;
+      _onceLock = true;
     }
 
     _state = state;
