@@ -51,4 +51,11 @@ extension IterableExt<E> on Iterable<E> {
       yield convert(entry);
     }
   }
+
+  /// Shortcut for `separate(convert: convert, separator: separator).toList()`.
+  List<To> separateToList<To>({
+    required To Function(E) convert,
+    required To separator,
+  }) =>
+      separate(convert: convert, separator: separator).toList();
 }
