@@ -2,7 +2,6 @@ export 'src/contribution_calendar/contribution_calendar.dart';
 export 'src/tree/tree.dart';
 
 export 'src/back_to_top.dart';
-export 'src/checkbox.dart';
 export 'src/expandable.dart';
 export 'src/floating.dart';
 export 'src/katex.dart';
