@@ -70,6 +70,11 @@ sealed class BadInput extends StatefulWidget {
   final TextStyle? placeholderStyle;
   final TextStyle? errorMessageStyle;
 
+  /// Callback when the input content is changed.
+  ///
+  /// Note: change value by methods below won't trigger this callback:
+  /// - [BadInputController.setText]
+  /// - clear button (use [onCleared] instead)
   final ValueChanged<String>? onChanged;
   final ValueSetter<String>? onSubmitted;
   final VoidCallback? onCleared;
