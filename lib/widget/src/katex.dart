@@ -89,10 +89,10 @@ class BadKatex extends StatefulWidget {
         assert(maxLines == null || maxLines > 0, 'Think twice!');
 
   @override
-  State<StatefulWidget> createState() => _BadKatexState();
+  State<StatefulWidget> createState() => _KatexState();
 }
 
-class _BadKatexState extends State<BadKatex> {
+class _KatexState extends State<BadKatex> {
   List<InlineSpan> spans = [];
 
   void _buildSpans() {
