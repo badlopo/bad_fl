@@ -3,6 +3,7 @@ export 'src/carousel.dart';
 export 'src/checkbox.dart';
 export 'src/clickable.dart';
 export 'src/katex.dart';
+export 'src/radio.dart';
 export 'src/input/input.dart';
 export 'src/refreshable.dart';
 export 'src/text.dart';
