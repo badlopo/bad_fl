@@ -18,7 +18,7 @@ sealed class BadCarousel extends StatefulWidget {
     this.onPageChanged,
     this.indicatorBuilder,
     required this.pages,
-  }) : assert(pages.length != 0, 'pages cannot be empty');
+  }) : assert(pages.length != 0, 'Think twice!');
 }
 
 /// Carousel with limited pages, when the user swipes out the last page, [onSwipeOut] will be called.
