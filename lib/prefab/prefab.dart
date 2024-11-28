@@ -4,7 +4,6 @@ export 'src/tree/tree.dart';
 export 'src/back_to_top.dart';
 export 'src/expandable.dart';
 export 'src/floating.dart';
-export 'src/named_stack.dart';
 export 'src/panel.dart';
 export 'src/popup.dart';
 export 'src/previewer.dart';
