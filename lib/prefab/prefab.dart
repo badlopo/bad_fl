@@ -12,6 +12,5 @@ export 'src/scroll_anchor.dart';
 export 'src/signature.dart';
 export 'src/snapshot.dart';
 export 'src/swipe_dismiss.dart';
-export 'src/switch.dart';
 export 'src/text_field.dart';
 export 'src/webview.dart';
