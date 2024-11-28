@@ -259,8 +259,8 @@ mixin SearchKitMixin<T> {
   Future<Iterable<T>?> fetcher(String target, int pageNo);
 }
 
-typedef SearchKitListWidgetBuilder<T> = Widget Function(
-    BuildContext context, ScrollController sc, List<T> result);
+typedef ListWidgetBuilder<T> = Widget Function(
+    BuildContext context, ScrollController sc, List<T> data);
 
 /// Display the corresponding widget of various states during search.
 class SearchKitWidgetBuilder<T> extends StatelessWidget {
@@ -274,7 +274,7 @@ class SearchKitWidgetBuilder<T> extends StatelessWidget {
   final Widget loadingWidget;
 
   /// Builder of the widget to display when search kit has non-empty result (in `done` / `loadingMore` state)
-  final SearchKitListWidgetBuilder<T> listWidgetBuilder;
+  final ListWidgetBuilder<T> listWidgetBuilder;
 
   const SearchKitWidgetBuilder({
     super.key,
