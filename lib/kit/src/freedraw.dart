@@ -242,7 +242,9 @@ class _FreeDrawState extends State<FreeDraw> {
           width: widget.width,
           height: widget.height,
           constraints: constraints,
-          color: widget.fill,
+          // use 'decoration' to fill the background to pass assert with 'clipBehavior'
+          decoration: BoxDecoration(color: widget.fill),
+          clipBehavior: Clip.hardEdge,
           child: Listener(
             onPointerDown: widget.controller._handlePointerDown,
             onPointerMove: widget.controller._handlePointerMove,
