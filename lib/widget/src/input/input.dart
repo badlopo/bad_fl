@@ -5,8 +5,6 @@ import '../clickable.dart';
 
 part 'common.dart';
 
-part 'intl_phone.dart';
-
 part 'otp.dart';
 
 part 'password.dart';

@@ -5,6 +5,9 @@ part of 'input.dart';
 /// Features: `Base`, `Prefix icon`, `Error state` (refer to [BadInput] for all features).
 /// Extra features: `Separator`.
 class BadPhoneInput extends BadInput {
+  /// Optional slot widget to display between prefix icon and input field.
+  final Widget? slot;
+
   /// A single character to separate phone number digits for better readability.
   ///
   /// Default to `' '`
@@ -25,6 +28,7 @@ class BadPhoneInput extends BadInput {
     required Widget super.prefixIcon,
     required Widget super.errorIcon,
     required Widget super.clearIcon,
+    this.slot,
     this.separator = ' ',
     super.textStyle,
     super.errorStyle,
@@ -41,55 +45,14 @@ class BadPhoneInput extends BadInput {
 
 class _BadPhoneInputState extends State<BadPhoneInput>
     with _BadInputStateMixin<BadPhoneInput> {
-  // OPTIMIZE: 去除格式化 (不适用于国际化手机号)
-  void _reformat() {
-    final text = widget.controller._textEditingController.text;
-
-    final formatted = text
-        .replaceAll(RegExp(r'\D'), '')
-        .split('')
-        .fold<StringBuffer>(StringBuffer(), (buffer, char) {
-      // 3-3-4 (3 digits, separator, 3 digits, separator, 4 digits)
-      if (buffer.length == 3 || buffer.length == 8) {
-        buffer.write(widget.separator);
-      }
-      buffer.write(char);
-      return buffer;
-    }).toString();
-
-    if (text != formatted) {
-      widget.controller._textEditingController.text = formatted;
-      // widget.controller._textEditingController.value = TextEditingValue(
-      //   text: formatted,
-      //   selection: TextSelection.collapsed(offset: formatted.length),
-      // );
-    }
-  }
-
-  /// recover the original text without separators
-  void _onChangeDelegate(String s) {
-    if (widget.onChanged != null) {
-      widget.onChanged!(s.replaceAll(RegExp(r'\D'), ''));
-    }
-  }
-
-  /// recover the original text without separators
-  void _onSubmitDelegate(String s) {
-    if (widget.onSubmitted != null) {
-      widget.onSubmitted!(s.replaceAll(RegExp(r'\D'), ''));
-    }
-  }
-
   @override
   void initState() {
     super.initState();
     widget.controller._attach(state: this);
-    widget.controller._textEditingController.addListener(_reformat);
   }
 
   @override
   void dispose() {
-    widget.controller._textEditingController.removeListener(_reformat);
     widget.controller._detach();
     super.dispose();
   }
@@ -107,8 +70,6 @@ class _BadPhoneInputState extends State<BadPhoneInput>
         keyboardType: TextInputType.phone,
         textInputAction: widget.action,
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-        // FIXME: loose the maxLength constraint for foreign phone numbers
-        maxLength: 11,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
           border: _border,
@@ -117,7 +78,12 @@ class _BadPhoneInputState extends State<BadPhoneInput>
         ),
         prefix: Padding(
           padding: const EdgeInsets.only(left: 12),
-          child: widget.prefixIcon,
+          child: widget.slot == null
+              ? widget.prefixIcon
+              : Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [widget.prefixIcon!, widget.slot!],
+                ),
         ),
         suffix: Padding(
           padding: const EdgeInsets.only(right: 12),
@@ -128,8 +94,8 @@ class _BadPhoneInputState extends State<BadPhoneInput>
         style: _error == null ? widget.textStyle : widget.errorStyle,
         placeholderStyle: widget.placeholderStyle,
         onTapOutside: (_) => _focusNode.unfocus(),
-        onChanged: _onChangeDelegate,
-        onSubmitted: _onSubmitDelegate,
+        onChanged: widget.onChanged,
+        onSubmitted: widget.onSubmitted,
       ),
     );
 
