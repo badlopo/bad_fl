@@ -5,7 +5,6 @@ export 'src/back_to_top.dart';
 export 'src/expandable.dart';
 export 'src/floating.dart';
 export 'src/panel.dart';
-export 'src/popup.dart';
 export 'src/previewer.dart';
 export '../widget/src/refreshable.dart';
 export 'src/scroll_anchor.dart';

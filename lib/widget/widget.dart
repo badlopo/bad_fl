@@ -5,6 +5,7 @@ export 'src/clickable.dart';
 export 'src/freedraw.dart';
 export 'src/katex.dart';
 export 'src/named_stack.dart';
+export 'src/popup.dart';
 export 'src/radio.dart';
 export 'src/input/input.dart';
 export 'src/refreshable.dart';
