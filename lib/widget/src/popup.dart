@@ -87,10 +87,10 @@ class BadPopup extends StatefulWidget {
   });
 
   @override
-  State<BadPopup> createState() => _BadPopupState();
+  State<BadPopup> createState() => _PopupState();
 }
 
-class _BadPopupState extends State<BadPopup> {
+class _PopupState extends State<BadPopup> {
   /// a [LayerLink] shared by [CompositedTransformTarget] and [CompositedTransformFollower]
   final LayerLink _link = LayerLink();
 

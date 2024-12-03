@@ -214,14 +214,14 @@ class FreeDrawController {
 }
 
 /// A canvas for free draw with undo/redo support.
-class FreeDraw extends StatefulWidget {
+class BadFreeDraw extends StatefulWidget {
   final FreeDrawController controller;
 
   final double? width;
   final double? height;
   final Color? fill;
 
-  const FreeDraw({
+  const BadFreeDraw({
     super.key,
     required this.controller,
     this.width,
@@ -230,10 +230,10 @@ class FreeDraw extends StatefulWidget {
   });
 
   @override
-  State<FreeDraw> createState() => _FreeDrawState();
+  State<BadFreeDraw> createState() => _FreeDrawState();
 }
 
-class _FreeDrawState extends State<FreeDraw> {
+class _FreeDrawState extends State<BadFreeDraw> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(

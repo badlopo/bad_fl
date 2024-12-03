@@ -165,10 +165,10 @@ class BadFloating extends StatefulWidget {
         );
 
   @override
-  State<BadFloating> createState() => _BadFloatingState();
+  State<BadFloating> createState() => _FloatingState();
 }
 
-class _BadFloatingState extends State<BadFloating> {
+class _FloatingState extends State<BadFloating> {
   late final _AdsorbArena _arena = _AdsorbArena(
     freeWidth: widget.containerSize.width - widget.floatingSize.width,
     freeHeight: widget.containerSize.height - widget.floatingSize.height,

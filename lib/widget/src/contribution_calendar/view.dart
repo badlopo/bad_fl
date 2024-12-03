@@ -116,10 +116,10 @@ class BadContributionCalendar extends StatefulWidget {
 
   @override
   State<BadContributionCalendar> createState() =>
-      _BadContributionCalendarState();
+      _ContributionCalendarState();
 }
 
-class _BadContributionCalendarState extends State<BadContributionCalendar> {
+class _ContributionCalendarState extends State<BadContributionCalendar> {
   late DateTimeRange range;
   late Map<DateTime, int?> values;
 

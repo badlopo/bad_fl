@@ -83,10 +83,10 @@ class BadExpandable extends StatefulWidget {
   });
 
   @override
-  State<BadExpandable> createState() => _BadExpandableState();
+  State<BadExpandable> createState() => _ExpandableState();
 }
 
-class _BadExpandableState extends State<BadExpandable> {
+class _ExpandableState extends State<BadExpandable> {
   late bool open;
 
   @override
