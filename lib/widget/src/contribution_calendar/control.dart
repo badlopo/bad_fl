@@ -25,14 +25,14 @@ class CalendarController {
     _state!.updateValues(others);
   }
 
-  /// get the value of a single date, `null` if unset
+  /// Get the value of a single date, `null` if unset.
   int? getValue(DateTime date) {
     assert(_state != null, 'controller is not attached to any calendar');
 
     return _state!.values[date];
   }
 
-  /// get the values of multiple dates, `null` if unset
+  /// Get the values of multiple dates, `null` if unset.
   Map<DateTime, int?> getValues(Set<DateTime> dates) {
     assert(_state != null, 'controller is not attached to any calendar');
 

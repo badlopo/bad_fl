@@ -76,41 +76,41 @@ class CalendarConfig {
   });
 }
 
-/// configuration for the layout of the calendar
+/// Configuration for the layout of the calendar
 ///
 /// Note: this is for internal use only
 class CalendarLayoutConfig {
-  /// the [CalendarConfig] passed to the [BadContributionCalendar] widget
+  /// The [CalendarConfig] passed to the [BadContributionCalendar] widget.
   final CalendarConfig rawConfig;
 
-  /// first date in the calendar
+  /// First date in the calendar.
   final DateTime dateBase;
 
-  /// number of weeks (columns) in the calendar
+  /// Number of weeks (columns) in the calendar.
   final int weeks;
 
-  /// values of the calendar
+  /// Values of the calendar.
   final Map<DateTime, int?> values;
 
-  /// offset of the paint when drawing next cell
+  /// Offset of the paint when drawing next cell.
   final double paintOffset;
 
-  /// size of the canvas
+  /// Size of the canvas.
   final Size size;
 
-  /// number of blank cells at the start of the calendar (before the first day)
+  /// Number of blank cells at the start of the calendar (before the first day).
   final int blankCells;
 
-  /// number of date cells in the calendar
+  /// Number of date cells in the calendar.
   final int dateCells;
 
-  /// minimum value in the calendar, if any
+  /// Minimum value in the calendar (if any).
   final int? minValue;
 
-  /// maximum value in the calendar, if any
+  /// Maximum value in the calendar (if any).
   final int? maxValue;
 
-  /// calculate the layout configuration for the calendar from other configurations
+  /// Calculate the layout configuration for the calendar from other configurations.
   factory CalendarLayoutConfig.calculate({
     required CalendarConfig config,
     required DateTimeRange range,
@@ -174,7 +174,7 @@ class CalendarLayoutConfig {
     required this.maxValue,
   });
 
-  /// get the date (and it's value) at the given position, return null if the position is not on a cell
+  /// Get the date (and it's value) at the given position, return null if the position is not on a cell.
   (DateTime date, int? value)? getDateAt(Offset position) {
     // check if the point is on a cell
     if (position.dx < 0 ||
