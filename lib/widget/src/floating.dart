@@ -3,41 +3,41 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-/// adsorb behavior of floating widget
-enum BadFloatingAdsorb {
-  /// adsorb to both horizontal and vertical (if equal, in order of left, right, top, bottom)
+/// Adsorb behavior of floating widget.
+enum AdsorbStrategy {
+  /// Adsorb to both horizontal and vertical (if equal, in order of left, right, top, bottom).
   both,
 
-  /// adsorb to horizontal (if equal, adsorb to left)
+  /// Adsorb to horizontal (if equal, adsorb to left).
   horizontal,
 
-  /// adsorb to vertical (if equal, adsorb to top)
+  /// Adsorb to vertical (if equal, adsorb to top).
   vertical,
 
-  /// no adsorb (keep the position as is)
+  /// No adsorb (keep the position as is).
   none,
 }
 
-/// position of floating widget
-class BadFloatingPosition {
+/// Describe the position of floating widget in two demension.
+class FloatingPosition {
   final double? left;
   final double? top;
   final double? right;
   final double? bottom;
 
-  const BadFloatingPosition.tl(double this.top, double this.left)
+  const FloatingPosition.tl(double this.top, double this.left)
       : right = null,
         bottom = null;
 
-  const BadFloatingPosition.tr(double this.top, double this.right)
+  const FloatingPosition.tr(double this.top, double this.right)
       : left = null,
         bottom = null;
 
-  const BadFloatingPosition.bl(double this.bottom, double this.left)
+  const FloatingPosition.bl(double this.bottom, double this.left)
       : top = null,
         right = null;
 
-  const BadFloatingPosition.br(double this.bottom, double this.right)
+  const FloatingPosition.br(double this.bottom, double this.right)
       : top = null,
         left = null;
 
@@ -47,7 +47,7 @@ class BadFloatingPosition {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is BadFloatingPosition &&
+    return other is FloatingPosition &&
         other.left == left &&
         other.top == top &&
         other.right == right &&
@@ -56,14 +56,15 @@ class BadFloatingPosition {
 
   @override
   String toString() {
-    return 'BadFloatingPosition(top: $top, left: $left, right: $right, bottom: $bottom)';
+    return 'FloatingPosition(top: $top, left: $left, right: $right, bottom: $bottom)';
   }
 }
 
+/// Arena for adsorb competition.
 class _AdsorbArena {
   final double freeWidth;
   final double freeHeight;
-  final BadFloatingAdsorb adsorb;
+  final AdsorbStrategy adsorb;
   final EdgeInsets adsorbInset;
 
   const _AdsorbArena({
@@ -74,33 +75,33 @@ class _AdsorbArena {
   });
 
   /// get the position of floating widget after adsorb, return null if no adsorb applied
-  BadFloatingPosition? compete(double top, double left) {
+  FloatingPosition? compete(double top, double left) {
     switch (adsorb) {
-      case BadFloatingAdsorb.none:
+      case AdsorbStrategy.none:
         return null;
-      case BadFloatingAdsorb.horizontal:
+      case AdsorbStrategy.horizontal:
         final double right = freeWidth - left;
         return left < right
-            ? BadFloatingPosition.tl(top, -adsorbInset.left)
-            : BadFloatingPosition.tl(top, freeWidth + adsorbInset.right);
-      case BadFloatingAdsorb.vertical:
+            ? FloatingPosition.tl(top, -adsorbInset.left)
+            : FloatingPosition.tl(top, freeWidth + adsorbInset.right);
+      case AdsorbStrategy.vertical:
         final double bottom = freeHeight - top;
         return top < bottom
-            ? BadFloatingPosition.tl(-adsorbInset.top, left)
-            : BadFloatingPosition.tl(freeHeight + adsorbInset.bottom, left);
-      case BadFloatingAdsorb.both:
+            ? FloatingPosition.tl(-adsorbInset.top, left)
+            : FloatingPosition.tl(freeHeight + adsorbInset.bottom, left);
+      case AdsorbStrategy.both:
         final double right = freeWidth - left;
         final double bottom = freeHeight - top;
         final double dis = min(min(left, top), min(right, bottom));
 
         if (dis == left) {
-          return BadFloatingPosition.tl(top, -adsorbInset.left);
+          return FloatingPosition.tl(top, -adsorbInset.left);
         } else if (dis == right) {
-          return BadFloatingPosition.tl(top, freeWidth + adsorbInset.right);
+          return FloatingPosition.tl(top, freeWidth + adsorbInset.right);
         } else if (dis == top) {
-          return BadFloatingPosition.tl(-adsorbInset.top, left);
+          return FloatingPosition.tl(-adsorbInset.top, left);
         } else if (dis == bottom) {
-          return BadFloatingPosition.tl(freeHeight + adsorbInset.bottom, left);
+          return FloatingPosition.tl(freeHeight + adsorbInset.bottom, left);
         }
 
         // unreachable
@@ -109,41 +110,42 @@ class _AdsorbArena {
   }
 }
 
+/// Note: this should be used within a [Stack] widget.
 class BadFloating extends StatefulWidget {
-  /// the size of container where floating widget is placed
+  /// Size of container where floating widget is placed.
   final Size containerSize;
 
-  /// the size of floating widget (the [child] will be constrained to this size)
+  /// Size of floating widget (the [child] will be constrained to this size).
   final Size floatingSize;
 
-  /// adsorb behavior
+  /// Adsorb behavior.
   ///
-  /// Default to `BadFloatingAdsorb.both`
-  final BadFloatingAdsorb adsorb;
+  /// Default to `AdsorbStrategy.both`.
+  final AdsorbStrategy adsorb;
 
-  /// the overflow distance when adsorbing to the edge
+  /// Overflow distance when adsorbing to the edge.
   ///
-  /// Note: this works when adsorb is not `BadFloatingAdsorb.none`
+  /// Note: this works when adsorb is not `AdsorbStrategy.none`
   ///
-  /// Default to `EdgeInsets.zero`
+  /// Default to `EdgeInsets.zero`.
   final EdgeInsets adsorbInset;
 
-  /// the duration of adsorb animation
+  /// Duration of adsorb animation.
   ///
-  /// Note: this works when adsorb is not `BadFloatingAdsorb.none`
+  /// Note: this works when adsorb is not `AdsorbStrategy.none`.
   ///
-  /// Default to `Duration(milliseconds: 150)`
+  /// Default to `Duration(milliseconds: 150)`.
   final Duration adsorbDuration;
 
-  /// the curve of adsorb animation
+  /// Curve of adsorb animation.
   ///
-  /// Note: this works when adsorb is not `BadFloatingAdsorb.none`
+  /// Note: this works when adsorb is not `AdsorbStrategy.none`.
   ///
-  /// Default to `Curves.easeInOut`
+  /// Default to `Curves.easeInOut`.
   final Curve adsorbCurve;
 
-  /// initial position of floating widget
-  final BadFloatingPosition initialPosition;
+  /// Initial position of floating widget.
+  final FloatingPosition initialPosition;
 
   final Widget child;
 
@@ -151,7 +153,7 @@ class BadFloating extends StatefulWidget {
     super.key,
     required this.containerSize,
     required this.floatingSize,
-    this.adsorb = BadFloatingAdsorb.both,
+    this.adsorb = AdsorbStrategy.both,
     this.adsorbInset = EdgeInsets.zero,
     this.adsorbDuration = const Duration(milliseconds: 150),
     this.adsorbCurve = Curves.easeInOut,
@@ -174,7 +176,7 @@ class _BadFloatingState extends State<BadFloating> {
     adsorbInset: widget.adsorbInset,
   );
 
-  late BadFloatingPosition _position = BadFloatingPosition.tl(
+  late FloatingPosition _position = FloatingPosition.tl(
     widget.initialPosition.top ??
         _arena.freeHeight - widget.initialPosition.bottom!,
     widget.initialPosition.left ??
@@ -187,7 +189,7 @@ class _BadFloatingState extends State<BadFloating> {
 
   void _onPanUpdate(DragUpdateDetails details) {
     setState(() {
-      _position = BadFloatingPosition.tl(
+      _position = FloatingPosition.tl(
         clampDouble(_position.top! + details.delta.dy, 0, _arena.freeHeight),
         clampDouble(_position.left! + details.delta.dx, 0, _arena.freeWidth),
       );
