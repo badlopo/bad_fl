@@ -2,6 +2,7 @@ export 'src/button.dart';
 export 'src/carousel.dart';
 export 'src/checkbox.dart';
 export 'src/clickable.dart';
+export 'src/expandable.dart';
 export 'src/floating.dart';
 export 'src/free_draw.dart';
 export 'src/katex.dart';
