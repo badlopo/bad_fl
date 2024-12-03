@@ -2,7 +2,7 @@ part of 'contribution_calendar.dart';
 
 class CalendarController {
   /// state of the calendar widget
-  _ContributionCalendarState? _state;
+  _BadContributionCalendarState? _state;
 
   void updateRange({DateTime? from, DateTime? to}) {
     assert(from != null || to != null, 'from and to cannot be both null');

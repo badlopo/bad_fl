@@ -98,14 +98,14 @@ class _CalendarPainter extends CustomPainter {
   bool shouldRepaint(covariant _CalendarPainter oldDelegate) => false;
 }
 
-class ContributionCalendar extends StatefulWidget {
+class BadContributionCalendar extends StatefulWidget {
   final CalendarController? controller;
   final CalendarConfig config;
   final DateTimeRange range;
   final Map<DateTime, int> values;
   final void Function(DateTime date, int? value)? onDateTap;
 
-  const ContributionCalendar({
+  const BadContributionCalendar({
     super.key,
     this.controller,
     this.config = const CalendarConfig(),
@@ -115,10 +115,11 @@ class ContributionCalendar extends StatefulWidget {
   });
 
   @override
-  State<ContributionCalendar> createState() => _ContributionCalendarState();
+  State<BadContributionCalendar> createState() =>
+      _BadContributionCalendarState();
 }
 
-class _ContributionCalendarState extends State<ContributionCalendar> {
+class _BadContributionCalendarState extends State<BadContributionCalendar> {
   late DateTimeRange range;
   late Map<DateTime, int?> values;
 
@@ -169,7 +170,7 @@ class _ContributionCalendarState extends State<ContributionCalendar> {
 
   /// this is more for hot reload
   @override
-  void didUpdateWidget(covariant ContributionCalendar oldWidget) {
+  void didUpdateWidget(covariant BadContributionCalendar oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     range = DateUtils.datesOnly(widget.range);
@@ -202,7 +203,12 @@ class _ContributionCalendarState extends State<ContributionCalendar> {
               height: 1,
             ),
           ),
-      ].slotted(slot: SizedBox(height: widget.config.cellGap)),
+      ]
+          .separate(
+            separator: SizedBox(height: widget.config.cellGap),
+            convert: asIs,
+          )
+          .toList(),
     );
 
     return SizedBox(

@@ -80,7 +80,7 @@ class CalendarConfig {
 ///
 /// Note: this is for internal use only
 class CalendarLayoutConfig {
-  /// the [CalendarConfig] passed to the [ContributionCalendar] widget
+  /// the [CalendarConfig] passed to the [BadContributionCalendar] widget
   final CalendarConfig rawConfig;
 
   /// first date in the calendar
