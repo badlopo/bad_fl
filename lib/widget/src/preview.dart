@@ -1,41 +1,43 @@
+import 'package:bad_fl/widget/src/clickable.dart';
 import 'package:flutter/material.dart';
 
-import 'clickable.dart';
-
-class BadPreviewer extends StatefulWidget {
-  /// the color to use as mask when previewing the widget
+/// Wrap a widget within [BadPreview] to enable previewing the widget when clicked.
+class BadPreview extends StatefulWidget {
+  /// The color to use as mask when previewing the widget.
   final Color maskColor;
 
-  /// the widget to display on the screen
-  final Widget displayWidget;
+  /// The widget to display on the screen.
+  final Widget child;
 
-  /// the widget to display as a preview, if not provided, [displayWidget] will be used
-  final Widget? previewWidget;
+  /// The widget to display as a preview, if not provided, [child] will be used.
+  final Widget? preview;
 
-  const BadPreviewer({
+  const BadPreview({
     super.key,
     this.maskColor = Colors.black,
-    required this.displayWidget,
-    this.previewWidget,
+    required this.child,
+    this.preview,
   });
 
   @override
-  State<BadPreviewer> createState() => _BadPreviewerState();
+  State<BadPreview> createState() => _PreviewState();
 }
 
-class _BadPreviewerState extends State<BadPreviewer> {
-  final tag = UniqueKey();
+class _PreviewState extends State<BadPreview> {
+  final heroTag = UniqueKey();
 
-  void handlePreview() {
+  void showPreview() {
     Navigator.push(
       context,
       PageRouteBuilder(
         opaque: false,
-        pageBuilder: (ctx, _, __) => _Preview(
-          tag: tag,
-          maskColor: widget.maskColor,
-          child: widget.previewWidget ?? widget.displayWidget,
-        ),
+        pageBuilder: (_, __, ___) {
+          return _PreviewView(
+            heroTag: heroTag,
+            maskColor: widget.maskColor,
+            child: widget.preview ?? widget.child,
+          );
+        },
       ),
     );
   }
@@ -43,28 +45,28 @@ class _BadPreviewerState extends State<BadPreviewer> {
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag: tag,
-      child: BadClickable(onClick: handlePreview, child: widget.displayWidget),
+      tag: heroTag,
+      child: BadClickable(onClick: showPreview, child: widget.child),
     );
   }
 }
 
-class _Preview extends StatefulWidget {
-  final UniqueKey tag;
+class _PreviewView extends StatefulWidget {
+  final UniqueKey heroTag;
   final Color maskColor;
   final Widget child;
 
-  const _Preview({
-    required this.tag,
+  const _PreviewView({
+    required this.heroTag,
     required this.maskColor,
     required this.child,
   });
 
   @override
-  State<_Preview> createState() => _PreviewState();
+  State<_PreviewView> createState() => _PreviewViewState();
 }
 
-class _PreviewState extends State<_Preview> {
+class _PreviewViewState extends State<_PreviewView> {
   /// scale factor to apply when double tap
   static const _sf = 1.5;
 
@@ -76,8 +78,7 @@ class _PreviewState extends State<_Preview> {
 
   final controller = TransformationController();
 
-  /// close on tap
-  void cancelPreview() {
+  void hidePreview() {
     Navigator.of(context).pop();
   }
 
@@ -155,7 +156,7 @@ class _PreviewState extends State<_Preview> {
   void _dragEnd() {
     if (_deltaY > _thresholdY || _deltaY < -_thresholdY) {
       // close preview
-      cancelPreview();
+      hidePreview();
     } else {
       // clear drag effect
       setState(() {
@@ -177,11 +178,11 @@ class _PreviewState extends State<_Preview> {
     final double shrinkX = _deltaY.abs() / 15.0;
 
     return Hero(
-      tag: widget.tag,
+      tag: widget.heroTag,
       child: Scaffold(
         backgroundColor: widget.maskColor,
         body: GestureDetector(
-          onTap: cancelPreview,
+          onTap: hidePreview,
           onDoubleTap: toggleScale,
           child: Stack(
             children: [

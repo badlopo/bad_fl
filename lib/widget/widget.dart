@@ -8,6 +8,7 @@ export 'src/free_draw.dart';
 export 'src/katex.dart';
 export 'src/named_stack.dart';
 export 'src/popup.dart';
+export 'src/preview.dart';
 export 'src/radio.dart';
 export 'src/refreshable.dart';
 export 'src/switch.dart';
