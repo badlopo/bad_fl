@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class PopupController {
   OverlayEntry? _entry;
   VoidCallback? _show;
+  ValueChanged<bool>? _onChanged;
 
   /// Rebuild the popup widget.
   void rebuild() {
@@ -27,6 +28,7 @@ class PopupController {
 
     // show the popup
     _show!();
+    _onChanged!(true);
   }
 
   /// Hide the popup widget.
@@ -42,6 +44,7 @@ class PopupController {
 
     // hide the popup
     _entry!.remove();
+    _onChanged!(false);
   }
 
   @protected
@@ -55,6 +58,8 @@ class PopupController {
   }
 }
 
+typedef PopupChildBuilder = Widget Function(BuildContext context, bool open);
+
 /// Attach a popup widget to a child widget.
 /// And use [PopupController] to control the popup widget.
 class BadPopup extends StatefulWidget {
@@ -64,7 +69,10 @@ class BadPopup extends StatefulWidget {
   final VoidCallback? onClickOut;
 
   /// Anchor widget.
-  final Widget child;
+  final Widget? child;
+
+  /// Builder function to build the popup widget based on the open state.
+  final PopupChildBuilder? builder;
 
   /// Popup widget.
   final Widget popup;
@@ -84,12 +92,25 @@ class BadPopup extends StatefulWidget {
     super.key,
     required this.controller,
     this.onClickOut,
-    required this.child,
+    required Widget this.child,
     required this.popup,
     this.offset = Offset.zero,
     this.targetAnchor = Alignment.bottomLeft,
     this.popupAnchor = Alignment.topLeft,
-  });
+  }) : builder = null;
+
+  /// Construct a [BadPopup] with a builder function,
+  /// which enables to build the anchor widget based on the open state.
+  const BadPopup.builder({
+    super.key,
+    required this.controller,
+    this.onClickOut,
+    required PopupChildBuilder this.builder,
+    required this.popup,
+    this.offset = Offset.zero,
+    this.targetAnchor = Alignment.bottomLeft,
+    this.popupAnchor = Alignment.topLeft,
+  }) : child = null;
 
   @override
   State<BadPopup> createState() => _PopupState();
@@ -100,6 +121,8 @@ class _PopupState extends State<BadPopup> {
   final LayerLink _link = LayerLink();
 
   late final OverlayEntry entry;
+
+  bool open = false;
 
   @override
   void initState() {
@@ -150,7 +173,16 @@ class _PopupState extends State<BadPopup> {
     );
 
     widget.controller._entry = entry;
-    widget.controller._show = () => Overlay.of(context).insert(entry);
+    widget.controller._show = () {
+      Overlay.of(context).insert(entry);
+    };
+    widget.controller._onChanged = (v) {
+      if (widget.builder != null) {
+        setState(() {
+          open = v;
+        });
+      }
+    };
   }
 
   @override
@@ -181,6 +213,9 @@ class _PopupState extends State<BadPopup> {
 
   @override
   Widget build(BuildContext context) {
-    return CompositedTransformTarget(link: _link, child: widget.child);
+    return CompositedTransformTarget(
+      link: _link,
+      child: widget.child ?? widget.builder!(context, open),
+    );
   }
 }
