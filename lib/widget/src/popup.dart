@@ -1,14 +1,15 @@
+import 'package:bad_fl/widget/src/clickable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class BadPopupController {
+class PopupController {
   OverlayEntry? _entry;
   VoidCallback? _show;
 
   /// Rebuild the popup widget.
   void rebuild() {
     if (_entry == null) {
-      throw StateError('BadPopupController not attached to any BadPopup');
+      throw StateError('PopupController not attached to any BadPopup');
     }
     _entry!.markNeedsBuild();
   }
@@ -18,7 +19,7 @@ class BadPopupController {
   /// This will do nothing if the popup widget is already shown.
   void show() {
     if (_entry == null) {
-      throw StateError('BadPopupController not attached to any BadPopup');
+      throw StateError('PopupController not attached to any BadPopup');
     }
 
     // ignore if already mounted
@@ -33,7 +34,7 @@ class BadPopupController {
   /// This will do nothing if the popup widget is already hidden.
   void hide() {
     if (_entry == null) {
-      throw StateError('BadPopupController not attached to any BadPopup');
+      throw StateError('PopupController not attached to any BadPopup');
     }
 
     // ignore if not mounted
@@ -55,9 +56,12 @@ class BadPopupController {
 }
 
 /// Attach a popup widget to a child widget.
-/// And use [BadPopupController] to control the popup widget.
+/// And use [PopupController] to control the popup widget.
 class BadPopup extends StatefulWidget {
-  final BadPopupController controller;
+  final PopupController controller;
+
+  /// Callback when a tap event is detected outside the popup widget.
+  final VoidCallback? onClickOut;
 
   /// Anchor widget.
   final Widget child;
@@ -79,6 +83,7 @@ class BadPopup extends StatefulWidget {
   const BadPopup({
     super.key,
     required this.controller,
+    this.onClickOut,
     required this.child,
     required this.popup,
     this.offset = Offset.zero,
@@ -101,25 +106,45 @@ class _PopupState extends State<BadPopup> {
     super.initState();
 
     entry = OverlayEntry(
-      // by default, the `OverlayEntry` is full screen,
-      // so we wrap the child with `Positioned` to avoid stretching.
-      builder: (context) {
-        return Positioned(
-          top: 0,
-          left: 0,
-          child: CompositedTransformFollower(
-            link: _link,
-            showWhenUnlinked: false,
-            offset: widget.offset,
-            targetAnchor: widget.targetAnchor,
-            followerAnchor: widget.popupAnchor,
-            // wrap the popup widget with `Material` to apply the theme,
-            // and use `MaterialType.transparency` to avoid extra effects.
-            child: Material(
-              type: MaterialType.transparency,
-              child: widget.popup,
-            ),
-          ),
+      builder: (_) {
+        // wrap the popup widget with `Material` to apply the theme,
+        // and use `MaterialType.transparency` to avoid extra effects.
+        Widget inner = Material(
+          type: MaterialType.canvas,
+          child: widget.popup,
+        );
+
+        if (widget.onClickOut != null) {
+          // wrap the popup widget with `GestureDetector` with no-op `onTap`
+          // to prevent the background widget from receiving the tap event.
+          inner = BadClickable(
+            onClick: () {
+              // no-op
+            },
+            child: inner,
+          );
+        }
+
+        return LayoutBuilder(
+          builder: (_, constraints) {
+            final outer = Container(
+              constraints: constraints,
+              child: UnconstrainedBox(
+                child: CompositedTransformFollower(
+                  link: _link,
+                  showWhenUnlinked: false,
+                  offset: widget.offset,
+                  targetAnchor: widget.targetAnchor,
+                  followerAnchor: widget.popupAnchor,
+                  child: inner,
+                ),
+              ),
+            );
+
+            if (widget.onClickOut == null) return outer;
+
+            return BadClickable(onClick: widget.onClickOut!, child: outer);
+          },
         );
       },
     );
