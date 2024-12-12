@@ -19,9 +19,11 @@ class PopupController {
   ///
   /// This will do nothing if the popup widget is already shown.
   void show() {
-    if (_entry == null) {
-      throw StateError('PopupController not attached to any BadPopup');
-    }
+    // OPTIMIZE: custom log
+    if (_entry == null) return;
+    // if (_entry == null) {
+    //   throw StateError('PopupController not attached to any BadPopup');
+    // }
 
     // ignore if already mounted
     if (_entry!.mounted) return;
@@ -35,9 +37,11 @@ class PopupController {
   ///
   /// This will do nothing if the popup widget is already hidden.
   void hide() {
-    if (_entry == null) {
-      throw StateError('PopupController not attached to any BadPopup');
-    }
+    // OPTIMIZE: custom log
+    if (_entry == null) return;
+    // if (_entry == null) {
+    //   throw StateError('PopupController not attached to any BadPopup');
+    // }
 
     // ignore if not mounted
     if (!_entry!.mounted) return;
