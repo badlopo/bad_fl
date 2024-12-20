@@ -32,6 +32,24 @@ class BadAnchoredScrollable<AnchorValue extends Object> extends StatefulWidget {
 class _AnchoredScrollableState<AnchorValue extends Object>
     extends State<BadAnchoredScrollable<AnchorValue>> {
   @override
+  void didUpdateWidget(covariant BadAnchoredScrollable<AnchorValue> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.controller != widget.controller) {
+      // clone all anchor info from old controller to the new one,
+      widget.controller._anchors.addAll(oldWidget.controller._anchors);
+      // and dispose the old controller
+      oldWidget.controller._anchors.clear();
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.controller._anchors.clear();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       key: widget.controller._key,

@@ -7,9 +7,6 @@ class ScrollAnchor<AnchorValue extends Object> extends StatefulWidget {
   /// This value SHOULD be unique among all the [ScrollAnchor] widgets in the nearest ancestor [BadAnchoredScrollable]. (Same value will override the previous one)
   final AnchorValue anchorValue;
 
-  // TODO: onShow
-  // TODO: onHide
-
   /// The widget to be anchored.
   final Widget child;
 
@@ -26,59 +23,67 @@ class ScrollAnchor<AnchorValue extends Object> extends StatefulWidget {
 
 class _ScrollAnchorState<AnchorValue extends Object>
     extends State<ScrollAnchor<AnchorValue>> {
+  /// Reference to the controller of nearest [BadAnchoredScrollable].
+  AnchoredScrollableController<AnchorValue> get _controller {
+    final controller = context
+        .findAncestorWidgetOfExactType<BadAnchoredScrollable<AnchorValue>>()
+        ?.controller;
+
+    if (controller == null) {
+      throw StateError(
+          'ScrollAnchor must be a descendant of BadAnchoredScrollable');
+    }
+
+    return controller;
+  }
+
   final _key = GlobalKey();
 
-  // FIXME: maybe remove the 'final' as the widget may move to another widget with different controller
-  // we should update it in 'didUpdateWidget'
-  late final AnchoredScrollableController<AnchorValue> _controller;
+  /// Register self to controller.
+  void _register() {
+    _controller._anchors[widget.anchorValue] = _key;
+  }
+
+  // Deregister self from controller.
+  void _deregister() {
+    _controller._anchors.remove(widget.anchorValue);
+  }
 
   @override
   void initState() {
     super.initState();
 
-    final asc = AnchoredScrollableController.of<AnchorValue>(context);
-    if (asc == null) {
-      throw StateError(
-          'ScrollAnchor must be a descendant of BadAnchoredScrollable');
-    }
-
-    // hold the reference to nearest AnchoredScrollableController
-    _controller = asc;
-
-    // register anchorValue and key
-    asc._anchors[widget.anchorValue] = _key;
+    _register();
   }
 
   @override
   void activate() {
     super.activate();
 
-    // register anchorValue and key
-    _controller._anchors[widget.anchorValue] = _key;
+    _register();
   }
 
   @override
   void deactivate() {
-    super.deactivate();
+    _deregister();
 
-    // deregister anchorValue and key
-    _controller._anchors.remove(widget.anchorValue);
+    super.deactivate();
   }
 
   @override
   void didUpdateWidget(covariant ScrollAnchor<AnchorValue> oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    // deregister old anchorValue and key
-    _controller._anchors.remove(oldWidget.anchorValue);
-    // register new anchorValue and key
-    _controller._anchors[widget.anchorValue] = _key;
+    // no-op if anchorValue keep the same
+    if (oldWidget.anchorValue == widget.anchorValue) return;
+
+    _deregister();
+    _register();
   }
 
   @override
   void dispose() {
-    // deregister anchorValue and key
-    _controller._anchors.remove(widget.anchorValue);
+    _deregister();
 
     super.dispose();
   }

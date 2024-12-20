@@ -1,16 +1,6 @@
 part of 'anchored_scrollable.dart';
 
 class AnchoredScrollableController<AnchorValue extends Object> {
-  /// Internal Use.
-  ///
-  /// Used in [ScrollAnchor] to find the nearest [AnchoredScrollableController].
-  static AnchoredScrollableController<AnchorValue>?
-      of<AnchorValue extends Object>(BuildContext context) {
-    return context
-        .findAncestorWidgetOfExactType<BadAnchoredScrollable<AnchorValue>>()
-        ?.controller;
-  }
-
   /// The scroll direction of the [BadAnchoredScrollable] widget that this controller is attached to.
   ///
   /// Configure this property here instead of in the [BadAnchoredScrollable] widget to make it easier to access.
