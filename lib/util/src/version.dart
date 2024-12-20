@@ -16,7 +16,7 @@ VersionType? _versionTypeFromString(String raw) {
   }
 }
 
-/// A version in format of `<prefix><major>.<minor>.<patch>[-<type>][.<description>]`
+/// A version in format of `[<prefix>]<major>.<minor>.<patch>[-<type>][.<description>]`
 class Version {
   /// Prefix section in version string (optional, usually 'v')
   final String? prefix;
