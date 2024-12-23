@@ -45,8 +45,8 @@ class _ScrollAnchorState<AnchorValue extends Object>
   }
 
   // Deregister self from controller.
-  void _deregister() {
-    _controller._anchors.remove(widget.anchorValue);
+  void _deregister(AnchorValue oldAnchorValue) {
+    _controller._anchors.remove(oldAnchorValue);
   }
 
   @override
@@ -65,7 +65,7 @@ class _ScrollAnchorState<AnchorValue extends Object>
 
   @override
   void deactivate() {
-    _deregister();
+    _deregister(widget.anchorValue);
 
     super.deactivate();
   }
@@ -77,13 +77,13 @@ class _ScrollAnchorState<AnchorValue extends Object>
     // no-op if anchorValue keep the same
     if (oldWidget.anchorValue == widget.anchorValue) return;
 
-    _deregister();
+    _deregister(oldWidget.anchorValue);
     _register();
   }
 
   @override
   void dispose() {
-    _deregister();
+    _deregister(widget.anchorValue);
 
     super.dispose();
   }
