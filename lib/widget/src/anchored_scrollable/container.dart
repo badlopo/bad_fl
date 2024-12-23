@@ -58,18 +58,36 @@ class _AnchoredScrollableState<AnchorValue extends Object>
       padding: widget.padding,
       physics: widget.physics,
       // wrap children in a column or row based on scrollDirection
-      child: switch (widget.controller.scrollDirection) {
-        Axis.vertical => Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: widget.children,
-          ),
-        Axis.horizontal => Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: widget.children,
-          ),
-      },
+      child: _AnchoredScrollProvider(
+        controller: widget.controller,
+        child: switch (widget.controller.scrollDirection) {
+          Axis.vertical => Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: widget.children,
+            ),
+          Axis.horizontal => Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: widget.children,
+            ),
+        },
+      ),
     );
+  }
+}
+
+class _AnchoredScrollProvider<AnchorValue extends Object>
+    extends InheritedWidget {
+  final AnchoredScrollableController<AnchorValue> controller;
+
+  const _AnchoredScrollProvider({
+    required super.child,
+    required this.controller,
+  });
+
+  @override
+  bool updateShouldNotify(covariant _AnchoredScrollProvider oldWidget) {
+    return oldWidget.controller != controller;
   }
 }

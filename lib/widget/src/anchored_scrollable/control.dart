@@ -19,6 +19,8 @@ class AnchoredScrollableController<AnchorValue extends Object> {
   /// and we will use the keys to find the offsets when we need them.
   final Map<AnchorValue, GlobalKey> _anchors = {};
 
+  List<AnchorValue> get dbgAnchors => _anchors.keys.toList();
+
   /// Get the target position of the anchor point specified by [anchorValue].
   double _getTargetPos(AnchorValue anchorValue, double offset) {
     // find reference to the anchor element
