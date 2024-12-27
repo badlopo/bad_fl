@@ -77,7 +77,7 @@ class _BadPasswordInputState extends State<BadPasswordInput>
         focusNode: _focusNode,
         controller: widget.controller._textEditingController,
         magnifierConfiguration: TextMagnifierConfiguration.disabled,
-        enableInteractiveSelection: false,
+        // enableInteractiveSelection: false,
         keyboardType: TextInputType.visiblePassword,
         textInputAction: widget.action,
         obscureText: !_visible,

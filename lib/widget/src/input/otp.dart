@@ -57,7 +57,7 @@ class _BadOTPInputState extends State<BadOTPInput>
         focusNode: _focusNode,
         controller: widget.controller._textEditingController,
         magnifierConfiguration: TextMagnifierConfiguration.disabled,
-        enableInteractiveSelection: false,
+        // enableInteractiveSelection: false,
         keyboardType: TextInputType.number,
         textInputAction: widget.action,
         maxLength: widget.maxLength,

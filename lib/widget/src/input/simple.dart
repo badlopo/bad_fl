@@ -56,7 +56,7 @@ class _BadSimpleInputState extends State<BadSimpleInput>
         focusNode: _focusNode,
         controller: widget.controller._textEditingController,
         magnifierConfiguration: TextMagnifierConfiguration.disabled,
-        enableInteractiveSelection: false,
+        // enableInteractiveSelection: false,
         keyboardType: widget.keyboardType,
         textInputAction: widget.action,
         padding: hasPrefix
