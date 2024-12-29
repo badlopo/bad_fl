@@ -18,3 +18,4 @@ export 'src/text.dart';
 export 'src/anchored_scrollable/anchored_scrollable.dart';
 export 'src/contribution_calendar/contribution_calendar.dart';
 export 'src/input/input.dart';
+export 'src/tree/tree.dart';
