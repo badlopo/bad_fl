@@ -1,3 +1,13 @@
+## 0.4.1
+
+> 2025.01.07
+
+- Still WIP.
+
+FIX:
+
+- KVStorageImpl.prelude (make it static)
+
 ## 0.4.0
 
 > 2024.12.30
