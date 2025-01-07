@@ -40,7 +40,7 @@ abstract class KVStorageImpl {
   }
 
   /// Do prelude before available.
-  Future<void> prelude(String directory, String boxName) async {
+  static Future<void> prelude(String directory, String boxName) async {
     await Hive.initFlutter(directory);
     _box = await Hive.openBox(boxName);
   }
