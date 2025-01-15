@@ -66,7 +66,7 @@ class Result<T, E> {
         _error = null;
 
   const Result.err(E error)
-      : isOk = true,
+      : isOk = false,
         _data = null,
         _error = error;
 
