@@ -22,10 +22,20 @@ class Ok<T> extends Result<T, Never> {
   final T data;
 
   const Ok(this.data);
+
+  @override
+  String toString() {
+    return data.toString();
+  }
 }
 
 class Err<E> extends Result<Never, E> {
   final E error;
 
   const Err(this.error);
+
+  @override
+  String toString() {
+    return error.toString();
+  }
 }
