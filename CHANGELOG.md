@@ -1,3 +1,13 @@
+## 0.4.3
+
+> 2025.01.15
+
+- Still WIP.
+
+REFACTOR:
+
+- Result (re-implement it due to weak inference of generics in dart)
+
 ## 0.4.2
 
 > 2025.01.15
