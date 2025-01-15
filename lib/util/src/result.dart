@@ -5,9 +5,20 @@ sealed class Result<T, E> {
   factory Result.ok(T data) => Ok<T>(data) as Result<T, E>;
 
   factory Result.err(E error) => Err<E>(error) as Result<T, E>;
+
+  bool isOk() => this is Ok<T>;
+
+  bool isErr() => this is Err<T>;
+
+  T unwrap() {
+    return switch (this) {
+      Ok<dynamic>() => (this as Ok<T>).data,
+      Err<dynamic>() => throw StateError('cannot apply unwrap on Err<$E>'),
+    };
+  }
 }
 
-class Ok<T> implements Result<T, Never> {
+class Ok<T> extends Result<T, Never> {
   final T data;
 
   const Ok(this.data);
