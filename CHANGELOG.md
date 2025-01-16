@@ -1,3 +1,11 @@
+## 0.4.4
+
+- Still WIP.
+
+FIX:
+
+- Result (incorrect 'isOk' in Result.err)
+
 ## 0.4.3
 
 > 2025.01.15
