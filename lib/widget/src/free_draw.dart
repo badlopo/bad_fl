@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -184,15 +185,20 @@ class FreeDrawController {
   VoidCallback get redoAll => _history.redoAll;
 
   /// Capture the current canvas to an image.
-  ui.Image toImage([double pixelRatio = 1]) {
+  ui.Image toImage([double? pixelRatio]) {
     final ctx = _key.currentContext;
-    if (ctx == null) {
-      throw StateError('FreeDrawController not attached to any FreeDraw.');
-    }
+    assert(ctx != null);
 
-    final RenderRepaintBoundary boundary =
-        ctx.findRenderObject() as RenderRepaintBoundary;
+    final boundary = ctx!.findRenderObject() as RenderRepaintBoundary;
+    pixelRatio ??= MediaQuery.of(ctx).devicePixelRatio;
     return boundary.toImageSync(pixelRatio: pixelRatio);
+  }
+
+  /// refer to [toImage].
+  Future<Uint8List> toImageAsPngBytes([double? pixelRatio]) async {
+    final image = toImage(pixelRatio);
+    final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
+    return bytes!.buffer.asUint8List();
   }
 
   FreeDrawController({this.strokeColor = Colors.black, this.strokeWidth = 1}) {

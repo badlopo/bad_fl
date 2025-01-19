@@ -1,4 +1,5 @@
 export 'src/button.dart';
+export 'src/capture.dart';
 export 'src/carousel.dart';
 export 'src/checkbox.dart';
 export 'src/clickable.dart';
@@ -11,7 +12,6 @@ export 'src/popup.dart';
 export 'src/preview.dart';
 export 'src/radio.dart';
 export 'src/refreshable.dart';
-export 'src/snapshot.dart';
 export 'src/switch.dart';
 export 'src/text.dart';
 
