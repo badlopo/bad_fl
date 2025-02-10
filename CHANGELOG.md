@@ -1,10 +1,25 @@
+## 0.5.0
+
+> 2025.02.10
+
+- Still WIP.
+
+ADD:
+
+- `BadNamedStack`: manage layers by name rather than index.
+- `SSERawTransformer` & `SSEEventTransformer`: `StreamTransformer` for sse stream.
+
+REFACTOR:
+
+- rename `SnapshotScope` to `BadCapture`, add `captureAsPngBytes` for more convenient use.
+
 ## 0.4.4
 
 - Still WIP.
 
 FIX:
 
-- Result (incorrect 'isOk' in Result.err)
+- Result (incorrect 'isOk' in Result.err).
 
 ## 0.4.3
 
@@ -14,7 +29,7 @@ FIX:
 
 REFACTOR:
 
-- Result (re-implement it due to weak inference of generics in dart)
+- Result (re-implement it due to weak inference of generics in dart).
 
 ## 0.4.2
 
@@ -24,7 +39,7 @@ REFACTOR:
 
 FIX:
 
-- Result
+- Result: implementation.
 
 ## 0.4.1
 
@@ -34,7 +49,7 @@ FIX:
 
 FIX:
 
-- KVStorageImpl.prelude (make it static)
+- KVStorageImpl.prelude (make it static).
 
 ## 0.4.0
 
