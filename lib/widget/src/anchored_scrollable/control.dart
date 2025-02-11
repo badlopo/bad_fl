@@ -1,5 +1,8 @@
 part of 'anchored_scrollable.dart';
 
+/// The [AnchoredScrollableController] class is a controller for
+/// the [BadAnchoredScrollable] widget, providing functionality
+/// to manage and control scrollable areas with anchor points.
 class AnchoredScrollableController<AnchorValue extends Object> {
   /// The scroll direction of the [BadAnchoredScrollable] widget that this controller is attached to.
   ///
