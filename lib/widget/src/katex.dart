@@ -77,6 +77,10 @@ class BadKatex extends StatefulWidget {
 
   final TextOverflow? overflow;
 
+  /// NOTE: if `overflow` is not specified, its default value depends on [maxLines]:
+  ///
+  /// - if [maxLines] is null, [overflow] is null
+  /// - if [maxLines] is not null, [overflow] is [TextOverflow.ellipsis]
   const BadKatex({
     super.key,
     this.leading,
@@ -84,9 +88,11 @@ class BadKatex extends StatefulWidget {
     this.style,
     this.formulaStyle,
     this.maxLines,
-    this.overflow,
+    TextOverflow? overflow,
   })  : assert(leading == null || leading.length > 0, 'Think twice!'),
-        assert(maxLines == null || maxLines > 0, 'Think twice!');
+        assert(maxLines == null || maxLines > 0, 'Think twice!'),
+        overflow =
+            overflow ?? (maxLines == null ? null : TextOverflow.ellipsis);
 
   @override
   State<StatefulWidget> createState() => _KatexState();
