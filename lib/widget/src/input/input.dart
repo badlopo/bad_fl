@@ -204,10 +204,10 @@ class BadInputController<T extends BadInput> {
 
   /// set content
   void setText(String text) {
-    // not allowed to set phone input directly
-    if (inputType == BadPhoneInput) {
-      throw UnsupportedError('Cannot set text for phone input');
-    }
+    // if inputType is BadPhoneInput, take risk yourself
+    // if (inputType == BadPhoneInput) {
+    //   throw UnsupportedError('Cannot set text for phone input');
+    // }
 
     _textEditingController.text = text;
   }
