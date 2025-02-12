@@ -1,120 +1,63 @@
-import 'package:bad_fl/widget/src/clickable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class PopupController {
-  OverlayEntry? _entry;
-  VoidCallback? _show;
-  ValueChanged<bool>? _onChanged;
+  _PopupState? _state;
 
-  /// Rebuild the popup widget.
-  void rebuild() {
-    if (_entry == null) {
-      throw StateError('PopupController not attached to any BadPopup');
-    }
-    _entry!.markNeedsBuild();
-  }
+  bool? get visible => _state?.visible;
 
-  /// Show the popup widget.
-  ///
-  /// This will do nothing if the popup widget is already shown.
   void show() {
-    // OPTIMIZE: custom log
-    if (_entry == null) return;
-    // if (_entry == null) {
-    //   throw StateError('PopupController not attached to any BadPopup');
-    // }
-
-    // ignore if already mounted
-    if (_entry!.mounted) return;
-
-    // show the popup
-    _show!();
-    _onChanged!(true);
+    assert(_state != null, 'controller is not attached to any popup');
+    _state?.show();
   }
 
-  /// Hide the popup widget.
-  ///
-  /// This will do nothing if the popup widget is already hidden.
   void hide() {
-    // OPTIMIZE: custom log
-    if (_entry == null) return;
-    // if (_entry == null) {
-    //   throw StateError('PopupController not attached to any BadPopup');
-    // }
-
-    // ignore if not mounted
-    if (!_entry!.mounted) return;
-
-    // hide the popup
-    _entry!.remove();
-    _onChanged!(false);
-  }
-
-  @protected
-  void dispose() {
-    if (_entry == null) return;
-
-    if (_entry!.mounted) _entry!.remove();
-    _entry!.dispose();
-    _entry = null;
-    _show = null;
+    assert(_state != null, 'controller is not attached to any popup');
+    _state?.hide();
   }
 }
 
-typedef PopupChildBuilder = Widget Function(BuildContext context, bool open);
+typedef PopupChildBuilder = Widget Function(BuildContext context, bool visible);
 
-/// Attach a popup widget to a child widget.
-/// And use [PopupController] to control the popup widget.
 class BadPopup extends StatefulWidget {
   final PopupController controller;
 
   /// Callback when a tap event is detected outside the popup widget.
+  ///
+  /// If set, there will be a transparent mask that prevents
+  /// items visually behind them from receiving tap event.
   final VoidCallback? onClickOut;
 
-  /// Anchor widget.
-  final Widget? child;
+  /// Whether rebuild popup widget when show.
+  final bool rebuildOnVisible;
 
-  /// Builder function to build the popup widget based on the open state.
-  final PopupChildBuilder? builder;
+  /// Builder function for child widget (with visibility of the popup-widget provided).
+  final PopupChildBuilder childBuilder;
 
-  /// Popup widget.
+  /// The popup widget.
   final Widget popup;
 
-  /// The anchor point on child widget.
-  final Alignment targetAnchor;
+  /// Origin of child widget.
+  final Alignment childOrigin;
 
-  /// The anchor point on popup widget.
-  final Alignment popupAnchor;
+  /// Origin of popup widget.
+  final Alignment popupOrigin;
 
   /// Extra offset to apply to the popup widget.
   ///
   /// Default to [Offset.zero].
-  final Offset offset;
+  final Offset popupOffset;
 
   const BadPopup({
     super.key,
     required this.controller,
+    this.rebuildOnVisible = false,
     this.onClickOut,
-    required Widget this.child,
+    required this.childBuilder,
     required this.popup,
-    this.offset = Offset.zero,
-    this.targetAnchor = Alignment.bottomLeft,
-    this.popupAnchor = Alignment.topLeft,
-  }) : builder = null;
-
-  /// Construct a [BadPopup] with a builder function,
-  /// which enables to build the anchor widget based on the open state.
-  const BadPopup.builder({
-    super.key,
-    required this.controller,
-    this.onClickOut,
-    required PopupChildBuilder this.builder,
-    required this.popup,
-    this.offset = Offset.zero,
-    this.targetAnchor = Alignment.bottomLeft,
-    this.popupAnchor = Alignment.topLeft,
-  }) : child = null;
+    this.childOrigin = Alignment.bottomLeft,
+    this.popupOrigin = Alignment.topLeft,
+    this.popupOffset = Offset.zero,
+  });
 
   @override
   State<BadPopup> createState() => _PopupState();
@@ -124,94 +67,92 @@ class _PopupState extends State<BadPopup> {
   /// a [LayerLink] shared by [CompositedTransformTarget] and [CompositedTransformFollower]
   final LayerLink _link = LayerLink();
 
-  late final OverlayEntry entry;
+  late OverlayEntry entry;
 
-  bool open = false;
+  bool get visible => entry.mounted;
+
+  void show() {
+    if (visible) return;
+
+    Overlay.of(context).insert(entry);
+    if (widget.rebuildOnVisible) entry.markNeedsBuild();
+    setState(() {});
+  }
+
+  void hide() {
+    if (!visible) return;
+
+    entry.remove();
+    setState(() {});
+  }
 
   @override
   void initState() {
     super.initState();
 
-    entry = OverlayEntry(
-      builder: (_) {
-        // wrap the popup widget with `Material` to apply the theme,
-        // and use `MaterialType.transparency` to avoid extra effects.
-        Widget inner = Material(
-          type: MaterialType.canvas,
-          child: widget.popup,
+    entry = OverlayEntry(builder: (_) {
+      final clickOutHandler = widget.onClickOut;
+
+      Widget popupWidget = Material(
+        type: MaterialType.transparency,
+        child: widget.popup,
+      );
+
+      if (clickOutHandler != null) {
+        // consume tap event on popup widget
+        popupWidget = GestureDetector(
+          onTap: () {},
+          behavior: HitTestBehavior.deferToChild,
+          child: popupWidget,
         );
-
-        if (widget.onClickOut != null) {
-          // wrap the popup widget with `GestureDetector` with no-op `onTap`
-          // to prevent the background widget from receiving the tap event.
-          inner = BadClickable(
-            onClick: () {
-              // no-op
-            },
-            child: inner,
-          );
-        }
-
-        return LayoutBuilder(
-          builder: (_, constraints) {
-            final outer = Container(
-              constraints: constraints,
-              child: UnconstrainedBox(
-                child: CompositedTransformFollower(
-                  link: _link,
-                  showWhenUnlinked: false,
-                  offset: widget.offset,
-                  targetAnchor: widget.targetAnchor,
-                  followerAnchor: widget.popupAnchor,
-                  child: inner,
-                ),
-              ),
-            );
-
-            if (widget.onClickOut == null) return outer;
-
-            return BadClickable(onClick: widget.onClickOut!, child: outer);
-          },
-        );
-      },
-    );
-
-    widget.controller._entry = entry;
-    widget.controller._show = () {
-      Overlay.of(context).insert(entry);
-    };
-    widget.controller._onChanged = (v) {
-      if (widget.builder != null) {
-        setState(() {
-          open = v;
-        });
       }
-    };
+
+      return LayoutBuilder(builder: (_, constraints) {
+        final maskWidget = UnconstrainedBox(
+          child: CompositedTransformFollower(
+            link: _link,
+            showWhenUnlinked: false,
+            targetAnchor: widget.childOrigin,
+            followerAnchor: widget.popupOrigin,
+            offset: widget.popupOffset,
+            child: ConstrainedBox(
+              constraints: BoxConstraints.loose(constraints.biggest),
+              child: popupWidget,
+            ),
+          ),
+        );
+
+        if (clickOutHandler == null) return maskWidget;
+
+        // it will prevent items visually behind them from receiving tap event
+        return GestureDetector(
+          onTap: clickOutHandler,
+          behavior: HitTestBehavior.translucent,
+          child: maskWidget,
+        );
+      });
+    });
+    widget.controller._state = this;
   }
 
   @override
   void didUpdateWidget(covariant BadPopup oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    // OPTIMIZE: (dev) sync UI issue
-    // The ui of [popup] widget is NOT very sync during
-    // development (by hot reload), usually one step behind.
-    // Here we force to rebuild the entry to fix this issue in debug mode.
-    // Not elegant, but works.
-    if (kDebugMode) {
-      // filter out the case that the popup is not mounted (unnecessary rebuild)
-      if (!entry.mounted) return;
-
-      // mark as dirty to rebuild the entry
-      Future.microtask(() {
-        entry.markNeedsBuild();
-      });
+    if (oldWidget.controller != widget.controller) {
+      // release reference to self held by detached controller
+      oldWidget.controller._state = null;
     }
+
+    // NOTE: cannot directly call 'markNeedsBuild' here (during 'build')
+    // so we schedule it in microtask.
+    Future.microtask(() => entry.markNeedsBuild());
   }
 
   @override
   void dispose() {
-    widget.controller.dispose();
+    hide();
+    widget.controller._state = null;
     super.dispose();
   }
 
@@ -219,7 +160,7 @@ class _PopupState extends State<BadPopup> {
   Widget build(BuildContext context) {
     return CompositedTransformTarget(
       link: _link,
-      child: widget.child ?? widget.builder!(context, open),
+      child: widget.childBuilder(context, true),
     );
   }
 }
