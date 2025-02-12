@@ -1,6 +1,16 @@
+## 0.5.2
+
+> 2025.02.12
+
+- Still WIP.
+
+FIX:
+
+- `BadPopup`: some typo thing.
+
 ## 0.5.1
 
-> ??.??.??
+> 2025.02.12
 
 - Still WIP.
 
