@@ -1,3 +1,13 @@
+## 0.5.3
+
+> 2025.02.12
+
+- Still WIP.
+
+FIX:
+
+- `BadInputController`: drop type check.
+
 ## 0.5.2
 
 > 2025.02.12
