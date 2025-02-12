@@ -1,3 +1,13 @@
+## 0.5.1
+
+> ??.??.??
+
+- Still WIP.
+
+REFACTOR:
+
+- `BadPopup`: re-implement this widget.
+
 ## 0.5.0
 
 > 2025.02.10
