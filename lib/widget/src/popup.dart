@@ -69,21 +69,27 @@ class _PopupState extends State<BadPopup> {
 
   late OverlayEntry entry;
 
-  bool get visible => entry.mounted;
+  // since 'entry.mounted' is not very sync (somehow like setState in React),
+  // we manage the 'visible' state ourself.
+  bool visible = false;
 
   void show() {
     if (visible) return;
 
     Overlay.of(context).insert(entry);
     if (widget.rebuildOnVisible) entry.markNeedsBuild();
-    setState(() {});
+    setState(() {
+      visible = true;
+    });
   }
 
   void hide() {
     if (!visible) return;
 
     entry.remove();
-    setState(() {});
+    setState(() {
+      visible = false;
+    });
   }
 
   @override
@@ -102,7 +108,7 @@ class _PopupState extends State<BadPopup> {
         // consume tap event on popup widget
         popupWidget = GestureDetector(
           onTap: () {},
-          behavior: HitTestBehavior.deferToChild,
+          behavior: HitTestBehavior.opaque,
           child: popupWidget,
         );
       }
@@ -127,7 +133,7 @@ class _PopupState extends State<BadPopup> {
         // it will prevent items visually behind them from receiving tap event
         return GestureDetector(
           onTap: clickOutHandler,
-          behavior: HitTestBehavior.translucent,
+          behavior: HitTestBehavior.opaque,
           child: maskWidget,
         );
       });
@@ -160,7 +166,7 @@ class _PopupState extends State<BadPopup> {
   Widget build(BuildContext context) {
     return CompositedTransformTarget(
       link: _link,
-      child: widget.childBuilder(context, true),
+      child: widget.childBuilder(context, visible),
     );
   }
 }
