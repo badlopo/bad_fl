@@ -5,11 +5,10 @@ abstract class KVStorageImpl {
   /// Hive box instance.
   static late final Box _box;
 
-  static Iterable<String> get keys => _box.keys as Iterable<String>;
+  static Iterable<String> get keys => _box.keys.cast<String>();
 
-  // TODO: test if 'as' works, or we need to use 'cast'
   static Map<String, dynamic> get entries =>
-      _box.toMap() as Map<String, dynamic>;
+      Map<String, dynamic>.from(_box.toMap());
 
   /// Get value by key.
   ///
