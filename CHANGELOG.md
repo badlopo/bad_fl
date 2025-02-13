@@ -1,3 +1,13 @@
+## 0.5.4
+
+> 2025.02.13
+
+- Still WIP.
+
+FIX:
+
+- `KVStorageImpl`: type case.
+
 ## 0.5.3
 
 > 2025.02.12
