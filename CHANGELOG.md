@@ -1,3 +1,17 @@
+## 0.7.0
+
+> 2025.02.14
+
+- Still WIP.
+
+ADD:
+
+- `BadButtonAsync`: a button automatically switch child widget according to its state (`idle` or `pending`).
+
+BREAKING CHANGE:
+
+- `BadTree`: re-implement this widget. (now state can be cached in `TreeController`)
+
 ## 0.6.0
 
 > 2025.02.14
@@ -8,7 +22,7 @@ ADD:
 
 - `KVStorageImpl`: add `clear` for clear all items in k-v storage.
 
-BREAKING CHANGES:
+BREAKING CHANGE:
 
 - `KVStorageImpl`: remove `directory` and `boxName` in `prelude`, use fixed names instead.
 - `AppMetaImpl`: split `prelude` to `prelude` and `preludeAfterAgreed`.
@@ -69,6 +83,8 @@ REFACTOR:
 - rename `SnapshotScope` to `BadCapture`, add `captureAsPngBytes` for more convenient use.
 
 ## 0.4.4
+
+> 2025.01.16
 
 - Still WIP.
 
@@ -138,7 +154,7 @@ Reorganized the entire project and renamed most of the classes (prefixed with ba
 
 ## 0.0.3
 
-BREAKING CHANGES:
+BREAKING CHANGE:
 
 - `BadWebviewFragment`:
     - renamed to `BadWebview`
