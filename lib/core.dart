@@ -5,7 +5,7 @@ class _BadFlCore {
   bool enableLog = kDebugMode;
 
   void log({required String module, required String message}) {
-    if (enableLog) developer.log('Module <$module>: $message', name: 'BadFL');
+    if (enableLog) developer.log('<$module> $message', name: 'BadFL');
   }
 }
 
