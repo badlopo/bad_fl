@@ -11,7 +11,9 @@ bool kIsExpandDefault($1, $2) => true;
 typedef NodeViewBuilder<T extends Object> = Widget Function(TreeNode<T> node);
 
 class BadTree<NodeData extends Object> extends StatefulWidget {
-  final TreeController controller;
+  final TreeController<NodeData> controller;
+
+  final EdgeInsets padding;
 
   /// The source data of tree.
   final NodeData tree;
@@ -31,6 +33,7 @@ class BadTree<NodeData extends Object> extends StatefulWidget {
   const BadTree({
     super.key,
     required this.controller,
+    this.padding = EdgeInsets.zero,
     required this.tree,
     this.isExpand = kIsExpandDefault,
     required this.childrenProvider,
@@ -200,10 +203,8 @@ class _TreeState<NodeData extends Object> extends State<BadTree<NodeData>> {
 
   @override
   Widget build(BuildContext context) {
-    // OPTIMIZE: other wrapper widget
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return ListView(
+      padding: widget.padding,
       children: [
         for (final node in _visibleNodes) widget.treeNodeViewBuilder(node),
       ],
