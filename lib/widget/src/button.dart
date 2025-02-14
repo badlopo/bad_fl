@@ -13,8 +13,8 @@ class BadButton extends StatelessWidget {
   /// Default to `0`.
   final double borderRadius;
   final Color? fill;
+  final void Function() onPressed;
   final Widget child;
-  final VoidCallback onPressed;
 
   const BadButton({
     super.key,
@@ -26,8 +26,8 @@ class BadButton extends StatelessWidget {
     this.border,
     this.borderRadius = 0,
     this.fill,
-    required this.child,
     required this.onPressed,
+    required this.child,
   });
 
   @override
@@ -50,6 +50,88 @@ class BadButton extends StatelessWidget {
 
     return GestureDetector(
       onTap: onPressed,
+      behavior: HitTestBehavior.opaque,
+      child: inner,
+    );
+  }
+}
+
+class BadButtonAsync extends StatefulWidget {
+  final double? width;
+  final double height;
+  final EdgeInsets? margin;
+  final EdgeInsets? padding;
+  final BoxConstraints? constraints;
+  final Border? border;
+
+  /// Default to `0`.
+  final double borderRadius;
+  final Color? fill;
+  final Future<void> Function() onPressed;
+
+  /// Child widget to show when `onPressed` is executing.
+  final Widget pending;
+
+  /// Child widget to show when the button in `idle` state.
+  final Widget idle;
+
+  const BadButtonAsync({
+    super.key,
+    this.width,
+    required this.height,
+    this.margin,
+    this.padding,
+    this.constraints,
+    this.border,
+    this.borderRadius = 0,
+    this.fill,
+    required this.onPressed,
+    required this.pending,
+    required this.idle,
+  });
+
+  @override
+  State<BadButtonAsync> createState() => _ButtonAsyncState();
+}
+
+class _ButtonAsyncState extends State<BadButtonAsync> {
+  BorderRadius? get borderRadius => widget.borderRadius == 0
+      ? null
+      : BorderRadius.circular(widget.borderRadius);
+
+  bool pending = false;
+
+  Future<void> onPressDelegate() async {
+    if (pending) return;
+
+    setState(() {
+      pending = true;
+    });
+    await widget.onPressed();
+    setState(() {
+      pending = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final inner = Container(
+      width: widget.width,
+      height: widget.height,
+      margin: widget.margin,
+      padding: widget.padding,
+      constraints: widget.constraints,
+      decoration: BoxDecoration(
+        borderRadius: borderRadius,
+        border: widget.border,
+        color: widget.fill,
+      ),
+      alignment: Alignment.center,
+      child: pending ? widget.pending : widget.idle,
+    );
+
+    return GestureDetector(
+      onTap: onPressDelegate,
       behavior: HitTestBehavior.opaque,
       child: inner,
     );
