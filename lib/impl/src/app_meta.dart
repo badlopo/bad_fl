@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bad_fl/core.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -16,36 +17,66 @@ abstract class AppMetaImpl {
   /// - `windows`
   static final String os = Platform.operatingSystem;
 
+  static PackageInfo? _packageInfo;
+
   /// Version. (e.g. `1.0.0`)
-  ///
-  /// Available after [prelude] is called.
-  static late final String version;
+  static String get version {
+    assert(_packageInfo != null, 'call "prelude" first');
+    return _packageInfo!.version;
+  }
 
   /// Build Number. (e.g. `1`)
-  ///
-  /// Available after [prelude] is called.
-  static late final String buildNumber;
+  static String get buildNumber {
+    assert(_packageInfo != null, 'call "prelude" first');
+    return _packageInfo!.buildNumber;
+  }
+
+  static String? _device;
 
   /// A string representing the device. (e.g. `Xiaomi/Redmi Note 7`)
-  static late final String device;
+  static String get device {
+    assert(_device != null, 'call "preludeAfterAgreed" first');
+    return _device!;
+  }
 
-  /// Do prelude before available.
-  ///
-  /// NOTE: call this after user agreement is accepted.
+  /// Initialization.
   static Future<void> prelude() async {
-    final packageInfo = await PackageInfo.fromPlatform();
-    version = packageInfo.version;
-    buildNumber = packageInfo.buildNumber;
+    if (_packageInfo != null) {
+      BadFl.log(
+        module: 'impl/AppMetaImpl',
+        message:
+            'The call to "prelude" is ignored cause package info has already been initialized',
+      );
+      return;
+    }
+    _packageInfo = await PackageInfo.fromPlatform();
+    BadFl.log(module: 'impl/AppMetaImpl', message: 'Package info initialized');
+  }
+
+  /// Initialization.
+  ///
+  /// According to privacy policy, you should call this after agreement is accepted.
+  static Future<void> preludeAfterAgreed() async {
+    if (_device != null) {
+      BadFl.log(
+        module: 'impl/AppMetaImpl',
+        message:
+            'The call to "preludeAfterAgreed" is ignored cause device info has already been initialized',
+      );
+      return;
+    }
 
     final deviceInfo = DeviceInfoPlugin();
     if (Platform.isAndroid) {
       final info = await deviceInfo.androidInfo;
-      device = '${info.brand}/${info.display}';
+      _device = '${info.brand}/${info.display}';
     } else if (Platform.isIOS) {
       final info = await deviceInfo.iosInfo;
-      device = '${info.utsname.machine}/${info.systemVersion}';
+      _device = '${info.utsname.machine}/${info.systemVersion}';
     } else {
       throw UnsupportedError('Unsupported platform: $os');
     }
+
+    BadFl.log(module: 'impl/AppMetaImpl', message: 'Device info initialized');
   }
 }
