@@ -160,6 +160,18 @@ class _TreeState<NodeData extends Object> extends State<BadTree<NodeData>> {
   }
 
   @override
+  void activate() {
+    super.activate();
+    widget.controller._state = this;
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    widget.controller._state = null;
+  }
+
+  @override
   void didUpdateWidget(covariant BadTree<NodeData> oldWidget) {
     super.didUpdateWidget(oldWidget);
 
