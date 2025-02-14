@@ -1,6 +1,6 @@
 name: bad_fl
 description: "A flutter package, including components, implementations, helper functions and extensions. Designed to provide a simple way to develop with flutter."
-version: 0.5.4
+version: 0.6.0
 # publish_to: https://pub.dev # this will cause error when publish ...
 homepage: https://github.com/badlopo/bad_fl
 repository: https://github.com/badlopo/bad_fl

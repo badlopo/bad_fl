@@ -1,3 +1,18 @@
+## 0.6.0
+
+> 2025.02.14
+
+- Still WIP.
+
+ADD:
+
+- `KVStorageImpl`: add `clear` for clear all items in k-v storage.
+
+BREAKING CHANGES:
+
+- `KVStorageImpl`: remove `directory` and `boxName` in `prelude`, use fixed names instead.
+- `AppMetaImpl`: split `prelude` to `prelude` and `preludeAfterAgreed`.
+
 ## 0.5.4
 
 > 2025.02.13
