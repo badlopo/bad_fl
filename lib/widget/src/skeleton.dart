@@ -3,19 +3,22 @@ import 'package:flutter/material.dart';
 enum ShimmerDirection { l2r, r2l, t2b, b2t }
 
 extension _ShimmerDirectionExt on ShimmerDirection {
-  Axis get axis => switch (this) {
+  Axis get axis =>
+      switch (this) {
         ShimmerDirection.l2r || ShimmerDirection.r2l => Axis.horizontal,
         ShimmerDirection.t2b || ShimmerDirection.b2t => Axis.vertical,
       };
 }
 
 extension _Ext2 on Axis {
-  AlignmentGeometry get gradientBegin => switch (this) {
+  AlignmentGeometry get gradientBegin =>
+      switch (this) {
         Axis.horizontal => Alignment.centerLeft,
         Axis.vertical => Alignment.topCenter,
       };
 
-  AlignmentGeometry get gradientEnd => switch (this) {
+  AlignmentGeometry get gradientEnd =>
+      switch (this) {
         Axis.horizontal => Alignment.centerRight,
         Axis.vertical => Alignment.bottomCenter,
       };
@@ -159,10 +162,10 @@ class _SkeletonState extends State<BadSkeleton>
               transform.translate(0.75 * w - 1.5 * w * _controller.value);
               break;
             case ShimmerDirection.t2b:
-              transform.translate(0, 1.5 * h * _controller.value - 0.75 * h);
+              transform.translate(0.0, 1.5 * h * _controller.value - 0.75 * h);
               break;
             case ShimmerDirection.b2t:
-              transform.translate(0, 0.75 * h - 1.5 * h * _controller.value);
+              transform.translate(0.0, 0.75 * h - 1.5 * h * _controller.value);
               break;
           }
 
