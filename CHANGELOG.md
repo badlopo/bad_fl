@@ -1,3 +1,13 @@
+## 0.7.1
+
+> 2025.02.20
+
+- Still WIP.
+
+ADD:
+
+- `BadButton`: add `lr` variant for two-child-row layout usage.
+
 ## 0.7.0
 
 > 2025.02.14
