@@ -1,3 +1,13 @@
+## 0.7.3
+
+> 2025.02.20
+
+- Still WIP.
+
+FIX:
+
+- `BadSkeleton`: type check with `0` and `0.0`.
+
 ## 0.7.2
 
 > 2025.02.20
@@ -30,7 +40,7 @@ ADD:
 
 BREAKING CHANGE:
 
-- `BadTree`: re-implement this widget. (now state can be cached in `TreeController`)
+- `BadTree`: re-implement this widget. (now state can be cached in `TreeController`).
 
 ## 0.6.0
 
