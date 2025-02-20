@@ -14,6 +14,7 @@ class BadButton extends StatelessWidget {
   final double borderRadius;
   final Color? fill;
   final void Function() onPressed;
+
   final Widget child;
 
   const BadButton({
@@ -29,6 +30,26 @@ class BadButton extends StatelessWidget {
     required this.onPressed,
     required this.child,
   });
+
+  /// In most case, child will be a [Row] contains two widget with a gap.
+  BadButton.lr({
+    super.key,
+    this.width,
+    required this.height,
+    this.margin,
+    this.padding,
+    this.constraints,
+    this.border,
+    this.borderRadius = 0,
+    this.fill,
+    required this.onPressed,
+    required Widget left,
+    required Widget right,
+    double gap = 0.0,
+  }) : child = Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [left, if (gap != 0) SizedBox(width: gap), right],
+        );
 
   @override
   Widget build(BuildContext context) {
