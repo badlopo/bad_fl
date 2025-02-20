@@ -11,6 +11,7 @@ export 'src/popup.dart';
 export 'src/preview.dart';
 export 'src/radio.dart';
 export 'src/refreshable.dart';
+export 'src/skeleton.dart';
 export 'src/switch.dart';
 export 'src/text.dart';
 
