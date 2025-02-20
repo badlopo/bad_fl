@@ -1,3 +1,13 @@
+## 0.7.2
+
+> 2025.02.20
+
+- Still WIP.
+
+ADD:
+
+- `BadSkeleton`: skeleton block with shimmer effect.
+
 ## 0.7.1
 
 > 2025.02.20
