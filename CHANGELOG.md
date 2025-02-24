@@ -4,6 +4,16 @@
 
 - Still WIP.
 
+BREAKING CHANGE:
+
+- `BadButton`: rename `BadButton.lr` to `BadButton.two`.
+
+## 0.7.4
+
+> 2025.02.24
+
+- Still WIP.
+
 FIX:
 
 - `BadSkeleton`: type check with `0` and `0.0`.
