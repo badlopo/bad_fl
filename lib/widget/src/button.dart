@@ -31,8 +31,8 @@ class BadButton extends StatelessWidget {
     required this.child,
   });
 
-  /// In most case, child will be a [Row] contains two widget with a gap.
-  BadButton.lr({
+  /// In most case, child will be a [Row] contains two widget with a gap. (e.g. `Prefix + Text`, `Text + Suffix`)
+  BadButton.two({
     super.key,
     this.width,
     required this.height,
@@ -47,9 +47,9 @@ class BadButton extends StatelessWidget {
     required Widget right,
     double gap = 0.0,
   }) : child = Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [left, if (gap != 0) SizedBox(width: gap), right],
-        );
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [left, if (gap != 0) SizedBox(width: gap), right],
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class BadButton extends StatelessWidget {
       constraints: constraints,
       decoration: BoxDecoration(
         borderRadius:
-            borderRadius == 0 ? null : BorderRadius.circular(borderRadius),
+        borderRadius == 0 ? null : BorderRadius.circular(borderRadius),
         border: border,
         color: fill,
       ),
@@ -116,9 +116,10 @@ class BadButtonAsync extends StatefulWidget {
 }
 
 class _ButtonAsyncState extends State<BadButtonAsync> {
-  BorderRadius? get borderRadius => widget.borderRadius == 0
-      ? null
-      : BorderRadius.circular(widget.borderRadius);
+  BorderRadius? get borderRadius =>
+      widget.borderRadius == 0
+          ? null
+          : BorderRadius.circular(widget.borderRadius);
 
   bool pending = false;
 
