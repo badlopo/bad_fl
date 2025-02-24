@@ -3,6 +3,8 @@ import 'dart:typed_data';
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:image_picker/image_picker.dart';
 
+export 'package:image_picker/image_picker.dart' show XFile;
+
 /// Image IO(pick, save) implementation.
 abstract class ImageIOImpl {
   static final ImagePicker _picker = ImagePicker();
