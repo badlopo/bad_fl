@@ -1,6 +1,17 @@
-## 0.7.3
+## 0.8.0
 
-> 2025.02.20
+> 2025.02.27
+
+- Still WIP.
+
+ADD:
+
+- `ImageIOImpl`: re-export `XFile`.
+- `BadSpinner`: a wrapper that infinitely spin its child.
+
+## 0.7.4
+
+> 2025.02.24
 
 - Still WIP.
 
@@ -8,9 +19,9 @@ BREAKING CHANGE:
 
 - `BadButton`: rename `BadButton.lr` to `BadButton.two`.
 
-## 0.7.4
+## 0.7.3
 
-> 2025.02.24
+> 2025.02.20
 
 - Still WIP.
 
