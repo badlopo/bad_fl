@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 /// that provides a facade configuration for a button.
 class BadButton extends StatelessWidget {
   final double? width;
-  final double height;
+  final double? height;
   final EdgeInsets? margin;
   final EdgeInsets? padding;
   final BoxConstraints? constraints;
@@ -20,7 +20,7 @@ class BadButton extends StatelessWidget {
   const BadButton({
     super.key,
     this.width,
-    required this.height,
+    this.height,
     this.margin,
     this.padding,
     this.constraints,
@@ -35,7 +35,7 @@ class BadButton extends StatelessWidget {
   BadButton.two({
     super.key,
     this.width,
-    required this.height,
+    this.height,
     this.margin,
     this.padding,
     this.constraints,
@@ -47,9 +47,9 @@ class BadButton extends StatelessWidget {
     required Widget right,
     double gap = 0.0,
   }) : child = Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [left, if (gap != 0) SizedBox(width: gap), right],
-  );
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [left, if (gap != 0) SizedBox(width: gap), right],
+        );
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class BadButton extends StatelessWidget {
       constraints: constraints,
       decoration: BoxDecoration(
         borderRadius:
-        borderRadius == 0 ? null : BorderRadius.circular(borderRadius),
+            borderRadius == 0 ? null : BorderRadius.circular(borderRadius),
         border: border,
         color: fill,
       ),
@@ -116,10 +116,9 @@ class BadButtonAsync extends StatefulWidget {
 }
 
 class _ButtonAsyncState extends State<BadButtonAsync> {
-  BorderRadius? get borderRadius =>
-      widget.borderRadius == 0
-          ? null
-          : BorderRadius.circular(widget.borderRadius);
+  BorderRadius? get borderRadius => widget.borderRadius == 0
+      ? null
+      : BorderRadius.circular(widget.borderRadius);
 
   bool pending = false;
 
