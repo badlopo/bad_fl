@@ -1,3 +1,17 @@
+## 0.8.1
+
+> 2025.03.02
+
+- Still WIP.
+
+ADD:
+
+- `SetExt`: `toggle`.
+
+FIX:
+
+- `BadButton`: remove unnecessary `required` for `height`.
+
 ## 0.8.0
 
 > 2025.02.27
