@@ -1,3 +1,13 @@
+## 0.8.2
+
+> 2025.03.03
+
+- Still WIP.
+
+FEAT:
+
+- `BadButton`: add the `centered` property to determine whether `alignment: Alignment.center` is needed.
+
 ## 0.8.1
 
 > 2025.03.02
