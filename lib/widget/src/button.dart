@@ -40,6 +40,7 @@ class BadButton extends StatelessWidget {
   BadButton.two({
     super.key,
     this.centered = true,
+    bool tight = true,
     this.width,
     this.height,
     this.margin,
@@ -53,6 +54,7 @@ class BadButton extends StatelessWidget {
     required Widget right,
     double gap = 0.0,
   }) : child = Row(
+          mainAxisSize: tight ? MainAxisSize.min : MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [left, if (gap != 0) SizedBox(width: gap), right],
         );
