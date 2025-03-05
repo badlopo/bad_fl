@@ -9,6 +9,7 @@ class BadCommonInput extends BadInput {
   const BadCommonInput({
     super.key,
     required super.controller,
+    super.enabled = true,
     this.keyboardType = TextInputType.text,
     super.action,
     super.width,
@@ -59,6 +60,7 @@ class _BadCommonInputState extends State<BadCommonInput>
       child: CupertinoTextField(
         focusNode: _focusNode,
         controller: widget.controller._textEditingController,
+        enabled: widget.enabled,
         magnifierConfiguration: TextMagnifierConfiguration.disabled,
         // enableInteractiveSelection: false,
         keyboardType: widget.keyboardType,

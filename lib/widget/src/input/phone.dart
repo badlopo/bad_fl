@@ -16,6 +16,7 @@ class BadPhoneInput extends BadInput {
   const BadPhoneInput({
     super.key,
     required super.controller,
+    super.enabled = true,
     super.action,
     super.width,
     required super.height,

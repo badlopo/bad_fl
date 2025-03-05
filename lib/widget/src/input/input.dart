@@ -31,6 +31,7 @@ const Border _defaultErrorBorder =
 /// - Error state ([errorStyle], [errorBorder], [errorIcon], [errorMessageStyle])
 sealed class BadInput extends StatefulWidget {
   final BadInputController controller;
+  final bool enabled;
   final TextInputAction action;
 
   final double? width;
@@ -80,6 +81,7 @@ sealed class BadInput extends StatefulWidget {
   const BadInput({
     super.key,
     required this.controller,
+    required this.enabled,
     this.action = TextInputAction.done,
     this.width,
     required this.height,

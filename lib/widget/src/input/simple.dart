@@ -9,6 +9,7 @@ class BadSimpleInput extends BadInput {
   const BadSimpleInput({
     super.key,
     required super.controller,
+    super.enabled = true,
     this.keyboardType = TextInputType.text,
     super.action,
     super.width,

@@ -9,6 +9,7 @@ class BadOTPInput extends BadInput {
   const BadOTPInput({
     super.key,
     required super.controller,
+    super.enabled = true,
     super.action,
     this.maxLength,
     super.width,

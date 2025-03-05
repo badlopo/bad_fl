@@ -21,6 +21,7 @@ class BadPasswordInput extends BadInput {
   const BadPasswordInput({
     super.key,
     required super.controller,
+    super.enabled = true,
     super.action,
     this.maxLength,
     super.width,
