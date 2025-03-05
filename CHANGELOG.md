@@ -1,3 +1,13 @@
+## 0.8.4
+
+> 2025.03.05
+
+- Still WIP.
+
+FEAT:
+
+- `BadInputXXX`: add `enabled` field.
+
 ## 0.8.3
 
 > 2025.03.04
