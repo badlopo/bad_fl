@@ -1,3 +1,13 @@
+## 0.8.5
+
+> 2025.03.12
+
+- Still WIP.
+
+FEAT:
+
+- `IterableExt.separate`: add `groupSize` for grouping.
+
 ## 0.8.4
 
 > 2025.03.05
