@@ -23,7 +23,7 @@ extension IterableExt<E> on Iterable<E> {
   }
 
   /// Apply [convert] to each item and insert the [separator] between
-  /// the two items (not including the beginning and the end).
+  /// each `<groupSize>` items (not including the beginning and the end).
   ///
   /// Returns a new [Iterable] (not lazy) with the converted items and separators.
   ///
@@ -40,22 +40,31 @@ extension IterableExt<E> on Iterable<E> {
   Iterable<To> separate<To>({
     required To Function(E) convert,
     required To separator,
+    int groupSize = 1,
   }) sync* {
-    bool skip = true;
+    assert(groupSize > 0);
+
+    int counter = 0;
     for (final E entry in this) {
-      if (skip) {
-        skip = false;
-      } else {
+      if (counter == groupSize) {
+        counter = 0;
         yield separator;
       }
+
+      counter += 1;
       yield convert(entry);
     }
   }
 
-  /// Shortcut for `separate(convert: convert, separator: separator).toList()`.
+  /// Shortcut for `separate(..).toList()`.
   List<To> separateToList<To>({
     required To Function(E) convert,
     required To separator,
+    int groupSize = 1,
   }) =>
-      separate(convert: convert, separator: separator).toList();
+      separate(
+        convert: convert,
+        separator: separator,
+        groupSize: groupSize,
+      ).toList();
 }
