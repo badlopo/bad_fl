@@ -1,3 +1,13 @@
+## 0.9.1
+
+> 2025.03.21
+
+- Still WIP.
+
+FIX:
+
+- `SearchKitMixin`: state machine transform error (from `Loading` to `Idle`)
+
 ## 0.9.0
 
 > 2025.03.21
