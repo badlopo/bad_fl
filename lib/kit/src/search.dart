@@ -126,6 +126,14 @@ class SearchKitState<T> extends ChangeNotifier
   }
 }
 
+enum EndStrategy {
+  /// result of `fetcher` is empty
+  empty,
+
+  /// result of `fetcher` is less than `pageSize`
+  notEnough
+}
+
 /// Search kit provide a encapsulation of search behaviors,
 /// includes search, next page, reload, clear.
 ///
@@ -159,6 +167,8 @@ mixin SearchKitMixin<T> {
   final SearchKitState<T> _state = SearchKitState<T>._();
 
   SearchKitState<T> get searchKit => _state;
+
+  EndStrategy get endStrategy => EndStrategy.notEnough;
 
   /// Default to `20`.
   final int pageSize = 20;
@@ -208,10 +218,14 @@ mixin SearchKitMixin<T> {
     if (items == null) {
       onFetcherFailed();
     } else {
-      final int count = items.length;
-      if (count < pageSize) _state._isEnd = true;
+      final bool isEnd = switch (endStrategy) {
+        EndStrategy.empty => items.isEmpty,
+        EndStrategy.notEnough => items.length < pageSize,
+      };
 
-      if (count == 0) {
+      if (isEnd) _state._isEnd = true;
+
+      if (items.isEmpty) {
         onNoMoreData();
       } else {
         _state._pageNo += 1;
