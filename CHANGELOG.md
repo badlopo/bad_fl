@@ -1,3 +1,13 @@
+## 0.9.0
+
+> 2025.03.21
+
+- Still WIP.
+
+FEAT:
+
+- `SearchKitMixin`: add `EndStrategy` to enable different `END` checker.
+
 ## 0.8.5
 
 > 2025.03.12
