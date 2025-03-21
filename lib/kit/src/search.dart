@@ -66,7 +66,7 @@ class SearchKitState<T> extends ChangeNotifier
   @protected
   void done(Iterable<T>? items) {
     if (_state is _Loading<T>) {
-      if (items?.isNotEmpty == true) {
+      if (items?.isNotEmpty != true) {
         _state = _Idle();
       } else {
         _state = _Done(items!.toList());
