@@ -3,27 +3,21 @@ import 'package:flutter/material.dart';
 /// A combination of [Container] and [GestureDetector]
 /// that provides a facade configuration for a button.
 class BadButton extends StatelessWidget {
-  /// Whether `alignment: Alignment.center` is set.
-  ///
-  /// Default to `true`.
-  final bool centered;
   final double? width;
   final double? height;
   final EdgeInsets? margin;
   final EdgeInsets? padding;
   final BoxConstraints? constraints;
   final Border? border;
-
-  /// Default to `0`.
   final double borderRadius;
   final Color? fill;
+  final Alignment? alignment;
   final void Function() onPressed;
 
   final Widget child;
 
   const BadButton({
     super.key,
-    this.centered = true,
     this.width,
     this.height,
     this.margin,
@@ -32,6 +26,7 @@ class BadButton extends StatelessWidget {
     this.border,
     this.borderRadius = 0,
     this.fill,
+    this.alignment = Alignment.center,
     required this.onPressed,
     required this.child,
   });
@@ -39,8 +34,6 @@ class BadButton extends StatelessWidget {
   /// In most case, child will be a [Row] contains two widget with a gap. (e.g. `Prefix + Text`, `Text + Suffix`)
   BadButton.two({
     super.key,
-    this.centered = true,
-    bool tight = true,
     this.width,
     this.height,
     this.margin,
@@ -49,12 +42,14 @@ class BadButton extends StatelessWidget {
     this.border,
     this.borderRadius = 0,
     this.fill,
+    this.alignment = Alignment.center,
+    MainAxisSize mainAxisSize = MainAxisSize.min,
     required this.onPressed,
     required Widget left,
     required Widget right,
     double gap = 0.0,
   }) : child = Row(
-          mainAxisSize: tight ? MainAxisSize.min : MainAxisSize.max,
+          mainAxisSize: mainAxisSize,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [left, if (gap != 0) SizedBox(width: gap), right],
         );
@@ -73,7 +68,7 @@ class BadButton extends StatelessWidget {
         border: border,
         color: fill,
       ),
-      alignment: centered ? Alignment.center : null,
+      alignment: alignment,
       child: child,
     );
 
@@ -86,20 +81,15 @@ class BadButton extends StatelessWidget {
 }
 
 class BadButtonAsync extends StatefulWidget {
-  /// Whether `alignment: Alignment.center` is set.
-  ///
-  /// Default to `true`.
-  final bool centered;
   final double? width;
   final double height;
   final EdgeInsets? margin;
   final EdgeInsets? padding;
   final BoxConstraints? constraints;
   final Border? border;
-
-  /// Default to `0`.
   final double borderRadius;
   final Color? fill;
+  final Alignment? alignment;
   final Future<void> Function() onPressed;
 
   /// Child widget to show when `onPressed` is executing.
@@ -110,7 +100,6 @@ class BadButtonAsync extends StatefulWidget {
 
   const BadButtonAsync({
     super.key,
-    this.centered = true,
     this.width,
     required this.height,
     this.margin,
@@ -119,6 +108,7 @@ class BadButtonAsync extends StatefulWidget {
     this.border,
     this.borderRadius = 0,
     this.fill,
+    this.alignment = Alignment.center,
     required this.onPressed,
     required this.pending,
     required this.idle,
@@ -160,7 +150,7 @@ class _ButtonAsyncState extends State<BadButtonAsync> {
         border: widget.border,
         color: widget.fill,
       ),
-      alignment: widget.centered ? Alignment.center : null,
+      alignment: widget.alignment,
       child: pending ? widget.pending : widget.idle,
     );
 
