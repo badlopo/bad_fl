@@ -1,3 +1,15 @@
+## 0.10.0
+
+> 2025.04.01
+
+- Still WIP.
+
+REFACTOR:
+
+- `BadButton`:
+    - replace `centered` with `alignment`.
+    - replace `tight` with `mainAxisSize`.
+
 ## 0.9.1
 
 > 2025.03.21
