@@ -1,3 +1,13 @@
+> **WARNING: THIS IS UNSTABLE UNTIL 1.x.x RELEASE**
+
+## 0.10.0
+
+> 2025.04.01
+
+ADD:
+
+- `BadSwitchAsync`: a switch update its state or do nothing according to result of task.
+
 ## 0.10.0
 
 > 2025.04.01
