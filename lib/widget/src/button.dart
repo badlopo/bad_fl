@@ -82,7 +82,7 @@ class BadButton extends StatelessWidget {
 
 class BadButtonAsync extends StatefulWidget {
   final double? width;
-  final double height;
+  final double? height;
   final EdgeInsets? margin;
   final EdgeInsets? padding;
   final BoxConstraints? constraints;
@@ -101,7 +101,7 @@ class BadButtonAsync extends StatefulWidget {
   const BadButtonAsync({
     super.key,
     this.width,
-    required this.height,
+    this.height,
     this.margin,
     this.padding,
     this.constraints,
