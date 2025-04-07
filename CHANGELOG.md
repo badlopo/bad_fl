@@ -1,12 +1,20 @@
 > **WARNING: THIS IS UNSTABLE UNTIL 1.x.x RELEASE**
 
+## 0.12.1
+
+> 2025.04.07
+
+FIX:
+
+- `BadButtonAsync`: remove unnecessary `required` for `height`.
+
 ## 0.12.0
 
 > 2025.04.07
 
 ADD:
 
-- `ScrollControllerExt`: `clampInExtent`
+- `ScrollControllerExt`: `clampInExtent`.
 
 ## 0.11.0
 
