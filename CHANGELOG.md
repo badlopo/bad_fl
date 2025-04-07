@@ -1,6 +1,14 @@
 > **WARNING: THIS IS UNSTABLE UNTIL 1.x.x RELEASE**
 
-## 0.10.0
+## 0.12.0
+
+> 2025.04.07
+
+ADD:
+
+- `ScrollControllerExt`: `clampInExtent`
+
+## 0.11.0
 
 > 2025.04.01
 
