@@ -1,5 +1,17 @@
 > **WARNING: THIS IS UNSTABLE UNTIL 1.x.x RELEASE**
 
+## 0.13.0
+
+> 2025.04.08
+
+FEAT:
+
+- `SearchKitMixin`: add `unsafeMutate` for custom mutation.
+
+REFACTOR:
+
+- `SearchKitMixin`: make `searchTarget` generic for more flexible usage.
+
 ## 0.12.1
 
 > 2025.04.07
