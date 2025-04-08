@@ -110,7 +110,6 @@ class SearchKitState<Q, T> extends ChangeNotifier
   /// Modify inner status by apply a custom `fn`.
   ///
   /// NOTE: it may break relationship of `status` and `pageNo`、`isEnd`
-  @protected
   void unsafeMutate(SearchStatus<T> Function(SearchStatus<T> status) fn) {
     _state = fn(_state);
 
