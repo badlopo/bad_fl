@@ -7,43 +7,44 @@ abstract class _WithResult<T> {
 }
 
 /// Current state of search kit.
-sealed class SearchState<T> {
-  const SearchState();
+sealed class SearchStatus<T> {
+  const SearchStatus();
 }
 
-class _Idle<T> extends SearchState<T> {
-  const _Idle();
+class SearchStatusIdle<T> extends SearchStatus<T> {
+  const SearchStatusIdle();
 }
 
-class _Loading<T> extends SearchState<T> {
-  const _Loading();
+class SearchStatusLoading<T> extends SearchStatus<T> {
+  const SearchStatusLoading();
 }
 
-class _LoadingMore<T> extends SearchState<T> implements _WithResult<T> {
+class SearchStatusLoadingMore<T> extends SearchStatus<T>
+    implements _WithResult<T> {
   @override
   final List<T> result;
 
-  const _LoadingMore(this.result);
+  const SearchStatusLoadingMore(this.result);
 }
 
-class _Done<T> extends SearchState<T> implements _WithResult<T> {
+class SearchStatusDone<T> extends SearchStatus<T> implements _WithResult<T> {
   @override
   final List<T> result;
 
-  const _Done(this.result);
+  const SearchStatusDone(this.result);
 }
 
 /// State of search kit.
-class SearchKitState<T> extends ChangeNotifier
-    implements ValueListenable<SearchState<T>> {
+class SearchKitState<Q, T> extends ChangeNotifier
+    implements ValueListenable<SearchStatus<T>> {
   /// Current state of search kit.
-  SearchState<T> _state;
+  SearchStatus<T> _state;
 
   @override
-  SearchState<T> get value => _state;
+  SearchStatus<T> get value => _state;
 
   /// private constructor
-  SearchKitState._() : _state = const _Idle();
+  SearchKitState._() : _state = const SearchStatusIdle();
 
   /// Change the state to `idle`.
   ///
@@ -52,8 +53,8 @@ class SearchKitState<T> extends ChangeNotifier
   /// DO NOT call this method directly, trigger it by performing a search action.
   @protected
   void idle() {
-    if (_state is! _Idle) {
-      _state = const _Idle();
+    if (_state is! SearchStatusIdle) {
+      _state = const SearchStatusIdle();
       notifyListeners();
     }
   }
@@ -65,15 +66,17 @@ class SearchKitState<T> extends ChangeNotifier
   /// DO NOT call this method directly, trigger it by performing a search action.
   @protected
   void done(Iterable<T>? items) {
-    if (_state is _Loading<T>) {
+    if (_state is SearchStatusLoading<T>) {
       if (items?.isNotEmpty != true) {
-        _state = _Idle();
+        _state = SearchStatusIdle();
       } else {
-        _state = _Done(items!.toList());
+        _state = SearchStatusDone(items!.toList());
       }
-    } else if (_state is _LoadingMore<T>) {
-      _state = _Done((_state as _LoadingMore<T>).result);
-      if (items?.isNotEmpty == true) (_state as _Done).result.addAll(items!);
+    } else if (_state is SearchStatusLoadingMore<T>) {
+      _state = SearchStatusDone((_state as SearchStatusLoadingMore<T>).result);
+      if (items?.isNotEmpty == true) {
+        (_state as SearchStatusDone).result.addAll(items!);
+      }
     } else {
       throw StateError('Unexpected transition');
     }
@@ -88,17 +91,28 @@ class SearchKitState<T> extends ChangeNotifier
   /// DO NOT call this method directly, trigger it by performing a search action.
   @protected
   void load(int pageNo) {
-    if (_state is _Idle<T>) {
-      _state = const _Loading();
-    } else if (_state is _Done<T>) {
+    if (_state is SearchStatusIdle<T>) {
+      _state = const SearchStatusLoading();
+    } else if (_state is SearchStatusDone<T>) {
       if (pageNo == 1) {
-        _state = const _Loading();
+        _state = const SearchStatusLoading();
       } else {
-        _state = _LoadingMore((_state as _Done<T>).result);
+        _state =
+            SearchStatusLoadingMore((_state as SearchStatusDone<T>).result);
       }
     } else {
       throw StateError('Unexpected transition');
     }
+
+    notifyListeners();
+  }
+
+  /// Modify inner status by apply a custom `fn`.
+  ///
+  /// NOTE: it may break relationship of `status` and `pageNo`、`isEnd`
+  @protected
+  void unsafeMutate(SearchStatus<T> Function(SearchStatus<T> status) fn) {
+    _state = fn(_state);
 
     notifyListeners();
   }
@@ -113,7 +127,7 @@ class SearchKitState<T> extends ChangeNotifier
   int _pageNo = 1;
 
   /// The target to search.
-  String _searchTarget = '';
+  Q? _searchTarget;
 
   bool _isEnd = false;
 
@@ -122,7 +136,7 @@ class SearchKitState<T> extends ChangeNotifier
     _pageNo = 1;
     _isEnd = false;
     if (sc.hasClients) sc.jumpTo(0);
-    if (_state is _Done) (_state as _Done).result.clear();
+    if (_state is SearchStatusDone) (_state as SearchStatusDone).result.clear();
   }
 }
 
@@ -162,11 +176,11 @@ enum EndStrategy {
 /// - `reloadPage`
 /// - `searchPage`
 /// - `clearPage`
-mixin SearchKitMixin<T> {
+mixin SearchKitMixin<Q, T> {
   /// Search kit state.
-  final SearchKitState<T> _state = SearchKitState<T>._();
+  final SearchKitState<Q, T> _state = SearchKitState<Q, T>._();
 
-  SearchKitState<T> get searchKit => _state;
+  SearchKitState<Q, T> get searchKit => _state;
 
   EndStrategy get endStrategy => EndStrategy.notEnough;
 
@@ -177,7 +191,7 @@ mixin SearchKitMixin<T> {
   int get pageNo => _state._pageNo;
 
   /// The target to search.
-  String get searchTarget => _state._searchTarget;
+  Q? get searchTarget => _state._searchTarget;
 
   /// ACTION CALLBACK: a search request is performed while search kit is in loading state (`loading` / `loadingMore`).
   ///
@@ -203,10 +217,11 @@ mixin SearchKitMixin<T> {
   /// Request the next page with current target
   @nonVirtual
   Future<void> nextPage() async {
-    if (_state._state is _Loading || _state._state is _LoadingMore) {
+    if (_state._state is SearchStatusLoading ||
+        _state._state is SearchStatusLoadingMore) {
       onReject();
       return;
-    } else if (_state._state is _Done && _state._isEnd) {
+    } else if (_state._state is SearchStatusDone && _state._isEnd) {
       onNoMoreData();
       return;
     }
@@ -245,7 +260,7 @@ mixin SearchKitMixin<T> {
 
   /// Perform a search with given target from the first page
   @nonVirtual
-  Future<void> searchPage(String searchTarget) {
+  Future<void> searchPage(Q searchTarget) {
     _state._resetState();
     _state._searchTarget = searchTarget;
     return nextPage();
@@ -254,12 +269,13 @@ mixin SearchKitMixin<T> {
   /// Reset state to initial.
   @nonVirtual
   bool clearPage() {
-    if (_state._state is _Loading || _state._state is _LoadingMore) {
+    if (_state._state is SearchStatusLoading ||
+        _state._state is SearchStatusLoadingMore) {
       onReject();
       return false;
     } else {
       _state._resetState();
-      _state._searchTarget = '';
+      _state._searchTarget = null;
       _state.idle();
       return true;
     }
@@ -270,16 +286,16 @@ mixin SearchKitMixin<T> {
   /// This SHOULD NOT throw error. (you SHOULD handle errors yourself in your implementation)
   ///
   /// Returns `Iterable<T>` on success, `null` on failure.
-  Future<Iterable<T>?> fetcher(String target, int pageNo);
+  Future<Iterable<T>?> fetcher(Q? target, int pageNo);
 }
 
 typedef ListWidgetBuilder<T> = Widget Function(
     BuildContext context, ScrollController sc, List<T> data);
 
 /// Display the corresponding widget of various states during search.
-class SearchKitWidgetBuilder<T> extends StatelessWidget {
+class SearchKitWidgetBuilder<Q, T> extends StatelessWidget {
   /// Search kit state
-  final SearchKitState<T> searchKit;
+  final SearchKitState<Q, T> searchKit;
 
   /// The widget to display when search kit is in `idle` state
   final Widget idleWidget;
@@ -300,16 +316,16 @@ class SearchKitWidgetBuilder<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<SearchState<T>>(
+    return ValueListenableBuilder<SearchStatus<T>>(
       valueListenable: searchKit,
       builder: (context, state, _) {
         switch (state) {
-          case _Idle():
+          case SearchStatusIdle():
             return idleWidget;
-          case _Loading():
+          case SearchStatusLoading():
             return loadingWidget;
-          case _LoadingMore():
-          case _Done():
+          case SearchStatusLoadingMore():
+          case SearchStatusDone():
             return listWidgetBuilder(
               context,
               searchKit.sc,
