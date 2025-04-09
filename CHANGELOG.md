@@ -1,5 +1,13 @@
 > **WARNING: THIS IS UNSTABLE UNTIL 1.x.x RELEASE**
 
+## 0.13.1
+
+> 2025.04.09
+
+FIX:
+
+- `SearchKitMixin`: remove `protected` decorator on `unsafeMutate`.
+
 ## 0.13.0
 
 > 2025.04.08
