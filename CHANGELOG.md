@@ -1,5 +1,13 @@
 > **WARNING: THIS IS UNSTABLE UNTIL 1.x.x RELEASE**
 
+## 0.13.3
+
+> 2025.05.28
+
+FIX:
+
+- `BadPopup`: log condition ...
+
 ## 0.13.2
 
 > 2025.05.28
@@ -56,8 +64,6 @@ ADD:
 
 > 2025.04.01
 
-- Still WIP.
-
 REFACTOR:
 
 - `BadButton`:
@@ -68,8 +74,6 @@ REFACTOR:
 
 > 2025.03.21
 
-- Still WIP.
-
 FIX:
 
 - `SearchKitMixin`: state machine transform error (from `Loading` to `Idle`)
@@ -77,8 +81,6 @@ FIX:
 ## 0.9.0
 
 > 2025.03.21
-
-- Still WIP.
 
 FEAT:
 
@@ -88,8 +90,6 @@ FEAT:
 
 > 2025.03.12
 
-- Still WIP.
-
 FEAT:
 
 - `IterableExt.separate`: add `groupSize` for grouping.
@@ -97,8 +97,6 @@ FEAT:
 ## 0.8.4
 
 > 2025.03.05
-
-- Still WIP.
 
 FEAT:
 
@@ -108,8 +106,6 @@ FEAT:
 
 > 2025.03.04
 
-- Still WIP.
-
 FEAT:
 
 - `BadButton`: `BadButton.two` variant can be tight.
@@ -118,8 +114,6 @@ FEAT:
 
 > 2025.03.03
 
-- Still WIP.
-
 FEAT:
 
 - `BadButton`: add the `centered` property to determine whether `alignment: Alignment.center` is needed.
@@ -127,8 +121,6 @@ FEAT:
 ## 0.8.1
 
 > 2025.03.02
-
-- Still WIP.
 
 ADD:
 
@@ -142,8 +134,6 @@ FIX:
 
 > 2025.02.27
 
-- Still WIP.
-
 ADD:
 
 - `ImageIOImpl`: re-export `XFile`.
@@ -153,8 +143,6 @@ ADD:
 
 > 2025.02.24
 
-- Still WIP.
-
 BREAKING CHANGE:
 
 - `BadButton`: rename `BadButton.lr` to `BadButton.two`.
@@ -162,8 +150,6 @@ BREAKING CHANGE:
 ## 0.7.3
 
 > 2025.02.20
-
-- Still WIP.
 
 FIX:
 
@@ -173,8 +159,6 @@ FIX:
 
 > 2025.02.20
 
-- Still WIP.
-
 ADD:
 
 - `BadSkeleton`: skeleton block with shimmer effect.
@@ -183,8 +167,6 @@ ADD:
 
 > 2025.02.20
 
-- Still WIP.
-
 ADD:
 
 - `BadButton`: add `lr` variant for two-child-row layout usage.
@@ -192,8 +174,6 @@ ADD:
 ## 0.7.0
 
 > 2025.02.14
-
-- Still WIP.
 
 ADD:
 
@@ -206,8 +186,6 @@ BREAKING CHANGE:
 ## 0.6.0
 
 > 2025.02.14
-
-- Still WIP.
 
 ADD:
 
@@ -222,8 +200,6 @@ BREAKING CHANGE:
 
 > 2025.02.13
 
-- Still WIP.
-
 FIX:
 
 - `KVStorageImpl`: type case.
@@ -231,8 +207,6 @@ FIX:
 ## 0.5.3
 
 > 2025.02.12
-
-- Still WIP.
 
 FIX:
 
@@ -242,8 +216,6 @@ FIX:
 
 > 2025.02.12
 
-- Still WIP.
-
 FIX:
 
 - `BadPopup`: some typo thing.
@@ -252,8 +224,6 @@ FIX:
 
 > 2025.02.12
 
-- Still WIP.
-
 REFACTOR:
 
 - `BadPopup`: re-implement this widget.
@@ -261,8 +231,6 @@ REFACTOR:
 ## 0.5.0
 
 > 2025.02.10
-
-- Still WIP.
 
 ADD:
 
@@ -277,8 +245,6 @@ REFACTOR:
 
 > 2025.01.16
 
-- Still WIP.
-
 FIX:
 
 - Result (incorrect 'isOk' in Result.err).
@@ -286,8 +252,6 @@ FIX:
 ## 0.4.3
 
 > 2025.01.15
-
-- Still WIP.
 
 REFACTOR:
 
@@ -297,8 +261,6 @@ REFACTOR:
 
 > 2025.01.15
 
-- Still WIP.
-
 FIX:
 
 - Result: implementation.
@@ -306,8 +268,6 @@ FIX:
 ## 0.4.1
 
 > 2025.01.07
-
-- Still WIP.
 
 FIX:
 
@@ -317,8 +277,6 @@ FIX:
 
 > 2024.12.30
 
-- Still WIP.
-
 ADD:
 
 - BadTree widget.
@@ -326,8 +284,6 @@ ADD:
 ## 0.3.0
 
 > 2024.12.23
-
-- Still WIP.
 
 ## 0.2.0
 
