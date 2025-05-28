@@ -1,3 +1,4 @@
+import 'package:bad_fl/core.dart';
 import 'package:flutter/material.dart';
 
 class PopupController {
@@ -6,12 +7,20 @@ class PopupController {
   bool? get visible => _state?.visible;
 
   void show() {
-    assert(_state != null, 'controller is not attached to any popup');
+    BadFl.log(
+      module: 'widget/BadPopup',
+      message:
+          'PopupController.show is called without any attached popup (maybe automatically disposed at this point)',
+    );
     _state?.show();
   }
 
   void hide() {
-    assert(_state != null, 'controller is not attached to any popup');
+    BadFl.log(
+      module: 'widget/BadPopup',
+      message:
+          'PopupController.hide is called without any attached popup (maybe automatically disposed at this point)',
+    );
     _state?.hide();
   }
 }
@@ -157,7 +166,13 @@ class _PopupState extends State<BadPopup> {
 
   @override
   void dispose() {
-    hide();
+    if (visible) {
+      // this assigment is for flow control in 'hide' method
+      visible = false;
+
+      // remove the overlay entry
+      entry.remove();
+    }
     widget.controller._state = null;
     super.dispose();
   }
