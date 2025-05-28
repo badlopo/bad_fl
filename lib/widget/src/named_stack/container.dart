@@ -18,8 +18,11 @@ class BadNamedStack extends StatefulWidget {
 class _NamedStackState extends State<BadNamedStack> {
   int activeIndex = 0;
 
+  /// layer name => stack index
   Map<String, int> mapping = {};
 
+  /// Set active layer to layer with given [name],
+  /// return if target layer exists.
   bool setLayer(String name) {
     final int? to = mapping[name];
     if (to == null) return false;
@@ -30,6 +33,7 @@ class _NamedStackState extends State<BadNamedStack> {
     return true;
   }
 
+  /// Regenerate mapping from layer name to stack index.
   void _rebuildMapping() {
     final newMapping = <String, int>{};
     for (final (index, layer) in widget.layers.enumerate) {
