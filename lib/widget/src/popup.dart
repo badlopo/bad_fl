@@ -7,21 +7,29 @@ class PopupController {
   bool? get visible => _state?.visible;
 
   void show() {
-    BadFl.log(
-      module: 'widget/BadPopup',
-      message:
-          'PopupController.show is called without any attached popup (maybe automatically disposed at this point)',
-    );
-    _state?.show();
+    if (_state == null) {
+      BadFl.log(
+        module: 'widget/BadPopup',
+        message:
+            'PopupController.show is called without any attached popup (maybe automatically disposed at this point)',
+      );
+      return;
+    }
+
+    _state!.show();
   }
 
   void hide() {
-    BadFl.log(
-      module: 'widget/BadPopup',
-      message:
-          'PopupController.hide is called without any attached popup (maybe automatically disposed at this point)',
-    );
-    _state?.hide();
+    if (_state == null) {
+      BadFl.log(
+        module: 'widget/BadPopup',
+        message:
+            'PopupController.hide is called without any attached popup (maybe automatically disposed at this point)',
+      );
+      return;
+    }
+
+    _state!.hide();
   }
 }
 
