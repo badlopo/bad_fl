@@ -1,5 +1,13 @@
 > **WARNING: THIS IS UNSTABLE UNTIL 1.x.x RELEASE**
 
+## 0.13.2
+
+> 2025.05.28
+
+FIX:
+
+- `BadPopup`: correct lifecycle handlers & add some log info.
+
 ## 0.13.1
 
 > 2025.04.09
