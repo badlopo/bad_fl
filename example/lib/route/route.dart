@@ -1,23 +1,41 @@
 import 'package:example/page/draft.dart';
 import 'package:example/page/home.dart';
-import 'package:example/page/widget/free_draw.dart';
-import 'package:example/page/widget/tree.dart';
-import 'package:flutter/widgets.dart';
+import 'package:example/page/widget/button.dart';
+import 'package:flutter/material.dart';
+
+part 'layout.dart';
 
 abstract class RouteNames {
-  /// draft page
-  static const String draft = '/draft';
+  /// ::home
+  static const home = '/';
 
-  /// entry point: gallery view
-  static const String home = '/';
+  /// ::draft
+  static const draft = '/draft';
 
-  static const String freeDraw = '/widget/free_draw';
-  static const String tree = '/widget/tree';
+  /// widget::button
+  static const button = '/widget/button';
 }
 
-final Map<String, WidgetBuilder> routes = {
-  RouteNames.draft: (context) => const DraftPage(),
-  RouteNames.home: (context) => const HomePage(),
-  RouteNames.freeDraw: (context) => const FreeDrawPage(),
-  RouteNames.tree: (context) => const TreePage(),
+/// display names for routes.
+final Map<String, String> routeNames = {
+  RouteNames.home: 'Home',
+  RouteNames.draft: 'Draft',
+  RouteNames.button: 'Button',
 };
+
+/// display widgets for routes.
+final Map<String, Widget> routeWidgets = {
+  RouteNames.home: const HomePage(),
+  RouteNames.draft: const DraftPage(),
+  RouteNames.button: const ButtonPage(),
+};
+
+Map<String, WidgetBuilder> _applyLayout(Map<String, Widget> routes) {
+  return {
+    for (final entry in routes.entries)
+      // entry.key: (context) => entry.value,
+      entry.key: (context) => AppLayout(child: entry.value),
+  };
+}
+
+final Map<String, WidgetBuilder> appRoutes = _applyLayout(routeWidgets);
