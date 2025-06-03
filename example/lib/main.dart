@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'BadFL Example',
+      title: 'BadFL',
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -31,9 +31,32 @@ class MyApp extends StatelessWidget {
           bodyMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           bodyLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
         ),
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android: _NoPageTransitionsBuilder(),
+            TargetPlatform.iOS: _NoPageTransitionsBuilder(),
+            TargetPlatform.macOS: _NoPageTransitionsBuilder(),
+            TargetPlatform.linux: _NoPageTransitionsBuilder(),
+            TargetPlatform.windows: _NoPageTransitionsBuilder(),
+          },
+        ),
       ),
-      initialRoute: RouteNames.home,
-      routes: routes,
+      initialRoute: '/',
+      routes: appRoutes,
     );
+  }
+}
+
+class _NoPageTransitionsBuilder extends PageTransitionsBuilder {
+  const _NoPageTransitionsBuilder();
+
+  @override
+  Widget buildTransitions<T>(
+      PageRoute<T> route,
+      BuildContext context,
+      Animation<double> animation,
+      Animation<double> secondaryAnimation,
+      Widget child) {
+    return child;
   }
 }
