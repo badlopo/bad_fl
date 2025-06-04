@@ -1,11 +1,8 @@
-import 'package:bad_fl/bad_fl.dart';
-import 'package:example/component/html_anchor.dart';
+import 'package:example/layout/app_layout.dart';
 import 'package:example/page/home.dart';
 import 'package:example/page/widget/visual/button.dart';
 import 'package:example/page/widget/visual/katex.dart';
 import 'package:flutter/material.dart';
-
-part 'layout.dart';
 
 abstract class RouteNames {
   static const home = '/';
@@ -26,7 +23,7 @@ final Map<String, Widget> _widgetRoutes = {
 Map<String, WidgetBuilder> _applyLayout(Map<String, Widget> routes) {
   return {
     for (final entry in routes.entries)
-      entry.key: (context) => _AppLayout(child: entry.value),
+      entry.key: (context) => AppLayout(child: entry.value),
   };
 }
 

@@ -1,6 +1,7 @@
 import 'package:bad_fl/bad_fl.dart';
 import 'package:example/component/codeblock.dart';
 import 'package:example/component/html_text.dart';
+import 'package:example/layout/page_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -57,39 +58,36 @@ class _KatexPageState extends State<KatexPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        padding: const EdgeInsets.all(24),
-        children: [
-          const HtmlText.h1('BadKatex'),
-          const HtmlText.h2('Live Demo'),
-          const HtmlText.p('请输入你的 Latex 表达式 (使用 \$ 或 \$\$ 包裹):'),
-          ColoredBox(
-            color: Colors.grey.shade100,
-            child: CupertinoTextField.borderless(
-              controller: controller,
-              maxLines: 5,
-              style: const TextStyle(color: Colors.black87, fontSize: 14),
-              onChanged: (s) => setState(() {
-                _string = s;
-              }),
-            ),
+    return WidgetPageLayout(
+      title: 'BadKatex',
+      children: [
+        const HtmlText.h2('Live Demo'),
+        const HtmlText.p('请输入你的 Latex 表达式 (使用 \$ 或 \$\$ 包裹):'),
+        ColoredBox(
+          color: Colors.grey.shade100,
+          child: CupertinoTextField.borderless(
+            controller: controller,
+            maxLines: 5,
+            style: const TextStyle(color: Colors.black87, fontSize: 14),
+            onChanged: (s) => setState(() {
+              _string = s;
+            }),
           ),
-          BadKatex(raw: _string),
-          const Divider(),
-          const HtmlText.h2('Showcase'),
-          ..._examples(),
-          const Divider(),
-          const HtmlText.h2('Formula Style'),
-          const HtmlText.p('段落中的公式的样式可以通过 formulaStyle 来单独设置'),
-          const CodeBlock(code: _styleExample),
-          const BadKatex(
-            raw: _styleExample,
-            style: TextStyle(color: Colors.red),
-            formulaStyle: TextStyle(color: Colors.blue),
-          ),
-        ],
-      ),
+        ),
+        BadKatex(raw: _string),
+        const Divider(),
+        const HtmlText.h2('Showcase'),
+        ..._examples(),
+        const Divider(),
+        const HtmlText.h2('Formula Style'),
+        const HtmlText.p('段落中的公式的样式可以通过 formulaStyle 来单独设置'),
+        const CodeBlock(code: _styleExample),
+        const BadKatex(
+          raw: _styleExample,
+          style: TextStyle(color: Colors.red),
+          formulaStyle: TextStyle(color: Colors.blue),
+        ),
+      ],
     );
   }
 }

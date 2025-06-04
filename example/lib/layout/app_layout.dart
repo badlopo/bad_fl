@@ -1,6 +1,11 @@
-part of 'route.dart';
-
 // >>>>> header
+
+import 'package:bad_fl/widget/transparent/clickable.dart';
+import 'package:bad_fl/widget/transparent/expansible.dart';
+import 'package:bad_fl/widget/visual/text.dart';
+import 'package:example/component/html_anchor.dart';
+import 'package:example/route/route.dart';
+import 'package:flutter/material.dart';
 
 class _AppHeader extends StatelessWidget implements PreferredSizeWidget {
   const _AppHeader();
@@ -41,9 +46,7 @@ class _AppHeader extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(56);
 }
 
-// >>>>> aside
-
-const Map<String, (String, String)> visualWidgetConfig = {
+const Map<String, (String, String)> _visualWidgetConfig = {
   RouteNames.button: ('Button', '按钮'),
   RouteNames.katex: ('Katex', '公式渲染'),
   RouteNames.shimmer: ('Shimmer', '骨架屏'),
@@ -149,7 +152,7 @@ class _AppAside extends StatelessWidget {
           },
           child: Column(
             children: [
-              for (final entry in visualWidgetConfig.entries)
+              for (final entry in _visualWidgetConfig.entries)
                 _AsideMenuItem(
                   currentRoute: current,
                   targetRoute: entry.key,
@@ -164,10 +167,10 @@ class _AppAside extends StatelessWidget {
   }
 }
 
-class _AppLayout extends StatelessWidget {
+class AppLayout extends StatelessWidget {
   final Widget child;
 
-  const _AppLayout({required this.child});
+  const AppLayout({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
