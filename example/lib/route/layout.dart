@@ -24,6 +24,14 @@ class _AppHeader extends StatelessWidget implements PreferredSizeWidget {
             },
             child: const BadText('BadFL'),
           ),
+          const Spacer(),
+          const HtmlAnchor(
+            target: 'https://github.com/badlopo/bad_fl/tree/master/example',
+            child: Tooltip(
+              message: 'Source Code',
+              child: Icon(Icons.code_outlined),
+            ),
+          ),
         ],
       ),
     );
@@ -38,6 +46,8 @@ class _AppHeader extends StatelessWidget implements PreferredSizeWidget {
 const Map<String, (String, String)> visualWidgetConfig = {
   RouteNames.button: ('Button', '按钮'),
   RouteNames.katex: ('Katex', '公式渲染'),
+  RouteNames.shimmer: ('Shimmer', '骨架屏'),
+  RouteNames.text: ('Text', '文字'),
 
   // TODO: non-exhaustive list, add more as needed
 };
@@ -169,27 +179,6 @@ class _AppLayout extends StatelessWidget {
           VerticalDivider(width: 1, thickness: 1, color: Colors.grey.shade300),
           Expanded(child: child),
         ],
-      ),
-    );
-  }
-}
-
-class _WIPPage extends StatelessWidget {
-  const _WIPPage();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text('Work in Progress'),
-      ),
-      body: const Center(
-        child: BadText(
-          'This page is under construction.',
-          fontSize: 24,
-          color: Colors.grey,
-        ),
       ),
     );
   }
