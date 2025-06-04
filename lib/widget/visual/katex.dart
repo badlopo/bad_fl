@@ -3,7 +3,9 @@ import 'package:flutter_math_fork/flutter_math.dart';
 
 /// regular expression for finding unicode directives
 const String _unicodeReg =
-    r'\${1,2}\\unicode\{\s*0?(?<isHex>x)?(?<val>[0-9a-fA-F]*)\s*\}\${1,2}';
+    r'\${1,2}\\unicode\{\s*0?(?<hexFlag>x)?(?<val>[0-9a-fA-F]*)\s*\}\${1,2}';
+
+final reg = RegExp(_unicodeReg, dotAll: true);
 
 /// the '\unicode{ xxx }' directive cannot be processed,
 /// needs to be converted into unicode characters for display.
@@ -18,29 +20,15 @@ const String _unicodeReg =
 /// - \unicode{0x41} -> A
 /// - \unicode{ x41 } -> A
 /// - \unicode{ 0x41 } -> A
-/// - \unicode{1f600} -> 😁
+/// - \unicode{x1f600} -> 😁
 String _convert(String raw) {
-  final reg = RegExp(_unicodeReg, dotAll: true);
+  return raw.replaceAllMapped(reg, (match) {
+    final bool isHex = (match as RegExpMatch).namedGroup('hexFlag') == 'x';
+    final int? charCode =
+        int.tryParse(match.namedGroup('val') ?? '', radix: isHex ? 16 : 10);
 
-  String replaced = '';
-  int p = 0;
-
-  reg.allMatches(raw).forEach((part) {
-    if (part.start > p) {
-      replaced += raw.substring(p, part.start);
-    }
-
-    bool isHex = part.namedGroup('isHex') == 'x';
-    int? v = int.tryParse(part.namedGroup('val') ?? '', radix: isHex ? 16 : 10);
-
-    if (v != null) replaced += String.fromCharCode(v);
-
-    p = part.end;
+    return charCode == null ? '' : String.fromCharCode(charCode);
   });
-
-  if (p < raw.length) replaced += raw.substring(p);
-
-  return replaced;
 }
 
 /// regular expression for finding formulas in text
@@ -108,7 +96,7 @@ class _KatexState extends State<BadKatex> {
     // if no formula is found, just return the raw text
     if (formulas.isEmpty) {
       spans = widget.leading == null
-          ? []
+          ? [TextSpan(text: raw)]
           : [...widget.leading!, TextSpan(text: raw)];
       return;
     }
