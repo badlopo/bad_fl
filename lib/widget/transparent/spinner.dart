@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// A wrapper widget that provides a spinning animation to its child.
 class BadSpinner extends StatefulWidget {
   final Duration duration;
   final Widget child;

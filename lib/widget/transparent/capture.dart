@@ -4,10 +4,10 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-class CaptureController {
+class BadCaptureController {
   final GlobalKey _key;
 
-  CaptureController({String? debugLabel})
+  BadCaptureController({String? debugLabel})
       : _key = GlobalKey(debugLabel: debugLabel);
 
   /// Capture an image of the current state of corresponding [BadCapture].
@@ -17,7 +17,7 @@ class CaptureController {
   /// Example:
   /// ```dart
   /// // create a SnapshotKit instance
-  /// final cc = CaptureController();
+  /// final cc = BadCaptureController();
   /// // don't forget to attach the controller to a BadCapture
   /// // e.g. BadCapture(controller: cc, child: Text('Hello'))
   ///
@@ -44,9 +44,9 @@ class CaptureController {
   }
 }
 
-/// A widget to wrap the child widget for snapshot capturing.
+/// Wrap any widget to capture its current state as an image.
 class BadCapture extends StatelessWidget {
-  final CaptureController controller;
+  final BadCaptureController controller;
   final Widget child;
 
   const BadCapture({super.key, required this.controller, required this.child});

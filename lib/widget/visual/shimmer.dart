@@ -2,29 +2,27 @@ import 'package:flutter/material.dart';
 
 enum ShimmerDirection { l2r, r2l, t2b, b2t }
 
-extension _ShimmerDirectionExt on ShimmerDirection {
-  Axis get axis =>
-      switch (this) {
+extension on ShimmerDirection {
+  Axis get axis => switch (this) {
         ShimmerDirection.l2r || ShimmerDirection.r2l => Axis.horizontal,
         ShimmerDirection.t2b || ShimmerDirection.b2t => Axis.vertical,
       };
 }
 
-extension _Ext2 on Axis {
-  AlignmentGeometry get gradientBegin =>
-      switch (this) {
+extension on Axis {
+  AlignmentGeometry get gradientBegin => switch (this) {
         Axis.horizontal => Alignment.centerLeft,
         Axis.vertical => Alignment.topCenter,
       };
 
-  AlignmentGeometry get gradientEnd =>
-      switch (this) {
+  AlignmentGeometry get gradientEnd => switch (this) {
         Axis.horizontal => Alignment.centerRight,
         Axis.vertical => Alignment.bottomCenter,
       };
 }
 
-class BadSkeleton extends StatefulWidget {
+/// Simple shimmer brick widget.
+class BadShimmer extends StatefulWidget {
   final double? width;
   final double height;
   final EdgeInsets? margin;
@@ -43,7 +41,7 @@ class BadSkeleton extends StatefulWidget {
   /// Time to delay before next repeat.
   final Duration repeatDelay;
 
-  const BadSkeleton({
+  const BadShimmer({
     super.key,
     this.width,
     required this.height,
@@ -59,10 +57,10 @@ class BadSkeleton extends StatefulWidget {
   }) : assert(repeat >= 0, 'out of range');
 
   @override
-  State<StatefulWidget> createState() => _SkeletonState();
+  State<StatefulWidget> createState() => _ShimmerState();
 }
 
-class _SkeletonState extends State<BadSkeleton>
+class _ShimmerState extends State<BadShimmer>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
 
@@ -95,7 +93,7 @@ class _SkeletonState extends State<BadSkeleton>
   }
 
   @override
-  void didUpdateWidget(covariant BadSkeleton oldWidget) {
+  void didUpdateWidget(covariant BadShimmer oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     _controller.duration = widget.duration;
@@ -173,20 +171,6 @@ class _SkeletonState extends State<BadSkeleton>
           // if (widget.rotateAngle != 0) transform.rotateZ(widget.rotateAngle);
 
           return Transform(transform: transform, child: shimmer);
-
-          // return Transform.translate(
-          //   offset: switch (widget.direction) {
-          //     ShimmerDirection.l2r =>
-          //       Offset(1.5 * w * _controller.value - 0.75 * w, 0),
-          //     ShimmerDirection.r2l =>
-          //       Offset(0.75 * w - 1.5 * w * _controller.value, 0),
-          //     ShimmerDirection.t2b =>
-          //       Offset(0, 1.5 * h * _controller.value - 0.75 * h),
-          //     ShimmerDirection.b2t =>
-          //       Offset(0, 0.75 * h - 1.5 * h * _controller.value),
-          //   },
-          //   child: shimmer,
-          // );
         },
       ),
     );
