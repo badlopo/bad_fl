@@ -48,8 +48,8 @@ class _AppHeader extends StatelessWidget implements PreferredSizeWidget {
 
 const Map<String, (String, String)> _visualWidgetConfig = {
   RouteNames.button: ('Button', '按钮'),
-  RouteNames.katex: ('Katex', '公式渲染'),
-  RouteNames.shimmer: ('Shimmer', '骨架屏'),
+  RouteNames.katex: ('Katex', '公式'),
+  RouteNames.shimmer: ('Shimmer', '闪光'),
   RouteNames.text: ('Text', '文字'),
 
   // TODO: non-exhaustive list, add more as needed
