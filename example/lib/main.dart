@@ -42,6 +42,14 @@ class MyApp extends StatelessWidget {
         ),
       ),
       initialRoute: RouteNames.home,
+      onUnknownRoute: (setting) {
+        return MaterialPageRoute(
+          builder: (context) => Scaffold(
+            appBar: AppBar(title: const Text('Unknown Route')),
+            body: Center(child: Text('No route defined for ${setting.name}')),
+          ),
+        );
+      },
       routes: appRoutes,
     );
   }
