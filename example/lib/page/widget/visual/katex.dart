@@ -60,6 +60,10 @@ class _KatexPageState extends State<KatexPage> {
   Widget build(BuildContext context) {
     return WidgetPageLayout(
       title: 'BadKatex',
+      description:
+          r'''对 flutter_math_fork 的封装, 可以接收整段的带公式文本作为输入 (其中公式使用 $ 或 $$ 包裹).
+
+此外还添加了对 \unicode 指令的支持, 可以直接使用 unicode 字符的编码来表示字符, 例如 \unicode{x41} 表示 A.''',
       children: [
         const HtmlText.h2('Live Demo'),
         const HtmlText.p('请输入你的 Latex 表达式 (使用 \$ 或 \$\$ 包裹):'),

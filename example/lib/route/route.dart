@@ -2,6 +2,7 @@ import 'package:example/layout/app_layout.dart';
 import 'package:example/page/home.dart';
 import 'package:example/page/widget/visual/button.dart';
 import 'package:example/page/widget/visual/katex.dart';
+import 'package:example/page/widget/visual/shimmer.dart';
 import 'package:flutter/material.dart';
 
 abstract class RouteNames {
@@ -18,6 +19,7 @@ final Map<String, Widget> _widgetRoutes = {
   RouteNames.home: const HomePage(),
   RouteNames.button: const ButtonPage(),
   RouteNames.katex: const KatexPage(),
+  RouteNames.shimmer: const ShimmerPage(),
 };
 
 Map<String, WidgetBuilder> _applyLayout(Map<String, Widget> routes) {

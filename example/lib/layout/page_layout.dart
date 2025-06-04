@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 
 class WidgetPageLayout extends StatelessWidget {
   final String title;
+  final String? description;
   final Iterable<Widget> children;
 
   const WidgetPageLayout({
     super.key,
     required this.title,
+    this.description,
     required this.children,
   });
 
@@ -18,6 +20,7 @@ class WidgetPageLayout extends StatelessWidget {
         padding: const EdgeInsets.all(24),
         children: [
           HtmlText.h1(title),
+          if (description != null) HtmlText.p(description!),
           ...children,
         ],
       ),
