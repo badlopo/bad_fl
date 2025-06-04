@@ -21,14 +21,14 @@ abstract class RouteNames {
 /// display widgets for routes.
 final Map<String, Widget> routeWidgets = {
   RouteNames.home: const HomePage(),
-  RouteNames.button: const ButtonPage(),
-  RouteNames.katex: const KatexPage(),
+  RouteNames.button: const _WIPPage(),
+  RouteNames.katex: const _WIPPage(),
 };
 
 Map<String, WidgetBuilder> _applyLayout(Map<String, Widget> routes) {
   return {
     for (final entry in routes.entries)
-      entry.key: (context) => AppLayout(child: entry.value),
+      entry.key: (context) => _AppLayout(child: entry.value),
   };
 }
 

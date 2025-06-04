@@ -15,7 +15,17 @@ class _AppHeader extends StatelessWidget implements PreferredSizeWidget {
             Border(bottom: BorderSide(width: 1, color: Colors.grey.shade300)),
         color: Colors.white,
       ),
-      child: const Row(children: [BadText('BadFL')]),
+      child: Row(
+        children: [
+          BadClickable(
+            onClick: () {
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil(RouteNames.home, (_) => false);
+            },
+            child: const BadText('BadFL'),
+          ),
+        ],
+      ),
     );
   }
 
@@ -144,10 +154,10 @@ class _AppAside extends StatelessWidget {
   }
 }
 
-class AppLayout extends StatelessWidget {
+class _AppLayout extends StatelessWidget {
   final Widget child;
 
-  const AppLayout({super.key, required this.child});
+  const _AppLayout({required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -159,6 +169,27 @@ class AppLayout extends StatelessWidget {
           VerticalDivider(width: 1, thickness: 1, color: Colors.grey.shade300),
           Expanded(child: child),
         ],
+      ),
+    );
+  }
+}
+
+class _WIPPage extends StatelessWidget {
+  const _WIPPage();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text('Work in Progress'),
+      ),
+      body: const Center(
+        child: BadText(
+          'This page is under construction.',
+          fontSize: 24,
+          color: Colors.grey,
+        ),
       ),
     );
   }
