@@ -12,7 +12,6 @@ environment:
 dependencies:
   device_info_plus: ^10.1.0  # https://pub.dev/packages/device_info_plus/changelog#1001
   dio: ^5.4.2+1
-  easy_refresh: ^3.4.0
   flutter:
     sdk: flutter
   flutter_math_fork: ^0.7.2
