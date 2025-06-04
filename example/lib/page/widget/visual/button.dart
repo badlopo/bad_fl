@@ -10,6 +10,17 @@ class ButtonPage extends StatelessWidget {
       appBar: AppBar(
         title: BadText('Button'),
       ),
+      body: ListView(
+        children: [
+          BadButton(
+            onPressed: () async {
+              await Future.delayed(Duration(seconds: 2));
+            },
+            loadingWidget: Text('running ...'),
+            child: Text('data'),
+          ),
+        ],
+      ),
     );
   }
 }
