@@ -50,14 +50,14 @@ class Result<T, E> {
 
   T get data {
     assert(isOk);
-    return _data!;
+    return _data as T;
   }
 
   final E? _error;
 
   E get error {
     assert(!isOk);
-    return _error!;
+    return _error as E;
   }
 
   const Result.ok(T data)
