@@ -4,7 +4,6 @@
 library widgets;
 
 export 'widgets/src/checkbox.dart';
-export 'widgets/src/floating.dart';
 export 'widgets/src/free_draw.dart';
 export 'widgets/src/popup.dart';
 export 'widgets/src/preview.dart';
@@ -29,6 +28,7 @@ export 'widgets/visual/text.dart';
 // >>>>> transparent widgets
 // ===== ===== ===== ===== =====
 
+export 'widgets/transparent/adsorb.dart';
 export 'widgets/transparent/capture.dart';
 export 'widgets/transparent/clickable.dart';
 export 'widgets/transparent/expansible.dart';
