@@ -30,8 +30,6 @@ export 'widget/visual/text.dart';
 // ===== ===== ===== ===== =====
 
 export 'widget/transparent/capture.dart';
-@Deprecated('will be rewritten soon')
-export 'widget/transparent/carousel.dart';
 export 'widget/transparent/clickable.dart';
 export 'widget/transparent/expansible.dart';
 export 'widget/transparent/spinner.dart';
