@@ -1,0 +1,35 @@
+/// A collection of pre-built widgets for common UI patterns.
+///
+/// Usage: `import 'package:bad_fl/widgets.dart';`
+library widgets;
+
+export 'widgets/src/checkbox.dart';
+export 'widgets/src/floating.dart';
+export 'widgets/src/free_draw.dart';
+export 'widgets/src/popup.dart';
+export 'widgets/src/preview.dart';
+export 'widgets/src/radio.dart';
+export 'widgets/src/switch.dart';
+
+export 'widgets/src/anchored_scrollable/anchored_scrollable.dart';
+export 'widgets/src/contribution_calendar/contribution_calendar.dart';
+export 'widgets/src/named_stack/named_stack.dart';
+export 'widgets/src/tree/tree.dart';
+
+// ===== ===== ===== ===== =====
+// >>>>> visual widgets
+// ===== ===== ===== ===== =====
+
+export 'widgets/visual/button.dart';
+export 'widgets/visual/katex.dart';
+export 'widgets/visual/shimmer.dart';
+export 'widgets/visual/text.dart';
+
+// ===== ===== ===== ===== =====
+// >>>>> transparent widgets
+// ===== ===== ===== ===== =====
+
+export 'widgets/transparent/capture.dart';
+export 'widgets/transparent/clickable.dart';
+export 'widgets/transparent/expansible.dart';
+export 'widgets/transparent/spinner.dart';
