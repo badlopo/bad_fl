@@ -51,14 +51,14 @@ class BadButton extends StatefulWidget {
     this.alignment = Alignment.center,
     required this.onPressed,
     this.loadingWidget,
-    required Widget left,
-    required Widget right,
+    required Widget icon,
+    required Widget label,
     MainAxisSize mainAxisSize = MainAxisSize.min,
     double gap = 0.0,
   }) : child = Row(
           mainAxisSize: mainAxisSize,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [left, if (gap != 0) SizedBox(width: gap), right],
+          children: [icon, if (gap != 0) SizedBox(width: gap), label],
         );
 
   @override
@@ -86,10 +86,9 @@ class _BadButtonState extends State<BadButton> {
 
   @override
   Widget build(BuildContext context) {
-    final inner = Container(
+    Widget inner = Container(
       width: widget.width,
       height: widget.height,
-      margin: widget.margin,
       padding: widget.padding,
       constraints: widget.constraints,
       decoration: BoxDecoration(
@@ -101,10 +100,18 @@ class _BadButtonState extends State<BadButton> {
       child: running ? (widget.loadingWidget ?? widget.child) : widget.child,
     );
 
-    return GestureDetector(
+    inner = GestureDetector(
       onTap: _onPress,
       behavior: HitTestBehavior.opaque,
       child: inner,
     );
+
+    // wrap with Padding outside GestureDetector to ensure margin
+    // is applied correctly (will not interfere with tap detection)
+    if (widget.margin != null) {
+      inner = Padding(padding: widget.margin!, child: inner);
+    }
+
+    return inner;
   }
 }
