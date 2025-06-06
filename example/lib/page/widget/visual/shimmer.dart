@@ -10,7 +10,7 @@ class ShimmerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return WidgetPageLayout(
       title: 'BadShimmer',
-      description: r'一个带闪光动画的小部件, 可用于快速构建任意结构的骨架屏.',
+      description: r'一个带闪光动画的小部件，可用于快速构建任意结构的骨架屏。',
       children: <Widget>[
         const HtmlText.h2('常规'),
         const HtmlText.p('width & height'),
@@ -18,6 +18,7 @@ class ShimmerPage extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: BadShimmer(width: 320, height: 32),
         ),
+        const Divider(),
         const HtmlText.h2('边框 & 圆角 & 背景色'),
         const HtmlText.p("border & borderRadius & fill"),
         Row(
@@ -46,6 +47,7 @@ class ShimmerPage extends StatelessWidget {
             ),
           ],
         ),
+        const Divider(),
         const HtmlText.h2('方向'),
         const HtmlText.p('direction'),
         const Row(
@@ -75,8 +77,9 @@ class ShimmerPage extends StatelessWidget {
             ),
           ],
         ),
+        const Divider(),
         const HtmlText.h2('组合'),
-        const HtmlText.p('结合 Row、Column 等布局组件, 可以快速构建任意结构的骨架屏.'),
+        const HtmlText.p('结合 Row、Column 等布局组件，可以快速构建任意结构的骨架屏。'),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

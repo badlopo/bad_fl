@@ -61,17 +61,21 @@ class _KatexPageState extends State<KatexPage> {
     return WidgetPageLayout(
       title: 'BadKatex',
       description:
-          r'''对 flutter_math_fork 的封装, 可以接收整段的带公式文本作为输入 (其中公式使用 $ 或 $$ 包裹).
+          r'''对 flutter_math_fork 的封装，可以接收整段的带公式文本作为输入 (其中公式使用 $ 或 $$ 包裹)。
 
-此外还添加了对 \unicode 指令的支持, 可以直接使用 unicode 字符的编码来表示字符, 例如 \unicode{x41} 表示 A.''',
+此外还添加了对 \unicode 指令的支持，可以直接使用 unicode 字符的编码来表示字符，例如 \unicode{x41} 表示 A。''',
       children: [
         const HtmlText.h2('Live Demo'),
-        const HtmlText.p('请输入你的 Latex 表达式 (使用 \$ 或 \$\$ 包裹):'),
+        const HtmlText.p('请输入你的 Latex 表达式 (使用 \$ 或 \$\$ 包裹)：'),
         ColoredBox(
           color: Colors.grey.shade100,
           child: CupertinoTextField.borderless(
             controller: controller,
             maxLines: 5,
+            decoration: const BoxDecoration(
+              border: Border.fromBorderSide(BorderSide(color: Colors.grey)),
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+            ),
             style: const TextStyle(color: Colors.black87, fontSize: 14),
             onChanged: (s) => setState(() {
               _string = s;

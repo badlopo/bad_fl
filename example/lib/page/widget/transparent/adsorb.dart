@@ -42,23 +42,23 @@ class AdsorbPage extends StatelessWidget {
       description:
           '为包裹的子组件提供任意拖拽的能力, 可选地进行吸附（水平、竖直、双向）。受限于实现方式，目前该组件需要放置在 Stack 内。',
       children: [
-        HtmlText.h2('双向吸附'),
+        HtmlText.h2('Adsorption strategy: both'),
         HtmlText.p('释放后，红色方块将自动吸附到最近的边缘。'),
         _AdsorbShowcase(strategy: AdsorbStrategy.both),
         Divider(),
-        HtmlText.h2('水平吸附'),
+        HtmlText.h2('Adsorption strategy: horizontal'),
         HtmlText.p('释放后，红色方块将自动吸附到左侧或右侧（较近的一边）。'),
         _AdsorbShowcase(strategy: AdsorbStrategy.horizontal),
         Divider(),
-        HtmlText.h2('竖直吸附'),
+        HtmlText.h2('Adsorption strategy: vertical'),
         HtmlText.p('释放后，红色方块将自动吸附到上侧或下侧（较近的一边）。'),
         _AdsorbShowcase(strategy: AdsorbStrategy.vertical),
         Divider(),
-        HtmlText.h2('不吸附'),
+        HtmlText.h2('Adsorption strategy: none'),
         HtmlText.p('释放后，红色方块将保持所在位置。'),
         _AdsorbShowcase(strategy: AdsorbStrategy.none),
         Divider(),
-        HtmlText.h2('额外偏移'),
+        HtmlText.h2('Extra insets'),
         HtmlText.p('可以通过 insets 参数来设置吸附时的额外偏移（支持正负值）。'),
         Row(
           children: [
