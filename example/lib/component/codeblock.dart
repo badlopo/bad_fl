@@ -1,4 +1,4 @@
-import 'package:bad_fl/widget/visual/text.dart';
+import 'package:bad_fl/widgets.dart';
 import 'package:flutter/material.dart';
 
 class CodeBlock extends StatelessWidget {

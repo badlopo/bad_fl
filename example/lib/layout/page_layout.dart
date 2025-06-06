@@ -21,6 +21,7 @@ class WidgetPageLayout extends StatelessWidget {
         children: [
           HtmlText.h1(title),
           if (description != null) HtmlText.p(description!),
+          const Divider(),
           ...children,
         ],
       ),
