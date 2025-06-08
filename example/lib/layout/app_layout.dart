@@ -1,5 +1,3 @@
-// >>>>> header
-
 import 'package:bad_fl/widgets.dart';
 import 'package:example/component/html_anchor.dart';
 import 'package:example/route/route.dart';
@@ -44,15 +42,13 @@ class _AppHeader extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(56);
 }
 
-const Map<String, (String, String)> _visualWidgetConfig = {
+const Map<String, (String, String)> _widgetConfig = {
+  RouteNames.adsorb: ('Adsorb', '吸附'),
   RouteNames.button: ('Button', '按钮'),
   RouteNames.katex: ('Katex', '公式'),
   RouteNames.shimmer: ('Shimmer', '闪光'),
   RouteNames.text: ('Text', '文字'),
-};
-
-const Map<String, (String, String)> _transparentWidgetConfig = {
-  RouteNames.adsorb: ('Adsorb', '吸附'),
+  RouteNames.tree: ('Tree', '树'),
 };
 
 class _AsideMenuItem extends StatelessWidget {
@@ -139,7 +135,7 @@ class _AppAside extends StatelessWidget {
                     const Expanded(
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 8),
-                        child: BadText('Visual Widget'),
+                        child: BadText('Widgets'),
                       ),
                     ),
                     controller.isExpanded
@@ -152,42 +148,7 @@ class _AppAside extends StatelessWidget {
           },
           child: Column(
             children: [
-              for (final entry in _visualWidgetConfig.entries)
-                _AsideMenuItem(
-                  currentRoute: current,
-                  targetRoute: entry.key,
-                  title: entry.value.$1,
-                  description: entry.value.$2,
-                ),
-            ],
-          ),
-        ),
-        BadExpansible(
-          headerBuilder: (controller) {
-            return BadClickable(
-              onClick: () => controller.toggle(),
-              child: SizedBox(
-                height: 48,
-                child: Row(
-                  children: [
-                    const Icon(Icons.widgets_outlined),
-                    const Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8),
-                        child: BadText('Transparent Widget'),
-                      ),
-                    ),
-                    controller.isExpanded
-                        ? const Icon(Icons.expand_less_outlined)
-                        : const Icon(Icons.expand_more_outlined),
-                  ],
-                ),
-              ),
-            );
-          },
-          child: Column(
-            children: [
-              for (final entry in _transparentWidgetConfig.entries)
+              for (final entry in _widgetConfig.entries)
                 _AsideMenuItem(
                   currentRoute: current,
                   targetRoute: entry.key,

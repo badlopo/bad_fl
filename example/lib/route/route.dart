@@ -1,32 +1,34 @@
 import 'package:example/layout/app_layout.dart';
 import 'package:example/page/draft.dart';
+import 'package:example/page/widget/katex.dart';
+import 'package:example/page/widget/shimmer.dart';
+import 'package:example/page/widget/text.dart';
+import 'package:example/page/widget/tree.dart';
 import 'package:example/page/home.dart';
-import 'package:example/page/widget/transparent/adsorb.dart';
-import 'package:example/page/widget/visual/button.dart';
-import 'package:example/page/widget/visual/katex.dart';
-import 'package:example/page/widget/visual/shimmer.dart';
-import 'package:example/page/widget/visual/text.dart';
+import 'package:example/page/widget/adsorb.dart';
+import 'package:example/page/widget/button.dart';
 import 'package:flutter/material.dart';
 
 abstract class RouteNames {
   static const home = '/';
 
-  static const button = '/widget/visual/button';
-  static const katex = '/widget/visual/katex';
-  static const shimmer = '/widget/visual/shimmer';
-  static const text = '/widget/visual/text';
-
-  static const adsorb = '/widget/transparent/adsorb';
+  static const adsorb = '/widget/adsorb';
+  static const button = '/widget/button';
+  static const katex = '/widget/katex';
+  static const shimmer = '/widget/shimmer';
+  static const text = '/widget/text';
+  static const tree = '/widget/tree';
 }
 
 /// display widgets for routes.
 final Map<String, Widget> _widgetRoutes = {
   RouteNames.home: const HomePage(),
+  RouteNames.adsorb: const AdsorbPage(),
   RouteNames.button: const ButtonPage(),
   RouteNames.katex: const KatexPage(),
   RouteNames.shimmer: const ShimmerPage(),
   RouteNames.text: const TextPage(),
-  RouteNames.adsorb: const AdsorbPage(),
+  RouteNames.tree: const TreePage(),
 };
 
 Map<String, WidgetBuilder> _applyLayout(Map<String, Widget> routes) {

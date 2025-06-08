@@ -40,14 +40,14 @@ class _DraftPageState extends State<DraftPage> {
           ],
         ),
       ),
-      body: IndexedStack(
-        index: active - 1,
-        children: [
-          LifecycleReportPage(name: 'page1'),
-          LifecycleReportPage(name: 'page2'),
-          LifecycleReportPage(name: 'page3'),
-        ],
-      ),
+      // body: IndexedStack(
+      //   index: active - 1,
+      //   children: [
+      //     LifecycleReportPage(name: 'page1'),
+      //     LifecycleReportPage(name: 'page2'),
+      //     LifecycleReportPage(name: 'page3'),
+      //   ],
+      // ),
       // body: BadNamedStack(
       //   controller: nsc,
       //   layers: const [
