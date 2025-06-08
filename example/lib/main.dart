@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
           },
         ),
       ),
-      initialRoute: RouteNames.home,
+      initialRoute: appRoutes[0].path,
       onUnknownRoute: (setting) {
         return MaterialPageRoute(
           builder: (context) => Scaffold(
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
           ),
         );
       },
-      routes: appRoutes,
+      routes: appRouter,
     );
   }
 }

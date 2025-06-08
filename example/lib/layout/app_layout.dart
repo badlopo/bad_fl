@@ -16,17 +16,11 @@ class _AppHeader extends StatelessWidget implements PreferredSizeWidget {
             Border(bottom: BorderSide(width: 1, color: Colors.grey.shade300)),
         color: Colors.white,
       ),
-      child: Row(
+      child: const Row(
         children: [
-          BadClickable(
-            onClick: () {
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil(RouteNames.home, (_) => false);
-            },
-            child: const BadText('BadFL'),
-          ),
-          const Spacer(),
-          const HtmlAnchor(
+          BadText('BadFL'),
+          Spacer(),
+          HtmlAnchor(
             target: 'https://github.com/badlopo/bad_fl/tree/master/example',
             child: Tooltip(
               message: 'Source Code',
@@ -41,15 +35,6 @@ class _AppHeader extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(56);
 }
-
-const Map<String, (String, String)> _widgetConfig = {
-  RouteNames.adsorb: ('Adsorb', '吸附'),
-  RouteNames.button: ('Button', '按钮'),
-  RouteNames.katex: ('Katex', '公式'),
-  RouteNames.shimmer: ('Shimmer', '闪光'),
-  RouteNames.text: ('Text', '文字'),
-  RouteNames.tree: ('Tree', '树'),
-};
 
 class _AsideMenuItem extends StatelessWidget {
   final String currentRoute;
@@ -148,12 +133,12 @@ class _AppAside extends StatelessWidget {
           },
           child: Column(
             children: [
-              for (final entry in _widgetConfig.entries)
+              for (final route in appRoutes)
                 _AsideMenuItem(
                   currentRoute: current,
-                  targetRoute: entry.key,
-                  title: entry.value.$1,
-                  description: entry.value.$2,
+                  targetRoute: route.path,
+                  title: route.names.$1,
+                  description: route.names.$2,
                 ),
             ],
           ),
