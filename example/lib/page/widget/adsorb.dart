@@ -1,31 +1,47 @@
 import 'package:bad_fl/widgets.dart';
-import 'package:example/component/html_text.dart';
-import 'package:example/layout/page_layout.dart';
 import 'package:flutter/material.dart';
 
 class _AdsorbShowcase extends StatelessWidget {
   final AdsorbStrategy strategy;
   final EdgeInsets insets;
+  final String title;
+  final String description;
 
   const _AdsorbShowcase({
     required this.strategy,
     this.insets = EdgeInsets.zero,
+    required this.title,
+    required this.description,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ColoredBox(
-          color: Colors.grey.shade300,
-          child: const SizedBox(width: 200, height: 200),
+        BadText(
+          title,
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
         ),
-        BadAdsorb(
-          strategy: strategy,
-          insets: insets,
-          parentSize: const Size(200, 200),
-          size: const Size(30, 30),
-          child: const ColoredBox(color: Colors.red),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: BadText(description),
+        ),
+        Stack(
+          children: [
+            ColoredBox(
+              color: Colors.grey.shade300,
+              child: const SizedBox(width: 200, height: 200),
+            ),
+            BadAdsorb(
+              strategy: strategy,
+              insets: insets,
+              parentSize: const Size(200, 200),
+              size: const Size(30, 30),
+              child: const ColoredBox(color: Colors.red),
+            ),
+          ],
         ),
       ],
     );
@@ -37,43 +53,49 @@ class AdsorbPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const WidgetPageLayout(
-      title: 'Adsorb',
-      description:
-          '为包裹的子组件提供任意拖拽的能力, 可选地进行吸附（水平、竖直、双向）。受限于实现方式，目前该组件需要放置在 Stack 内。',
-      children: [
-        HtmlText.h2('Adsorption strategy: both'),
-        HtmlText.p('释放后，红色方块将自动吸附到最近的边缘。'),
-        _AdsorbShowcase(strategy: AdsorbStrategy.both),
-        Divider(),
-        HtmlText.h2('Adsorption strategy: horizontal'),
-        HtmlText.p('释放后，红色方块将自动吸附到左侧或右侧（较近的一边）。'),
-        _AdsorbShowcase(strategy: AdsorbStrategy.horizontal),
-        Divider(),
-        HtmlText.h2('Adsorption strategy: vertical'),
-        HtmlText.p('释放后，红色方块将自动吸附到上侧或下侧（较近的一边）。'),
-        _AdsorbShowcase(strategy: AdsorbStrategy.vertical),
-        Divider(),
-        HtmlText.h2('Adsorption strategy: none'),
-        HtmlText.p('释放后，红色方块将保持所在位置。'),
-        _AdsorbShowcase(strategy: AdsorbStrategy.none),
-        Divider(),
-        HtmlText.h2('Extra insets'),
-        HtmlText.p('可以通过 insets 参数来设置吸附时的额外偏移（支持正负值）。'),
-        Row(
-          children: [
-            _AdsorbShowcase(
-              strategy: AdsorbStrategy.both,
-              insets: EdgeInsets.all(10),
-            ),
-            SizedBox(width: 12),
-            _AdsorbShowcase(
-              strategy: AdsorbStrategy.both,
-              insets: EdgeInsets.all(-10),
-            ),
-          ],
-        )
-      ],
+    return Scaffold(
+      body: ListView(
+        padding: const EdgeInsets.all(24),
+        children: const [
+          _AdsorbShowcase(
+            strategy: AdsorbStrategy.both,
+            title: 'Adsorption strategy: both',
+            description: '释放后，红色方块将自动吸附到最近的边缘。',
+          ),
+          Divider(),
+          _AdsorbShowcase(
+            strategy: AdsorbStrategy.horizontal,
+            title: 'Adsorption strategy: horizontal',
+            description: '释放后，红色方块将自动吸附到左侧或右侧（较近的一边）。',
+          ),
+          Divider(),
+          _AdsorbShowcase(
+            strategy: AdsorbStrategy.vertical,
+            title: 'Adsorption strategy: vertical',
+            description: '释放后，红色方块将自动吸附到上侧或下侧（较近的一边）。',
+          ),
+          Divider(),
+          _AdsorbShowcase(
+            strategy: AdsorbStrategy.none,
+            title: 'Adsorption strategy: none',
+            description: '释放后，红色方块将保持所在位置。',
+          ),
+          Divider(),
+          _AdsorbShowcase(
+            strategy: AdsorbStrategy.both,
+            insets: EdgeInsets.all(10),
+            title: '正偏移',
+            description: '可以通过 insets 参数来设置吸附时的额外偏移，设为正值则向内偏移',
+          ),
+          Divider(),
+          _AdsorbShowcase(
+            strategy: AdsorbStrategy.both,
+            insets: EdgeInsets.all(-10),
+            title: '负偏移',
+            description: '可以通过 insets 参数来设置吸附时的额外偏移，设为负值则向外偏移',
+          ),
+        ],
+      ),
     );
   }
 }
