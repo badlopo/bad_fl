@@ -1,8 +1,11 @@
 import 'package:example/layout/app_layout.dart';
+import 'package:example/page/draft.dart';
 import 'package:example/page/home.dart';
+import 'package:example/page/widget/transparent/adsorb.dart';
 import 'package:example/page/widget/visual/button.dart';
 import 'package:example/page/widget/visual/katex.dart';
 import 'package:example/page/widget/visual/shimmer.dart';
+import 'package:example/page/widget/visual/text.dart';
 import 'package:flutter/material.dart';
 
 abstract class RouteNames {
@@ -12,6 +15,8 @@ abstract class RouteNames {
   static const katex = '/widget/visual/katex';
   static const shimmer = '/widget/visual/shimmer';
   static const text = '/widget/visual/text';
+
+  static const adsorb = '/widget/transparent/adsorb';
 }
 
 /// display widgets for routes.
@@ -20,12 +25,15 @@ final Map<String, Widget> _widgetRoutes = {
   RouteNames.button: const ButtonPage(),
   RouteNames.katex: const KatexPage(),
   RouteNames.shimmer: const ShimmerPage(),
+  RouteNames.text: const TextPage(),
+  RouteNames.adsorb: const AdsorbPage(),
 };
 
 Map<String, WidgetBuilder> _applyLayout(Map<String, Widget> routes) {
   return {
     for (final entry in routes.entries)
       entry.key: (context) => AppLayout(child: entry.value),
+    '/draft': (_) => const DraftPage(),
   };
 }
 
