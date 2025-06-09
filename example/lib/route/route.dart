@@ -1,6 +1,7 @@
 import 'package:example/layout/app_layout.dart';
 import 'package:example/page/draft.dart';
 import 'package:example/page/widget/katex.dart';
+import 'package:example/page/widget/preview.dart';
 import 'package:example/page/widget/shimmer.dart';
 import 'package:example/page/widget/text.dart';
 import 'package:example/page/widget/tree.dart';
@@ -35,6 +36,11 @@ const appRoutes = [
     path: '/widget/katex',
     page: KatexPage(),
     names: ('Katex', '公式'),
+  ),
+  RouteObject(
+    path: '/widget/preview',
+    page: PreviewPage(),
+    names: ('Preview', '预览'),
   ),
   RouteObject(
     path: '/widget/shimmer',
