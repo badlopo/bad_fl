@@ -1,7 +1,25 @@
+import 'dart:js' as js show context;
+
 import 'package:bad_fl/widgets.dart';
-import 'package:example/component/html_anchor.dart';
 import 'package:example/route/route.dart';
 import 'package:flutter/material.dart';
+
+class _HtmlAnchor extends StatelessWidget {
+  final String target;
+  final Widget child;
+
+  const _HtmlAnchor({required this.target, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return BadClickable(
+      onClick: () {
+        js.context.callMethod('open', [target]);
+      },
+      child: child,
+    );
+  }
+}
 
 class _AppHeader extends StatelessWidget implements PreferredSizeWidget {
   const _AppHeader();
@@ -20,7 +38,7 @@ class _AppHeader extends StatelessWidget implements PreferredSizeWidget {
         children: [
           BadText('BadFL'),
           Spacer(),
-          HtmlAnchor(
+          _HtmlAnchor(
             target: 'https://github.com/badlopo/bad_fl/tree/master/example',
             child: Tooltip(
               message: 'Source Code',
