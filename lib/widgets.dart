@@ -5,7 +5,6 @@ library widgets;
 
 export 'widgets/src/free_draw.dart';
 export 'widgets/src/popup.dart';
-export 'widgets/src/preview.dart';
 export 'widgets/src/radio.dart';
 export 'widgets/src/switch.dart';
 
@@ -30,5 +29,6 @@ export 'widgets/transparent/adsorb.dart';
 export 'widgets/transparent/capture.dart';
 export 'widgets/transparent/clickable.dart';
 export 'widgets/transparent/expansible.dart';
+export 'widgets/transparent/preview.dart';
 export 'widgets/transparent/spinner.dart';
 export 'widgets/transparent/tree.dart';

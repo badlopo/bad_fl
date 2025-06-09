@@ -1,22 +1,36 @@
-import 'package:bad_fl/widget/src/clickable.dart';
+import 'package:bad_fl/widgets/transparent/clickable.dart';
 import 'package:flutter/material.dart';
 
-/// Wrap a widget within [BadPreview] to enable previewing the widget when clicked.
+Widget _kDefaultPreviewWidgetBuilder(_, v) => v;
+
+/// Wraps an element that opens a temporary page to display a preview (with hero animation) when clicked.
+///
+/// NOTE: This component is my study of matrix transformation.
+/// The interaction and animation are relatively stiff. If you need a better form, you can go to pub to find it.
 class BadPreview extends StatefulWidget {
-  /// The color to use as mask when previewing the widget.
-  final Color maskColor;
+  /// Background color of preview page.
+  final Color color;
 
   /// The widget to display on the screen.
   final Widget child;
 
-  /// The widget to display as a preview, if not provided, [child] will be used.
-  final Widget? preview;
+  /// The widget to display as the preview. If not provided, [child] will be used.
+  final Widget? previewWidget;
+
+  /// Create the preview view based on the current child,
+  /// for example, wrap it in [Center] to achieve centering.
+  //
+  // The child passed to this builder will be the preview-widget actually used,
+  // that is, [previewWidget] if there is one, otherwise [child].
+  final Widget Function(BuildContext context, Widget child)
+      previewWidgetBuilder;
 
   const BadPreview({
     super.key,
-    this.maskColor = Colors.black,
+    this.color = Colors.black,
+    this.previewWidget,
+    this.previewWidgetBuilder = _kDefaultPreviewWidgetBuilder,
     required this.child,
-    this.preview,
   });
 
   @override
@@ -34,8 +48,9 @@ class _PreviewState extends State<BadPreview> {
         pageBuilder: (_, __, ___) {
           return _PreviewView(
             heroTag: heroTag,
-            maskColor: widget.maskColor,
-            child: widget.preview ?? widget.child,
+            backgroundColor: widget.color,
+            child: widget.previewWidgetBuilder(
+                context, widget.previewWidget ?? widget.child),
           );
         },
       ),
@@ -53,12 +68,12 @@ class _PreviewState extends State<BadPreview> {
 
 class _PreviewView extends StatefulWidget {
   final UniqueKey heroTag;
-  final Color maskColor;
+  final Color backgroundColor;
   final Widget child;
 
   const _PreviewView({
     required this.heroTag,
-    required this.maskColor,
+    required this.backgroundColor,
     required this.child,
   });
 
@@ -175,12 +190,14 @@ class _PreviewViewState extends State<_PreviewView> {
 
   @override
   Widget build(BuildContext context) {
+    // apply some shrinkage when dragging vertically
     final double shrinkX = _deltaY.abs() / 15.0;
 
+    // wrap the entire page in 'Hero' so that the background appears animated
     return Hero(
       tag: widget.heroTag,
       child: Scaffold(
-        backgroundColor: widget.maskColor,
+        backgroundColor: widget.backgroundColor,
         body: GestureDetector(
           onTap: hidePreview,
           onDoubleTap: toggleScale,
