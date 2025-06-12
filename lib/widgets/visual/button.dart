@@ -62,10 +62,10 @@ class BadButton extends StatefulWidget {
         );
 
   @override
-  State<BadButton> createState() => _BadButtonState();
+  State<BadButton> createState() => _ButtonState();
 }
 
-class _BadButtonState extends State<BadButton> {
+class _ButtonState extends State<BadButton> {
   BorderRadius? get borderRadius => widget.borderRadius == 0
       ? null
       : BorderRadius.circular(widget.borderRadius);
