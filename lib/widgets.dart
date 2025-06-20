@@ -5,7 +5,6 @@ library widgets;
 
 export 'widgets/src/free_draw.dart';
 export 'widgets/src/popup.dart';
-export 'widgets/src/radio.dart';
 
 export 'widgets/src/anchored_scrollable/anchored_scrollable.dart';
 export 'widgets/src/contribution_calendar/contribution_calendar.dart';
