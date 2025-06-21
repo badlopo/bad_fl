@@ -90,38 +90,38 @@ class _SwitchState extends State<BadSwitch> {
 
   @override
   Widget build(BuildContext context) {
-    final inner = UnconstrainedBox(
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        width: widget.width,
-        height: widget.height,
-        padding: EdgeInsets.all(widget.insets),
-        decoration: BoxDecoration(
-          color: active ? widget.activeTrackColor : widget.trackColor,
-          borderRadius: BorderRadius.circular(widget.height / 2),
+    final inner = AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      width: widget.width,
+      height: widget.height,
+      padding: EdgeInsets.all(widget.insets),
+      decoration: BoxDecoration(
+        color: active ? widget.activeTrackColor : widget.trackColor,
+        borderRadius: BorderRadius.circular(widget.height / 2),
+      ),
+      alignment: active ? Alignment.centerRight : Alignment.centerLeft,
+      child: Container(
+        width: widget._handleSize,
+        height: widget._handleSize,
+        decoration: ShapeDecoration(
+          shape: const CircleBorder(),
+          color: active ? widget.activeHandleColor : widget.handleColor,
         ),
-        alignment: active ? Alignment.centerRight : Alignment.centerLeft,
-        child: Container(
-          width: widget._handleSize,
-          height: widget._handleSize,
-          decoration: ShapeDecoration(
-            shape: const CircleBorder(),
-            color: active ? widget.activeHandleColor : widget.handleColor,
-          ),
-          alignment: Alignment.center,
-          child: pending
-              ? BadSpinner(
-                  child: Icon(
-                    Icons.autorenew_rounded,
-                    size: widget._handleSize,
-                    color: spinnerColor,
-                  ),
-                )
-              : null,
-        ),
+        alignment: Alignment.center,
+        child: pending
+            ? BadSpinner(
+                child: Icon(
+                  Icons.autorenew_rounded,
+                  size: widget._handleSize,
+                  color: spinnerColor,
+                ),
+              )
+            : null,
       ),
     );
 
-    return BadClickable(onClick: handleTap, child: inner);
+    return UnconstrainedBox(
+      child: BadClickable(onClick: handleTap, child: inner),
+    );
   }
 }
