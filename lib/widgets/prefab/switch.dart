@@ -82,13 +82,6 @@ class _SwitchState extends State<BadSwitch> {
   }
 
   @override
-  void didUpdateWidget(covariant BadSwitch oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    active = widget.initialActive;
-  }
-
-  @override
   Widget build(BuildContext context) {
     final inner = AnimatedContainer(
       duration: const Duration(milliseconds: 300),
