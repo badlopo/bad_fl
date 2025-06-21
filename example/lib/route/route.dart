@@ -3,6 +3,7 @@ import 'package:example/page/draft.dart';
 import 'package:example/page/widget/katex.dart';
 import 'package:example/page/widget/preview.dart';
 import 'package:example/page/widget/shimmer.dart';
+import 'package:example/page/widget/switch.dart';
 import 'package:example/page/widget/text.dart';
 import 'package:example/page/widget/tree.dart';
 import 'package:example/page/widget/adsorb.dart';
@@ -46,6 +47,11 @@ const appRoutes = [
     path: '/widget/shimmer',
     page: ShimmerPage(),
     names: ('Shimmer', '闪光'),
+  ),
+  RouteObject(
+    path: '/widget/switch',
+    page: SwitchPage(),
+    names: ('Switch', '开关'),
   ),
   RouteObject(
     path: '/widget/text',
