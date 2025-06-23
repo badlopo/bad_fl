@@ -4,7 +4,6 @@
 library widgets;
 
 export 'widgets/src/free_draw.dart';
-export 'widgets/src/popup.dart';
 
 export 'widgets/src/anchored_scrollable/anchored_scrollable.dart';
 export 'widgets/src/contribution_calendar/contribution_calendar.dart';
@@ -18,6 +17,7 @@ export 'widgets/transparent/adsorb.dart';
 export 'widgets/transparent/capture.dart';
 export 'widgets/transparent/clickable.dart';
 export 'widgets/transparent/expansible.dart';
+export 'widgets/transparent/popup.dart';
 export 'widgets/transparent/preview.dart';
 export 'widgets/transparent/spinner.dart';
 export 'widgets/transparent/tree.dart';
