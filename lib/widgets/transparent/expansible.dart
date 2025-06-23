@@ -67,7 +67,7 @@ class _ExpansibleState extends State<BadExpansible> {
   BadExpansibleController get _controller =>
       widget.controller ?? _localController!;
 
-  void _didChangeExpandState() {
+  void handleUpdate() {
     setState(() {
       /** value has been changed in widget.controller */
     });
@@ -78,7 +78,7 @@ class _ExpansibleState extends State<BadExpansible> {
     super.initState();
 
     _setupLocalControllerIfNeeded();
-    _controller.addListener(_didChangeExpandState);
+    _controller.addListener(handleUpdate);
   }
 
   @override
@@ -86,12 +86,11 @@ class _ExpansibleState extends State<BadExpansible> {
     super.didUpdateWidget(oldWidget);
 
     // remove listener on the previous working controller
-    (oldWidget.controller ?? _localController)!
-        .removeListener(_didChangeExpandState);
+    (oldWidget.controller ?? _localController)!.removeListener(handleUpdate);
 
     // ensure there is a working controller and add listener to it
     _setupLocalControllerIfNeeded();
-    _controller.addListener(_didChangeExpandState);
+    _controller.addListener(handleUpdate);
   }
 
   @override
@@ -100,7 +99,7 @@ class _ExpansibleState extends State<BadExpansible> {
     // otherwise we assume the controller is managed by the user.
     // this is to avoid disposing the controller that is passed by the user.
 
-    _controller.removeListener(_didChangeExpandState);
+    _controller.removeListener(handleUpdate);
     if (_localController != null) {
       _localController!.dispose();
       _localController = null;
