@@ -1,6 +1,7 @@
 import 'package:example/layout/app_layout.dart';
 import 'package:example/page/draft.dart';
 import 'package:example/page/widget/katex.dart';
+import 'package:example/page/widget/popup.dart';
 import 'package:example/page/widget/preview.dart';
 import 'package:example/page/widget/shimmer.dart';
 import 'package:example/page/widget/switch.dart';
@@ -37,6 +38,11 @@ const appRoutes = [
     path: '/widget/katex',
     page: KatexPage(),
     names: ('Katex', '公式'),
+  ),
+  RouteObject(
+    path: '/widget/popup',
+    page: PopupPage(),
+    names: ('Popup', '弹出'),
   ),
   RouteObject(
     path: '/widget/preview',
