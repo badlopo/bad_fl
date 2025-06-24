@@ -2,31 +2,6 @@ import 'package:bad_fl/widgets.dart';
 import 'package:example/route/route.dart';
 import 'package:flutter/material.dart';
 
-class _AppHeader extends StatelessWidget implements PreferredSizeWidget {
-  const _AppHeader();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 56,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      decoration: BoxDecoration(
-        border:
-            Border(bottom: BorderSide(width: 1, color: Colors.grey.shade300)),
-        color: Colors.white,
-      ),
-      child: const Row(
-        children: [
-          BadText('BadFL'),
-        ],
-      ),
-    );
-  }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(56);
-}
-
 class _AsideMenuItem extends StatelessWidget {
   final String currentRoute;
   final String targetRoute;
@@ -147,14 +122,9 @@ class AppLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const _AppHeader(),
-      body: Row(
-        children: [
-          const SizedBox(width: 240, child: _AppAside()),
-          VerticalDivider(width: 1, thickness: 1, color: Colors.grey.shade300),
-          Expanded(child: child),
-        ],
-      ),
+      appBar: AppBar(),
+      drawer: const Drawer(child: _AppAside()),
+      body: child,
     );
   }
 }
