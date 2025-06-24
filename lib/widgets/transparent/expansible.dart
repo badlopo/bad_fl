@@ -54,18 +54,18 @@ class BadExpansible extends StatefulWidget {
 
 class _ExpansibleState extends State<BadExpansible> {
   /// local controller that is used when the user did not provide one.
-  BadExpansibleController? _localController;
+  BadExpansibleController? localController;
 
   // Set up the local controller if the user did not provide one,
   // and ensures that the local controller is created at most once.
-  void _setupLocalControllerIfNeeded() {
-    if (widget.controller == null && _localController == null) {
-      _localController = BadExpansibleController();
+  void setupLocalControllerIfNeeded() {
+    if (widget.controller == null && localController == null) {
+      localController = BadExpansibleController();
     }
   }
 
-  BadExpansibleController get _controller =>
-      widget.controller ?? _localController!;
+  BadExpansibleController get controller =>
+      widget.controller ?? localController!;
 
   void handleUpdate() {
     setState(() {
@@ -77,8 +77,8 @@ class _ExpansibleState extends State<BadExpansible> {
   void initState() {
     super.initState();
 
-    _setupLocalControllerIfNeeded();
-    _controller.addListener(handleUpdate);
+    setupLocalControllerIfNeeded();
+    controller.addListener(handleUpdate);
   }
 
   @override
@@ -86,11 +86,11 @@ class _ExpansibleState extends State<BadExpansible> {
     super.didUpdateWidget(oldWidget);
 
     // remove listener on the previous working controller
-    (oldWidget.controller ?? _localController)!.removeListener(handleUpdate);
+    (oldWidget.controller ?? localController)!.removeListener(handleUpdate);
 
     // ensure there is a working controller and add listener to it
-    _setupLocalControllerIfNeeded();
-    _controller.addListener(handleUpdate);
+    setupLocalControllerIfNeeded();
+    controller.addListener(handleUpdate);
   }
 
   @override
@@ -99,10 +99,10 @@ class _ExpansibleState extends State<BadExpansible> {
     // otherwise we assume the controller is managed by the user.
     // this is to avoid disposing the controller that is passed by the user.
 
-    _controller.removeListener(handleUpdate);
-    if (_localController != null) {
-      _localController!.dispose();
-      _localController = null;
+    controller.removeListener(handleUpdate);
+    if (localController != null) {
+      localController!.dispose();
+      localController = null;
     }
 
     super.dispose();
@@ -112,14 +112,14 @@ class _ExpansibleState extends State<BadExpansible> {
   Widget build(BuildContext context) {
     return AnimatedSize(
       duration: const Duration(milliseconds: 300),
-      onEnd: () => widget.onChanged?.call(_controller.isExpanded),
+      onEnd: () => widget.onChanged?.call(controller.isExpanded),
       alignment: Alignment.topCenter,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          widget.headerBuilder(_controller),
-          if (_controller.isExpanded) widget.child,
+          widget.headerBuilder(controller),
+          if (controller.isExpanded) widget.child,
         ],
       ),
     );
