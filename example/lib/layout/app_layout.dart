@@ -71,45 +71,47 @@ class _AppAside extends StatelessWidget {
   Widget build(BuildContext context) {
     final current = ModalRoute.settingsOf(context)!.name ?? '';
 
-    return ListView(
-      padding: const EdgeInsets.all(12),
-      children: [
-        BadExpansible(
-          headerBuilder: (controller) {
-            return BadClickable(
-              onClick: () => controller.toggle(),
-              child: SizedBox(
-                height: 48,
-                child: Row(
-                  children: [
-                    const Icon(Icons.widgets_outlined),
-                    const Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8),
-                        child: BadText('Widgets'),
+    return SafeArea(
+      child: ListView(
+        padding: const EdgeInsets.all(12),
+        children: [
+          BadExpansible(
+            headerBuilder: (controller) {
+              return BadClickable(
+                onClick: () => controller.toggle(),
+                child: SizedBox(
+                  height: 48,
+                  child: Row(
+                    children: [
+                      const Icon(Icons.widgets_outlined),
+                      const Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          child: BadText('Widgets'),
+                        ),
                       ),
-                    ),
-                    controller.isExpanded
-                        ? const Icon(Icons.expand_less_outlined)
-                        : const Icon(Icons.expand_more_outlined),
-                  ],
+                      controller.isExpanded
+                          ? const Icon(Icons.expand_less_outlined)
+                          : const Icon(Icons.expand_more_outlined),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
-          child: Column(
-            children: [
-              for (final route in appRoutes)
-                _AsideMenuItem(
-                  currentRoute: current,
-                  targetRoute: route.path,
-                  title: route.names.$1,
-                  description: route.names.$2,
-                ),
-            ],
+              );
+            },
+            child: Column(
+              children: [
+                for (final route in appRoutes)
+                  _AsideMenuItem(
+                    currentRoute: current,
+                    targetRoute: route.path,
+                    title: route.names.$1,
+                    description: route.names.$2,
+                  ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
