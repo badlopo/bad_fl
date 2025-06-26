@@ -5,7 +5,6 @@ library widgets;
 
 export 'widgets/src/free_draw.dart';
 
-export 'widgets/src/anchored_scrollable/anchored_scrollable.dart';
 export 'widgets/src/contribution_calendar/contribution_calendar.dart';
 export 'widgets/src/named_stack/named_stack.dart';
 
@@ -14,6 +13,7 @@ export 'widgets/src/named_stack/named_stack.dart';
 // ===== ===== ===== ===== =====
 
 export 'widgets/transparent/adsorb.dart';
+export 'widgets/transparent/anchored_scrollable.dart';
 export 'widgets/transparent/capture.dart';
 export 'widgets/transparent/clickable.dart';
 export 'widgets/transparent/expansible.dart';
