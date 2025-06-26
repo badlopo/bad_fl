@@ -62,32 +62,35 @@ class ShimmerPage extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
             const SizedBox(height: 12),
-            const Row(
-              children: [
-                BadShimmer(
-                  width: 100,
-                  height: 100,
-                  direction: ShimmerDirection.l2r,
-                ),
-                BadShimmer(
-                  width: 100,
-                  height: 100,
-                  margin: EdgeInsets.only(left: 10),
-                  direction: ShimmerDirection.r2l,
-                ),
-                BadShimmer(
-                  width: 100,
-                  height: 100,
-                  margin: EdgeInsets.only(left: 10),
-                  direction: ShimmerDirection.t2b,
-                ),
-                BadShimmer(
-                  width: 100,
-                  height: 100,
-                  margin: EdgeInsets.only(left: 10),
-                  direction: ShimmerDirection.b2t,
-                ),
-              ],
+            const SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  BadShimmer(
+                    width: 100,
+                    height: 100,
+                    direction: ShimmerDirection.l2r,
+                  ),
+                  BadShimmer(
+                    width: 100,
+                    height: 100,
+                    margin: EdgeInsets.only(left: 10),
+                    direction: ShimmerDirection.r2l,
+                  ),
+                  BadShimmer(
+                    width: 100,
+                    height: 100,
+                    margin: EdgeInsets.only(left: 10),
+                    direction: ShimmerDirection.t2b,
+                  ),
+                  BadShimmer(
+                    width: 100,
+                    height: 100,
+                    margin: EdgeInsets.only(left: 10),
+                    direction: ShimmerDirection.b2t,
+                  ),
+                ],
+              ),
             ),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 12),
