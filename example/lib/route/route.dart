@@ -1,5 +1,6 @@
 import 'package:example/layout/app_layout.dart';
 import 'package:example/page/draft.dart';
+import 'package:example/page/widget/anchored_scrollable.dart';
 import 'package:example/page/widget/katex.dart';
 import 'package:example/page/widget/popup.dart';
 import 'package:example/page/widget/preview.dart';
@@ -28,6 +29,11 @@ const appRoutes = [
     path: '/widget/adsorb',
     page: AdsorbPage(),
     names: ('Adsorb', '吸附'),
+  ),
+  RouteObject(
+    path: '/widget/anchored_scrollable',
+    page: AnchoredScrollablePage(),
+    names: ('AnchoredScrollable', '锚点滚动'),
   ),
   RouteObject(
     path: '/widget/button',
