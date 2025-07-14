@@ -1,6 +1,6 @@
 # extension/num
 
-- [Source Code](../../lib/extension/src/num.dart)
+- [Source Code](../../lib/extensions/src/num.dart)
 - [GitHub Gist](https://gist.github.com/lopo12123/f7d87e05f90d43eed76feaee75d821b1)
 - [Live Example](https://dartpad.dev/?id=f7d87e05f90d43eed76feaee75d821b1&run=true&channel=stable)
 

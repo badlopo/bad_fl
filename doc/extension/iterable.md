@@ -1,6 +1,6 @@
 # extension/iterable
 
-- [Source Code](../../lib/extension/src/iterable.dart)
+- [Source Code](../../lib/extensions/src/iterable.dart)
 - [GitHub Gist](https://gist.github.com/lopo12123/fa2d412f12dff1c555853c60b49ff22f)
 - [Live Example](https://dartpad.dev/?id=fa2d412f12dff1c555853c60b49ff22f&run=true&channel=stable)
 
