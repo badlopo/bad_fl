@@ -42,7 +42,7 @@ extension NumExt on num {
     return '$raw$unit';
   }
 
-  /// alias of `toReadable(1)`
+  /// alias of `toReadable()`
   String get readable => toReadable();
 
   /// Convert to a grouped string (e.g. `1234567` -> `1,234,567`).
@@ -64,6 +64,6 @@ extension NumExt on num {
     return str.replaceAllMapped(reg, (Match match) => '${match[1]}$separator');
   }
 
-  /// Alias of `toGroupedString()`
+  /// Alias of `toGrouped()`
   String get grouped => toGrouped();
 }
