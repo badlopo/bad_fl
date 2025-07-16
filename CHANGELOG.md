@@ -1,5 +1,60 @@
 > **WARNING: THIS IS UNSTABLE UNTIL 1.x.x RELEASE**
 
+## 1.0.0
+
+🎉 INTRODUCING 1.0.0!
+
+### Extensions
+
+- `IterableExt`:
+    - `enumerate`: REMOVED! Since there is already a built-in getter `indexed` that does exactly the same thing.
+    - `zip`: Introducing new extension methods on `Iterable`.
+
+### Impl (deprecated)
+
+Most of the content under this module has been deleted (because it can be better encapsulated directly based on the
+third-party packages it uses).
+
+- `TextMeasureImpl`: moved to the `utils` module
+- `FileStorageImpl`: moved to the `kit` module
+
+### Utils
+
+- `helper`: Here are some helper functions for data conversion, such as `asIs`, `nonNull`(new), `separate`(new).
+- `measureText`: Previously `TextMeasureImpl.measure`, now classified as a utility function.
+- `Result`: Use `as` instead of null check operator `!` to enable nullable generics.
+
+### Widgets
+
+- `BadAnchoredScrollable`: Completely rewritten! Now the anchor information is stored in `BadAnchoredScrollable` instead
+  of its controller, which allows you to use one controller to control as many different lists as you want.
+    - Now you can control multiple lists with the same `BadAnchoredScrollableController`.
+    - Now `null` can also be used as an anchor value.
+    - Silently ignore attempts to jump to nonexistent anchors (previously would have resulted in an error).
+- `BadButton`: Completely rewritten! Now the button will always be a `StatefulWidget`.
+    - The logic of `BadButtonAsync` has been merged, `onPressed` now accepts a function that returns a `FutureOr`, and
+      the button will show the `loadingWidget` during its execution.
+    - Rename `BadButton.two` to `BadButton.icon`, which is more semantically correct.
+- `BadExpandable`:
+    - Rename to `BadExpansible`.
+    - Re-implement the way it works.
+- `BadPopup`:
+    - Re-implement show and hide. Now you can use one controller to control multiple components. (something like `spmc`)
+    - Remove `rebuildOnVisible`, add it later if necessary.
+    - Do some renaming on its properties.
+- `BadSwitch`: Completely rewritten! Now the button will always be a `StatefulWidget`.
+    - Custom loading widgets are no longer supported, always use `Icons.autorenew_rounded` (this allows for better size
+      control, of course this can also be achieved using `FittedBox`).
+    - Simplified `padding` to `insets`, now the padding on all four sides is always the same.
+    - rename `onTap` to `onWillChange`, now it is more intuitive and supports async handler and cancellation.
+- `BadTree`:
+    - The tree control logic and rendering logic are now completely decoupled. You can use `BadTreeController` only and
+      implement your own renderer as needed.
+    - Now a `BadTreeController` can be attached to multiple `BadTree` widget to achieve the effect of multiple views
+      sharing state and linkage.
+
+---
+
 ## 0.13.3
 
 > 2025.05.28
@@ -14,7 +69,7 @@ FIX:
 
 FIX:
 
-- `BadPopup`: correct lifecycle handlers & add some log info.
+- `BadPopup`: correct lifecycle handlers and add some log info.
 
 ## 0.13.1
 
