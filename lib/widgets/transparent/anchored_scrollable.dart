@@ -17,13 +17,13 @@ class _AnchorManager<AnchorValue> {
 }
 
 /// context provider
-class _AnchoredScrollableProvider<AnchorValue> extends InheritedWidget {
-  static _AnchoredScrollableProvider<AnchorValue> of<AnchorValue>(
+class _AnchoredScrollableScope<AnchorValue> extends InheritedWidget {
+  static _AnchoredScrollableScope<AnchorValue> of<AnchorValue>(
       BuildContext context) {
     // final provider = context.dependOnInheritedWidgetOfExactType<
     //     _AnchoredScrollableProvider<AnchorValue>>();
     final provider = context.getInheritedWidgetOfExactType<
-        _AnchoredScrollableProvider<AnchorValue>>();
+        _AnchoredScrollableScope<AnchorValue>>();
 
     assert(provider != null,
         "Cannot find AnchoredScrollableProvider in the widget tree. Make sure you are using BadAnchoredScrollable as an ancestor widget.");
@@ -33,14 +33,14 @@ class _AnchoredScrollableProvider<AnchorValue> extends InheritedWidget {
 
   final _AnchorManager<AnchorValue> anchorManager;
 
-  const _AnchoredScrollableProvider({
+  const _AnchoredScrollableScope({
     required this.anchorManager,
     required super.child,
   });
 
   @override
   bool updateShouldNotify(
-      covariant _AnchoredScrollableProvider<AnchorValue> oldWidget) {
+      covariant _AnchoredScrollableScope<AnchorValue> oldWidget) {
     return oldWidget.anchorManager != anchorManager;
   }
 }
@@ -128,7 +128,7 @@ class _ScrollAnchorState<AnchorValue>
 
     // hold a reference to the new anchor manager
     // and register self to it
-    _anchorManager = _AnchoredScrollableProvider.of<AnchorValue>(context)
+    _anchorManager = _AnchoredScrollableScope.of<AnchorValue>(context)
         .anchorManager
       ..register(widget.anchorValue, ref);
   }
@@ -304,7 +304,7 @@ class _AnchoredScrollableState<AnchorValue>
       scrollDirection: widget.scrollDirection,
       padding: widget.padding,
       physics: widget.physics,
-      child: _AnchoredScrollableProvider(
+      child: _AnchoredScrollableScope(
         anchorManager: anchorManager,
         child: switch (widget.scrollDirection) {
           Axis.horizontal => Row(
