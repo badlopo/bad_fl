@@ -6,7 +6,6 @@ library widgets;
 export 'widgets/src/free_draw.dart';
 
 export 'widgets/src/contribution_calendar/contribution_calendar.dart';
-export 'widgets/src/named_stack/named_stack.dart';
 
 // ===== ===== ===== ===== =====
 // >>>>> transparent widgets
