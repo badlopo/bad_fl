@@ -13,7 +13,6 @@ class _DraftPageState extends State<DraftPage> {
   int active = 1;
 
   String name = '';
-  final nsc = NamedStackController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,31 +39,6 @@ class _DraftPageState extends State<DraftPage> {
           ],
         ),
       ),
-      // body: IndexedStack(
-      //   index: active - 1,
-      //   children: [
-      //     LifecycleReportPage(name: 'page1'),
-      //     LifecycleReportPage(name: 'page2'),
-      //     LifecycleReportPage(name: 'page3'),
-      //   ],
-      // ),
-      // body: BadNamedStack(
-      //   controller: nsc,
-      //   layers: const [
-      //     NamedStackLayer(
-      //       name: 'page1',
-      //       child: LifecycleReportPage(key: ValueKey('page1'), name: 'page1'),
-      //     ),
-      //     NamedStackLayer(
-      //       name: 'page2',
-      //       child: LifecycleReportPage(key: ValueKey('page2'), name: 'page2'),
-      //     ),
-      //     NamedStackLayer(
-      //       name: 'page3',
-      //       child: LifecycleReportPage(key: ValueKey('page3'), name: 'page3'),
-      //     ),
-      //   ],
-      // ),
     );
   }
 }

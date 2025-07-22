@@ -4,6 +4,13 @@
 
 🎉 INTRODUCING 1.0.0!
 
+### Experimental
+
+The items under this module are experimental and will ensure basic normal use but may change at any time.
+
+- `BadNamedStack`: Completely rewritten! Now it provides parameters and usage similar to `IndexedStack` (no longer using
+  `NamedStackController`).
+
 ### Extensions
 
 - `IterableExt`:
