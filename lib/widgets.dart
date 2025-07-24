@@ -11,7 +11,6 @@ export 'widgets/src/contribution_calendar/contribution_calendar.dart';
 // >>>>> transparent widgets
 // ===== ===== ===== ===== =====
 
-export 'widgets/transparent/adsorb.dart';
 export 'widgets/transparent/anchored_scrollable.dart';
 export 'widgets/transparent/capture.dart';
 export 'widgets/transparent/clickable.dart';
