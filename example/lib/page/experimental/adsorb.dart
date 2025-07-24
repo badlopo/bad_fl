@@ -1,4 +1,4 @@
-import 'package:bad_fl/widgets.dart';
+import 'package:bad_fl/bad_fl.dart';
 import 'package:flutter/material.dart';
 
 class _AdsorbShowcase extends StatelessWidget {

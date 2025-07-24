@@ -75,6 +75,21 @@ class _AppAside extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.all(12),
         children: [
+          for (final route in appRoutes)
+            _AsideMenuItem(
+              currentRoute: current,
+              targetRoute: route.path,
+              title: route.names.$1,
+              description: route.names.$2,
+            ),
+        ],
+      ),
+    );
+
+    return SafeArea(
+      child: ListView(
+        padding: const EdgeInsets.all(12),
+        children: [
           BadExpansible(
             headerBuilder: (controller) {
               return BadClickable(
@@ -117,14 +132,16 @@ class _AppAside extends StatelessWidget {
 }
 
 class AppLayout extends StatelessWidget {
+  final (String, String) names;
+
   final Widget child;
 
-  const AppLayout({super.key, required this.child});
+  const AppLayout({super.key, required this.names, required this.child});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: Text(names.$1)),
       drawer: const Drawer(child: _AppAside()),
       body: child,
     );

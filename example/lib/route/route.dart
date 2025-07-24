@@ -8,7 +8,6 @@ import 'package:example/page/widget/shimmer.dart';
 import 'package:example/page/widget/switch.dart';
 import 'package:example/page/widget/text.dart';
 import 'package:example/page/widget/tree.dart';
-import 'package:example/page/widget/adsorb.dart';
 import 'package:example/page/widget/button.dart';
 import 'package:flutter/material.dart';
 
@@ -25,11 +24,11 @@ class RouteObject {
 }
 
 const appRoutes = [
-  RouteObject(
-    path: '/widget/adsorb',
-    page: AdsorbPage(),
-    names: ('Adsorb', '吸附'),
-  ),
+  // RouteObject(
+  //   path: '/widget/adsorb',
+  //   page: AdsorbPage(),
+  //   names: ('Adsorb', '吸附'),
+  // ),
   RouteObject(
     path: '/widget/anchored_scrollable',
     page: AnchoredScrollablePage(),
@@ -79,6 +78,6 @@ const appRoutes = [
 
 final Map<String, WidgetBuilder> appRouter = {
   for (final route in appRoutes)
-    route.path: (context) => AppLayout(child: route.page),
+    route.path: (context) => AppLayout(names: route.names, child: route.page),
   '/draft': (_) => const DraftPage(),
 };
