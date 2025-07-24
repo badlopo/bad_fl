@@ -1,4 +1,4 @@
-import 'package:example/layout/app_layout.dart';
+import 'package:bad_fl/bad_fl.dart';
 import 'package:example/page/draft.dart';
 import 'package:example/page/widget/anchored_scrollable.dart';
 import 'package:example/page/widget/katex.dart';
@@ -11,73 +11,94 @@ import 'package:example/page/widget/tree.dart';
 import 'package:example/page/widget/button.dart';
 import 'package:flutter/material.dart';
 
-class RouteObject {
+part 'app_layout.dart';
+
+sealed class AsideMenuItem {
+  const AsideMenuItem();
+}
+
+class AsideMenuGroup extends AsideMenuItem {
+  final String name;
+
+  const AsideMenuGroup(this.name);
+}
+
+class AsideMenuSubtitle extends AsideMenuItem {
+  final String name;
+
+  const AsideMenuSubtitle(this.name);
+}
+
+class AsideMenuRoute extends AsideMenuItem {
   final String path;
   final Widget page;
-  final (String, String) names;
+  final ({String en, String zh}) names;
 
-  const RouteObject({
+  const AsideMenuRoute({
     required this.path,
     required this.page,
     required this.names,
   });
 }
 
-const appRoutes = [
-  // RouteObject(
-  //   path: '/widget/adsorb',
-  //   page: AdsorbPage(),
-  //   names: ('Adsorb', '吸附'),
-  // ),
-  RouteObject(
+const firstRoute = '/widget/anchored_scrollable';
+
+const menuItems = [
+  AsideMenuGroup('Widget'),
+  AsideMenuSubtitle('Transparent'),
+  AsideMenuRoute(
     path: '/widget/anchored_scrollable',
     page: AnchoredScrollablePage(),
-    names: ('AnchoredScrollable', '锚点滚动'),
+    names: (en: 'AnchoredScrollable', zh: '锚点滚动'),
   ),
-  RouteObject(
-    path: '/widget/button',
-    page: ButtonPage(),
-    names: ('Button', '按钮'),
-  ),
-  RouteObject(
-    path: '/widget/katex',
-    page: KatexPage(),
-    names: ('Katex', '公式'),
-  ),
-  RouteObject(
+  AsideMenuRoute(
     path: '/widget/popup',
     page: PopupPage(),
-    names: ('Popup', '弹出'),
+    names: (en: 'Popup', zh: '弹出'),
   ),
-  RouteObject(
+  AsideMenuRoute(
     path: '/widget/preview',
     page: PreviewPage(),
-    names: ('Preview', '预览'),
+    names: (en: 'Preview', zh: '预览'),
   ),
-  RouteObject(
-    path: '/widget/shimmer',
-    page: ShimmerPage(),
-    names: ('Shimmer', '闪光'),
-  ),
-  RouteObject(
-    path: '/widget/switch',
-    page: SwitchPage(),
-    names: ('Switch', '开关'),
-  ),
-  RouteObject(
-    path: '/widget/text',
-    page: TextPage(),
-    names: ('Text', '文本'),
-  ),
-  RouteObject(
+  AsideMenuRoute(
     path: '/widget/tree',
     page: TreePage(),
-    names: ('Tree', '树'),
+    names: (en: 'Tree', zh: '树'),
   ),
+  AsideMenuSubtitle('Visual'),
+  AsideMenuRoute(
+    path: '/widget/button',
+    page: ButtonPage(),
+    names: (en: 'Button', zh: '按钮'),
+  ),
+  AsideMenuRoute(
+    path: '/widget/katex',
+    page: KatexPage(),
+    names: (en: 'Katex', zh: '公式'),
+  ),
+  AsideMenuRoute(
+    path: '/widget/shimmer',
+    page: ShimmerPage(),
+    names: (en: 'Shimmer', zh: '闪光'),
+  ),
+  AsideMenuRoute(
+    path: '/widget/text',
+    page: TextPage(),
+    names: (en: 'Text', zh: '文本'),
+  ),
+  AsideMenuSubtitle('Prefab'),
+  AsideMenuRoute(
+    path: '/widget/switch',
+    page: SwitchPage(),
+    names: (en: 'Switch', zh: '开关'),
+  ),
+  // AsideMenuGroup('Widget'),
 ];
 
 final Map<String, WidgetBuilder> appRouter = {
-  for (final route in appRoutes)
-    route.path: (context) => AppLayout(names: route.names, child: route.page),
+  for (final item in menuItems)
+    if (item is AsideMenuRoute)
+      item.path: (context) => AppLayout(names: item.names, child: item.page),
   '/draft': (_) => const DraftPage(),
 };
