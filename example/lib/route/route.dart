@@ -1,6 +1,7 @@
 import 'package:bad_fl/bad_fl.dart';
 import 'package:example/page/draft.dart';
 import 'package:example/page/experimental/adsorb.dart';
+import 'package:example/page/experimental/named_stack.dart';
 import 'package:example/page/widget/anchored_scrollable.dart';
 import 'package:example/page/widget/expansible.dart';
 import 'package:example/page/widget/katex.dart';
@@ -111,6 +112,11 @@ const menuItems = [
     path: '/widget/adsorb',
     page: AdsorbPage(),
     names: (en: 'Adsorb', zh: '吸附'),
+  ),
+  AsideMenuRoute(
+    path: '/widget/named_stack',
+    page: NamedStackPage(),
+    names: (en: 'NamedStack', zh: '命名堆叠'),
   ),
 ];
 
