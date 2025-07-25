@@ -9,71 +9,66 @@ class PreviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(bottom: 12),
-              child: BadText(
-                'Container',
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(bottom: 12),
+            child: BadText(
+              'Container',
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
             ),
-            BadPreview(
-              previewWidgetBuilder: (_, child) =>
-                  UnconstrainedBox(child: child),
-              child: Container(width: 200, height: 200, color: Colors.red),
+          ),
+          BadPreview(
+            previewWidgetBuilder: (_, child) => UnconstrainedBox(child: child),
+            child: Container(width: 200, height: 200, color: Colors.red),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 12),
+            child: BadText(
+              'Text',
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 12),
-              child: BadText(
-                'Text',
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
+          ),
+          const BadPreview(
+            previewWidget: Center(child: BadText(_lorem, color: Colors.white)),
+            child: BadText(_lorem),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 12),
+            child: BadText(
+              'Image',
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
             ),
-            const BadPreview(
-              previewWidget:
-                  Center(child: BadText(_lorem, color: Colors.white)),
-              child: BadText(_lorem),
+          ),
+          BadPreview(
+            child: Image.network(
+              'https://picsum.photos/200',
+              width: 200,
+              height: 200,
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 12),
-              child: BadText(
-                'Image',
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 12),
+            child: BadText(
+              'Custom previewWidget & background color',
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
             ),
-            BadPreview(
-              child: Image.network(
-                'https://picsum.photos/200',
-                width: 200,
-                height: 200,
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 12),
-              child: BadText(
-                'Custom previewWidget & background color',
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            BadPreview(
-              color: Colors.grey,
-              previewWidget:
-                  Container(width: 200, height: 200, color: Colors.orange),
-              previewWidgetBuilder: (_, child) =>
-                  UnconstrainedBox(child: child),
-              child: Container(width: 200, height: 200, color: Colors.red),
-            ),
-          ],
-        ),
+          ),
+          BadPreview(
+            color: Colors.grey,
+            previewWidget:
+                Container(width: 200, height: 200, color: Colors.orange),
+            previewWidgetBuilder: (_, child) => UnconstrainedBox(child: child),
+            child: Container(width: 200, height: 200, color: Colors.red),
+          ),
+        ],
       ),
     );
   }

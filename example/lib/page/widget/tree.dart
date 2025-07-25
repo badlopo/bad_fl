@@ -38,36 +38,34 @@ class _TreePageState extends State<TreePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Row(
-          children: [
-            Expanded(
-              child: BadTree(
-                controller: treeController,
-                nodeBuilder: (context, node) {
-                  return BadClickable(
-                    onClick: () => treeController.toggleExpand(node),
-                    child: _TreeNode(node: node),
-                  );
-                },
-              ),
+    return Padding(
+      padding: const EdgeInsets.all(24),
+      child: Row(
+        children: [
+          Expanded(
+            child: BadTree(
+              controller: treeController,
+              nodeBuilder: (context, node) {
+                return BadClickable(
+                  onClick: () => treeController.toggleExpand(node),
+                  child: _TreeNode(node: node),
+                );
+              },
             ),
-            const VerticalDivider(),
-            Expanded(
-              child: BadTree(
-                controller: treeController,
-                nodeBuilder: (context, node) {
-                  return BadClickable(
-                    onClick: () => treeController.toggleExpand(node),
-                    child: _TreeNode(node: node),
-                  );
-                },
-              ),
+          ),
+          const VerticalDivider(),
+          Expanded(
+            child: BadTree(
+              controller: treeController,
+              nodeBuilder: (context, node) {
+                return BadClickable(
+                  onClick: () => treeController.toggleExpand(node),
+                  child: _TreeNode(node: node),
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -9,26 +9,24 @@ class TextPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        padding: const EdgeInsets.all(24),
-        children: const [
-          BadText(_lorem),
-          Divider(),
-          BadText(
-            _lorem,
-            color: Colors.blue,
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-          ),
-          Divider(),
-          BadText(_lorem, underline: true, italic: true),
-          Divider(),
-          BadText(_lorem, maxLines: 1),
-          Divider(),
-          BadText(_lorem, lineHeight: 24, letterSpacing: 2),
-        ],
-      ),
+    return ListView(
+      padding: const EdgeInsets.all(24),
+      children: const [
+        BadText(_lorem),
+        Divider(),
+        BadText(
+          _lorem,
+          color: Colors.blue,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+        ),
+        Divider(),
+        BadText(_lorem, underline: true, italic: true),
+        Divider(),
+        BadText(_lorem, maxLines: 1),
+        Divider(),
+        BadText(_lorem, lineHeight: 24, letterSpacing: 2),
+      ],
     );
   }
 }

@@ -67,38 +67,36 @@ class KatexPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        padding: const EdgeInsets.all(24),
-        children: [
-          ..._examples(),
-          const BadText(
-            '样式',
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            child: ColoredBox(
-              color: Colors.grey.shade100,
-              child: const Padding(
-                padding: EdgeInsets.all(8),
-                child: BadText(
-                  _styleExample,
-                  color: Colors.black87,
-                  fontSize: 14,
-                  lineHeight: 21,
-                ),
+    return ListView(
+      padding: const EdgeInsets.all(24),
+      children: [
+        ..._examples(),
+        const BadText(
+          '样式',
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: ColoredBox(
+            color: Colors.grey.shade100,
+            child: const Padding(
+              padding: EdgeInsets.all(8),
+              child: BadText(
+                _styleExample,
+                color: Colors.black87,
+                fontSize: 14,
+                lineHeight: 21,
               ),
             ),
           ),
-          const BadKatex(
-            raw: _styleExample,
-            style: TextStyle(color: Colors.red),
-            formulaStyle: TextStyle(color: Colors.blue),
-          ),
-        ],
-      ),
+        ),
+        const BadKatex(
+          raw: _styleExample,
+          style: TextStyle(color: Colors.red),
+          formulaStyle: TextStyle(color: Colors.blue),
+        ),
+      ],
     );
   }
 }

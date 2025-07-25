@@ -53,49 +53,47 @@ class AdsorbPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        padding: const EdgeInsets.all(24),
-        children: const [
-          _AdsorbShowcase(
-            strategy: AdsorbStrategy.both,
-            title: 'Adsorption strategy: both',
-            description: '释放后，红色方块将自动吸附到最近的边缘。',
-          ),
-          Divider(),
-          _AdsorbShowcase(
-            strategy: AdsorbStrategy.horizontal,
-            title: 'Adsorption strategy: horizontal',
-            description: '释放后，红色方块将自动吸附到左侧或右侧（较近的一边）。',
-          ),
-          Divider(),
-          _AdsorbShowcase(
-            strategy: AdsorbStrategy.vertical,
-            title: 'Adsorption strategy: vertical',
-            description: '释放后，红色方块将自动吸附到上侧或下侧（较近的一边）。',
-          ),
-          Divider(),
-          _AdsorbShowcase(
-            strategy: AdsorbStrategy.none,
-            title: 'Adsorption strategy: none',
-            description: '释放后，红色方块将保持所在位置。',
-          ),
-          Divider(),
-          _AdsorbShowcase(
-            strategy: AdsorbStrategy.both,
-            insets: EdgeInsets.all(10),
-            title: '正偏移',
-            description: '可以通过 insets 参数来设置吸附时的额外偏移，设为正值则向内偏移',
-          ),
-          Divider(),
-          _AdsorbShowcase(
-            strategy: AdsorbStrategy.both,
-            insets: EdgeInsets.all(-10),
-            title: '负偏移',
-            description: '可以通过 insets 参数来设置吸附时的额外偏移，设为负值则向外偏移',
-          ),
-        ],
-      ),
+    return ListView(
+      padding: const EdgeInsets.all(24),
+      children: const [
+        _AdsorbShowcase(
+          strategy: AdsorbStrategy.both,
+          title: 'Adsorption strategy: both',
+          description: '释放后，红色方块将自动吸附到最近的边缘。',
+        ),
+        Divider(),
+        _AdsorbShowcase(
+          strategy: AdsorbStrategy.horizontal,
+          title: 'Adsorption strategy: horizontal',
+          description: '释放后，红色方块将自动吸附到左侧或右侧（较近的一边）。',
+        ),
+        Divider(),
+        _AdsorbShowcase(
+          strategy: AdsorbStrategy.vertical,
+          title: 'Adsorption strategy: vertical',
+          description: '释放后，红色方块将自动吸附到上侧或下侧（较近的一边）。',
+        ),
+        Divider(),
+        _AdsorbShowcase(
+          strategy: AdsorbStrategy.none,
+          title: 'Adsorption strategy: none',
+          description: '释放后，红色方块将保持所在位置。',
+        ),
+        Divider(),
+        _AdsorbShowcase(
+          strategy: AdsorbStrategy.both,
+          insets: EdgeInsets.all(10),
+          title: '正偏移',
+          description: '可以通过 insets 参数来设置吸附时的额外偏移，设为正值则向内偏移',
+        ),
+        Divider(),
+        _AdsorbShowcase(
+          strategy: AdsorbStrategy.both,
+          insets: EdgeInsets.all(-10),
+          title: '负偏移',
+          description: '可以通过 insets 参数来设置吸附时的额外偏移，设为负值则向外偏移',
+        ),
+      ],
     );
   }
 }

@@ -21,40 +21,38 @@ class _SwitchPageState extends State<SwitchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const BadText(
-              'onWillChange',
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              child: BadText('下次点击将切换${ok ? '成功' : '失败'}'),
-            ),
-            BadSwitch(onWillChange: handleToggle),
-            const Divider(),
-            const BadText(
-              'async handler',
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 12),
-              child: BadText('点击后将等待1s, 然后切换状态'),
-            ),
-            BadSwitch(
-              onWillChange: (to) async {
-                await Future.delayed(const Duration(seconds: 1));
-                return true;
-              },
-            ),
-          ],
-        ),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const BadText(
+            'onWillChange',
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: BadText('下次点击将切换${ok ? '成功' : '失败'}'),
+          ),
+          BadSwitch(onWillChange: handleToggle),
+          const Divider(),
+          const BadText(
+            'async handler',
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 12),
+            child: BadText('点击后将等待1s, 然后切换状态'),
+          ),
+          BadSwitch(
+            onWillChange: (to) async {
+              await Future.delayed(const Duration(seconds: 1));
+              return true;
+            },
+          ),
+        ],
       ),
     );
   }

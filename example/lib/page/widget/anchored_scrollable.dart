@@ -25,55 +25,53 @@ class _AnchoredScrollablePageState extends State<AnchoredScrollablePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-                'You can control multiple lists with the same "BadAnchoredScrollableController"'),
-          ),
-          SizedBox(
-            height: 48,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-              children: [
-                for (int i = 0; i < anchorCount; i += 1)
-                  ElevatedButton(
-                    onPressed: () => asc.jumpToAnchor(i),
-                    child: Text('Jump to anchor$i'),
-                  ),
-              ],
-            ),
-          ),
-          const Divider(),
-          Expanded(
-              child: Row(
+    return Column(
+      children: [
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+              'You can control multiple lists with the same "BadAnchoredScrollableController"'),
+        ),
+        SizedBox(
+          height: 48,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
             children: [
-              Expanded(
-                child: BadAnchoredScrollable(
-                  controller: asc,
-                  scrollController: ScrollController(),
-                  children: [
-                    ..._buildListItems(),
-                  ],
+              for (int i = 0; i < anchorCount; i += 1)
+                ElevatedButton(
+                  onPressed: () => asc.jumpToAnchor(i),
+                  child: Text('Jump to anchor$i'),
                 ),
-              ),
-              VerticalDivider(),
-              Expanded(
-                child: BadAnchoredScrollable(
-                  controller: asc,
-                  scrollController: ScrollController(),
-                  children: [
-                    ..._buildListItems(),
-                  ],
-                ),
-              ),
             ],
-          )),
-        ],
-      ),
+          ),
+        ),
+        const Divider(),
+        Expanded(
+            child: Row(
+          children: [
+            Expanded(
+              child: BadAnchoredScrollable(
+                controller: asc,
+                scrollController: ScrollController(),
+                children: [
+                  ..._buildListItems(),
+                ],
+              ),
+            ),
+            const VerticalDivider(),
+            Expanded(
+              child: BadAnchoredScrollable(
+                controller: asc,
+                scrollController: ScrollController(),
+                children: [
+                  ..._buildListItems(),
+                ],
+              ),
+            ),
+          ],
+        )),
+      ],
     );
   }
 }
