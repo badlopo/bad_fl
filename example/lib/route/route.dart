@@ -1,10 +1,12 @@
 import 'package:bad_fl/bad_fl.dart';
 import 'package:example/page/draft.dart';
+import 'package:example/page/experimental/adsorb.dart';
 import 'package:example/page/widget/anchored_scrollable.dart';
 import 'package:example/page/widget/katex.dart';
 import 'package:example/page/widget/popup.dart';
 import 'package:example/page/widget/preview.dart';
 import 'package:example/page/widget/shimmer.dart';
+import 'package:example/page/widget/spinner.dart';
 import 'package:example/page/widget/switch.dart';
 import 'package:example/page/widget/text.dart';
 import 'package:example/page/widget/tree.dart';
@@ -62,6 +64,11 @@ const menuItems = [
     names: (en: 'Preview', zh: '预览'),
   ),
   AsideMenuRoute(
+    path: '/widget/spinner',
+    page: SpinnerPage(),
+    names: (en: 'Spinner', zh: '旋转'),
+  ),
+  AsideMenuRoute(
     path: '/widget/tree',
     page: TreePage(),
     names: (en: 'Tree', zh: '树'),
@@ -93,7 +100,12 @@ const menuItems = [
     page: SwitchPage(),
     names: (en: 'Switch', zh: '开关'),
   ),
-  // AsideMenuGroup('Widget'),
+  AsideMenuGroup('Experimental'),
+  AsideMenuRoute(
+    path: '/widget/adsorb',
+    page: AdsorbPage(),
+    names: (en: 'Adsorb', zh: '吸附'),
+  ),
 ];
 
 final Map<String, WidgetBuilder> appRouter = {
