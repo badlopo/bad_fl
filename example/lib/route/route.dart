@@ -2,6 +2,7 @@ import 'package:bad_fl/bad_fl.dart';
 import 'package:example/page/draft.dart';
 import 'package:example/page/experimental/adsorb.dart';
 import 'package:example/page/widget/anchored_scrollable.dart';
+import 'package:example/page/widget/expansible.dart';
 import 'package:example/page/widget/katex.dart';
 import 'package:example/page/widget/popup.dart';
 import 'package:example/page/widget/preview.dart';
@@ -52,6 +53,11 @@ const menuItems = [
     path: '/widget/anchored_scrollable',
     page: AnchoredScrollablePage(),
     names: (en: 'AnchoredScrollable', zh: '锚点滚动'),
+  ),
+  AsideMenuRoute(
+    path: '/widget/expansible',
+    page: ExpansiblePage(),
+    names: (en: 'Expansible', zh: '展开'),
   ),
   AsideMenuRoute(
     path: '/widget/popup',
