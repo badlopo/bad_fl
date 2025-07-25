@@ -62,146 +62,105 @@ class _AsideMenuRoute extends StatelessWidget {
   }
 }
 
-class _AppAside extends StatelessWidget {
-  const _AppAside();
+class _AsideMenuGroup extends StatelessWidget {
+  final AsideMenuGroup group;
+  final List<AsideMenuItem> items;
 
-  Iterable<Widget> _expandMenuItems(String current) sync* {
+  const _AsideMenuGroup({required this.group, required this.items});
+
+  @override
+  Widget build(BuildContext context) {
+    final current = ModalRoute.settingsOf(context)!.name ?? '';
+
+    return BadExpansible(
+      headerBuilder: (controller) {
+        return BadClickable(
+          onClick: () => controller.toggle(),
+          child: SizedBox(
+            height: 48,
+            child: Row(
+              children: [
+                const Icon(Icons.widgets_outlined),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: BadText(group.name),
+                  ),
+                ),
+                controller.isExpanded
+                    ? const Icon(Icons.expand_less_outlined)
+                    : const Icon(Icons.expand_more_outlined),
+              ],
+            ),
+          ),
+        );
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (final item in items)
+            switch (item) {
+              AsideMenuGroup() => BadText(item.name),
+              AsideMenuSubtitle() => Container(
+                  margin: const EdgeInsets.symmetric(vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.blue.shade700,
+                    borderRadius: const BorderRadius.all(Radius.circular(4)),
+                  ),
+                  child: BadText(
+                    item.name,
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
+                ),
+              AsideMenuRoute() => _AsideMenuRoute(
+                  currentRoute: current,
+                  targetRoute: item.path,
+                  title: item.names.en,
+                  description: item.names.zh,
+                ),
+            },
+        ],
+      ),
+    );
+  }
+}
+
+class _AsideMenu extends StatelessWidget {
+  const _AsideMenu();
+
+  Iterable<Widget> _expandMenuItems() sync* {
     AsideMenuGroup? group;
-    List<AsideMenuItem> groupItem = [];
+    List<AsideMenuItem> groupItems = [];
 
     for (final menuItem in menuItems) {
       if (menuItem is AsideMenuGroup) {
         if (group == null) {
           group = menuItem;
         } else {
-          yield BadExpansible(
-            headerBuilder: (controller) {
-              return BadClickable(
-                onClick: () => controller.toggle(),
-                child: SizedBox(
-                  height: 48,
-                  child: Row(
-                    children: [
-                      const Icon(Icons.widgets_outlined),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: BadText(group!.name),
-                        ),
-                      ),
-                      controller.isExpanded
-                          ? const Icon(Icons.expand_less_outlined)
-                          : const Icon(Icons.expand_more_outlined),
-                    ],
-                  ),
-                ),
-              );
-            },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                for (final groupItem in groupItem)
-                  switch (groupItem) {
-                    AsideMenuGroup() => BadText(groupItem.name),
-                    AsideMenuSubtitle() => Container(
-                        margin: const EdgeInsets.symmetric(vertical: 8),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: Colors.blue.shade900,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(4)),
-                        ),
-                        child: BadText(
-                          groupItem.name,
-                          color: Colors.blue.shade50,
-                          fontSize: 14,
-                        ),
-                      ),
-                    AsideMenuRoute() => _AsideMenuRoute(
-                        currentRoute: current,
-                        targetRoute: groupItem.path,
-                        title: groupItem.names.en,
-                        description: groupItem.names.zh,
-                      ),
-                  },
-              ],
-            ),
-          );
+          yield _AsideMenuGroup(group: group, items: groupItems);
 
           group = menuItem;
-          groupItem = [];
+          groupItems = [];
         }
       } else {
-        groupItem.add(menuItem);
+        groupItems.add(menuItem);
       }
     }
 
     if (group != null) {
-      yield BadExpansible(
-        headerBuilder: (controller) {
-          return BadClickable(
-            onClick: () => controller.toggle(),
-            child: SizedBox(
-              height: 48,
-              child: Row(
-                children: [
-                  const Icon(Icons.widgets_outlined),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: BadText(group!.name),
-                    ),
-                  ),
-                  controller.isExpanded
-                      ? const Icon(Icons.expand_less_outlined)
-                      : const Icon(Icons.expand_more_outlined),
-                ],
-              ),
-            ),
-          );
-        },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            for (final groupItem in groupItem)
-              switch (groupItem) {
-                AsideMenuGroup() => BadText(groupItem.name),
-                AsideMenuSubtitle() => Container(
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: Colors.blue.shade900,
-                      borderRadius: const BorderRadius.all(Radius.circular(4)),
-                    ),
-                    child: BadText(
-                      groupItem.name,
-                      color: Colors.blue.shade50,
-                      fontSize: 14,
-                    ),
-                  ),
-                AsideMenuRoute() => _AsideMenuRoute(
-                    currentRoute: current,
-                    targetRoute: groupItem.path,
-                    title: groupItem.names.en,
-                    description: groupItem.names.zh,
-                  ),
-              },
-          ],
-        ),
-      );
+      yield _AsideMenuGroup(group: group, items: groupItems);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final current = ModalRoute.settingsOf(context)!.name ?? '';
-
     return SafeArea(
       child: ListView(
         padding: const EdgeInsets.all(12),
-        children: [..._expandMenuItems(current)],
+        children: [..._expandMenuItems()],
       ),
     );
   }
@@ -218,7 +177,7 @@ class AppLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(names.en)),
-      drawer: const Drawer(child: _AppAside()),
+      drawer: const Drawer(child: _AsideMenu()),
       body: child,
     );
   }
