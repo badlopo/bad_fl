@@ -115,8 +115,7 @@ class BadContributionCalendar extends StatefulWidget {
   });
 
   @override
-  State<BadContributionCalendar> createState() =>
-      _ContributionCalendarState();
+  State<BadContributionCalendar> createState() => _ContributionCalendarState();
 }
 
 class _ContributionCalendarState extends State<BadContributionCalendar> {
@@ -203,12 +202,10 @@ class _ContributionCalendarState extends State<BadContributionCalendar> {
               height: 1,
             ),
           ),
-      ]
-          .separate(
-            separator: SizedBox(height: widget.config.cellGap),
-            convert: asIs,
-          )
-          .toList(),
+      ].separateToList(
+        separator: SizedBox(height: widget.config.cellGap),
+        convert: asIs,
+      ),
     );
 
     return SizedBox(

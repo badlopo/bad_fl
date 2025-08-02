@@ -1,5 +1,5 @@
-import 'package:bad_fl/ext/src/iterable.dart';
-import 'package:bad_fl/util/util.dart';
+import 'package:bad_fl/extensions.dart';
+import 'package:bad_fl/utils.dart';
 import 'package:flutter/material.dart';
 
 part 'config.dart';
