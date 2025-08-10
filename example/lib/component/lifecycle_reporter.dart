@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class LifecycleReportPage extends StatefulWidget {
+class LifecycleReporter extends StatefulWidget {
   final String name;
 
-  const LifecycleReportPage({super.key, required this.name});
+  const LifecycleReporter({super.key, required this.name});
 
   @override
-  State<LifecycleReportPage> createState() => _LifecycleReportPageState();
+  State<LifecycleReporter> createState() => _LifecycleReporterState();
 }
 
-class _LifecycleReportPageState extends State<LifecycleReportPage> {
+class _LifecycleReporterState extends State<LifecycleReporter> {
   @override
   void initState() {
     super.initState();
@@ -18,7 +18,7 @@ class _LifecycleReportPageState extends State<LifecycleReportPage> {
   }
 
   @override
-  void didUpdateWidget(covariant LifecycleReportPage oldWidget) {
+  void didUpdateWidget(covariant LifecycleReporter oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     print('[${widget.name}] didUpdateWidget');
@@ -33,8 +33,6 @@ class _LifecycleReportPageState extends State<LifecycleReportPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Text(widget.name),
-    );
+    return Text(widget.name);
   }
 }
