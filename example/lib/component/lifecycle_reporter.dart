@@ -14,19 +14,19 @@ class _LifecycleReporterState extends State<LifecycleReporter> {
   void initState() {
     super.initState();
 
-    print('[${widget.name}] initState');
+    debugPrint('[${widget.name}] initState');
   }
 
   @override
   void didUpdateWidget(covariant LifecycleReporter oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    print('[${widget.name}] didUpdateWidget');
+    debugPrint('[${widget.name}] didUpdateWidget');
   }
 
   @override
   void dispose() {
-    print('[${widget.name}] dispose');
+    debugPrint('[${widget.name}] dispose');
 
     super.dispose();
   }

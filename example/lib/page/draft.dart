@@ -1,6 +1,4 @@
-import 'package:example/component/lifecycle_reporter.dart';
 import 'package:flutter/material.dart';
-import 'package:bad_fl/bad_fl.dart';
 
 class DraftPage extends StatefulWidget {
   const DraftPage({super.key});
