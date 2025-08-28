@@ -1,8 +1,3 @@
-// ignore_for_file: unused_element
-
-/// Returns the input value as is.
-T asIs<T>(T it) => it;
-
 /// Filter out null values in a list.
 Iterable<T> nonNull<T extends Object>(Iterable<T?> source) =>
     source.whereType<T>();

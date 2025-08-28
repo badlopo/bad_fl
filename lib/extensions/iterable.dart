@@ -1,4 +1,4 @@
-import 'package:bad_fl/utils/helper.dart' as helper;
+import 'package:bad_fl/utils/iterable.dart' as i;
 
 extension IterableExt<E> on Iterable<E> {
   /// {@macro bad_fl_doc_separate}
@@ -7,7 +7,7 @@ extension IterableExt<E> on Iterable<E> {
     required To separator,
     int groupSize = 1,
   }) =>
-      helper.separate(
+      i.separate(
         this,
         convert: convert,
         separator: separator,
@@ -24,5 +24,5 @@ extension IterableExt<E> on Iterable<E> {
           .toList();
 
   /// {@macro bad_fl_doc_zip}
-  Iterable<(E, E2)> zip<E2>(Iterable<E2> other) => helper.zip(this, other);
+  Iterable<(E, E2)> zip<E2>(Iterable<E2> other) => i.zip(this, other);
 }
