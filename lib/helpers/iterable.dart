@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 /// Filter out null values in a list.
 Iterable<T> nonNull<T extends Object>(Iterable<T?> source) =>
     source.whereType<T>();
