@@ -3,9 +3,7 @@ import 'package:flutter_math_fork/flutter_math.dart';
 
 /// regular expression for finding unicode directives
 const String _unicodeReg =
-    r'\${1,2}\\unicode\{\s*0?(?<hexFlag>x)?(?<val>[0-9a-fA-F]*)\s*\}\${1,2}';
-
-final reg = RegExp(_unicodeReg, dotAll: true);
+    r'\${1,2}\\unicode\{\s*0?(?<isHex>x)?(?<val>[0-9a-fA-F]*)\s*\}\${1,2}';
 
 /// the '\unicode{ xxx }' directive cannot be processed,
 /// needs to be converted into unicode characters for display.
@@ -20,15 +18,29 @@ final reg = RegExp(_unicodeReg, dotAll: true);
 /// - \unicode{0x41} -> A
 /// - \unicode{ x41 } -> A
 /// - \unicode{ 0x41 } -> A
-/// - \unicode{x1f600} -> 😁
+/// - \unicode{1f600} -> 😁
 String _convert(String raw) {
-  return raw.replaceAllMapped(reg, (match) {
-    final bool isHex = (match as RegExpMatch).namedGroup('hexFlag') == 'x';
-    final int? charCode =
-        int.tryParse(match.namedGroup('val') ?? '', radix: isHex ? 16 : 10);
+  final reg = RegExp(_unicodeReg, dotAll: true);
 
-    return charCode == null ? '' : String.fromCharCode(charCode);
+  String replaced = '';
+  int p = 0;
+
+  reg.allMatches(raw).forEach((part) {
+    if (part.start > p) {
+      replaced += raw.substring(p, part.start);
+    }
+
+    bool isHex = part.namedGroup('isHex') == 'x';
+    int? v = int.tryParse(part.namedGroup('val') ?? '', radix: isHex ? 16 : 10);
+
+    if (v != null) replaced += String.fromCharCode(v);
+
+    p = part.end;
   });
+
+  if (p < raw.length) replaced += raw.substring(p);
+
+  return replaced;
 }
 
 /// regular expression for finding formulas in text
@@ -87,17 +99,19 @@ class BadKatex extends StatefulWidget {
 }
 
 class _KatexState extends State<BadKatex> {
+  /// the content after all '\unicode' directive replaced
+  String _processedRaw = '';
   List<InlineSpan> spans = [];
 
   void _buildSpans() {
-    final raw = _convert(widget.raw);
-    final formulas = RegExp(_formulaReg, dotAll: true).allMatches(raw);
+    final formulas =
+        RegExp(_formulaReg, dotAll: true).allMatches(_processedRaw);
 
     // if no formula is found, just return the raw text
     if (formulas.isEmpty) {
       spans = widget.leading == null
-          ? [TextSpan(text: raw)]
-          : [...widget.leading!, TextSpan(text: raw)];
+          ? []
+          : [...widget.leading!, TextSpan(text: _processedRaw)];
       return;
     }
 
@@ -111,7 +125,8 @@ class _KatexState extends State<BadKatex> {
     for (final formula in formulas) {
       // leading text before the first formula
       if (formula.start > cursor) {
-        spans.add(TextSpan(text: raw.substring(cursor, formula.start)));
+        spans.add(
+            TextSpan(text: _processedRaw.substring(cursor, formula.start)));
       }
 
       final inline = formula.namedGroup('inline');
@@ -153,20 +168,22 @@ class _KatexState extends State<BadKatex> {
     }
 
     // trailing text after the last formula
-    if (cursor < raw.length) {
-      spans.add(TextSpan(text: raw.substring(cursor)));
+    if (cursor < _processedRaw.length) {
+      spans.add(TextSpan(text: _processedRaw.substring(cursor)));
     }
   }
 
   @override
   void initState() {
     super.initState();
+    _processedRaw = _convert(widget.raw);
     _buildSpans();
   }
 
   @override
   void didUpdateWidget(covariant BadKatex oldWidget) {
     super.didUpdateWidget(oldWidget);
+    _processedRaw = _convert(widget.raw);
     _buildSpans();
   }
 
@@ -174,7 +191,7 @@ class _KatexState extends State<BadKatex> {
   Widget build(BuildContext context) {
     if (spans.isEmpty) {
       return Text(
-        widget.raw,
+        _processedRaw,
         style: widget.style,
         maxLines: widget.maxLines,
         overflow: widget.overflow,
