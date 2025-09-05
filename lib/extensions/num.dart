@@ -36,8 +36,8 @@ extension NumExt on num {
         break;
     }
 
-    // remove trailing zeros if not forceFraction
-    if (!forceFraction) raw = raw.replaceAll(RegExp(r'\.?0+$'), '');
+    // remove trailing zeros (after the dot) if not forceFraction
+    if (!forceFraction) raw = raw.replaceAll(RegExp(r'\.0+$'), '');
 
     return '$raw$unit';
   }
